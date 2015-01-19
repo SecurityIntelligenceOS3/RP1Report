@@ -1,0 +1,229 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{ragged2e}
+\usepackage[none]{hyphenat}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage[title,titletoc,toc]{appendix}
+\usepackage{kantlipsum}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+\center
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics{images/uva.jpeg}\\[0.5cm]% Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+\textsc{\Large System and Network Engineering, MSc}\\[0.5cm] 
+\textsc { \large Research Project 1}\\[0.4cm] % Title of your document
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\HRule \\[0.4cm]
+{ \huge \bfseries Security Intelligence Data Mining}\\[0.4cm] % Title of your document
+{ \large \bfseries Research Proposal}\\[0.4cm] % Title of your document
+\HRule \\[0.4cm]
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+
+\large Diana Rusu\\
+{\bfseries Diana.Rusu@os3.nl}\\[0.5cm]
+\large Nikolaos Petros Triantafyllidis\\
+\bfseries Nikolaos.Triantafyllidis@os3.nl\\[2cm]
+
+{\large \today} 
+
+\end{titlepage}
+\newpage
+\section*{Abstract}
+\newpage
+\section*{Acknowledgement}
+
+We would like to express our gratitude and appreciation for all support, expert knowledge and guidelines during this research project. It has been a great opportunity for us to explore the real feel of working with a successful company. 
+\\
+\\
+Who should we mention? 
+\begin{itemize}
+\item{dhr. prof. dr. ir. C.T.A.M. (Cees) de Laat - for the project proposals}
+\item{Delloite NL specifically to our first supervisor Henri Hambartsumyan - for giving us access inside their company and offices, for all the experts and employees that we had the chance to meet}
+ \begin{itemize}
+ \item{Henri Hambartsumyan - who proposed Security Intelligence Data Mining}
+ \item{Kremers, Joost  - supervisor }
+ \item{Niels - Cyber Threat Intelligence project}
+ \item{Ari Davies - proposed making the plugins also more depth in CTI }
+ \item{Gijs Hollestelle - presented the actual CTI platform and the portal to it, proposed phishtank and cleared out the purpose for this project(making some agents for IR system) }
+ \end{itemize}
+\item{dhr. dr. C.P.J. (Karst) Koymans}
+\end{itemize}
+
+
+ 
+\newpage
+
+\tableofcontents
+\newpage
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+\parbox{\linewidth}{
+With the increasing number of cyber-attacks and the growth of computer crime worldwide, it becomes apparent that IT security is a major concern and crucial survival factor for large companies, organisations and institutions of any sort. Security Operations departments working to ensure confidentiality, integrity and availability for the system infrastructure of their organisation, invest huge  parts \cite{cyber} of their time and effort in detecting threats in real time. A very valuable source of security intelligence, vital to cyber-risk assessment, is information mined from data posted on public sites such as "pastebins" or social networks. However, this is a very cumbersome task due to the lack of Natural Language Processing capabilities in most of the existing tools. Moreover, as recent events have showcased \cite{sony}, several threats arise from governments and criminal associations originating from countries whose languages use non-latin scripts (Chinese, Russian, Korean, etc.). It is, hence, important to have data mining tools that provide support for such alphabets and languages, since a lot of a security intelligence can be discovered in such texts. The main goals of this research project will be to explore the various public data and detect the most appropriate among them. Moreover, numerous current data analytics techniques as well as their application on security related issues will be assessed. Lastly the above knowledge will be applied on the implementation of a simple system that will work as a proof-of-concept and help determine the technical feasibility, storage requirements and operational cost of such a system. This project was proposed by and will carried out in co-operation with Deloitte NL. 
+}
+\newpage
+\section{Research Questions}
+This topic is admittedly very open but it can be narrowed down to several specific research questions some of which we will try to answer to some extent. The main question that we will be trying to answer is the following:\\[0.1cm]
+
+\noindent
+\textbf{How can we effectively use public sources to obtain real time information about security incidents?}\\[0.1cm]
+
+\noindent
+This question can be analysed into more specific parts that cover the topic to some extent, as follows:
+
+\begin{enumerate}
+	\item How can the raw data be effectively collected from the public sources? 
+	\begin{itemize}
+		\item How can we effectively detect the reliable sources?
+		\item What search terms can we deploy during the retrieval phase?
+		\item How can the unstructured data be pre-processed? 
+	\end{itemize}
+	\item How can the data be analysed in respect to security operations?
+	\begin{itemize}
+		\item How can we apply current Data Mining and Analytics techniques on Security issues?
+		\item How can we derive the risk assessment model from the above?
+		\item How can we apply the model on new data?
+	\end{itemize}
+	\item	How can the collected knowledge be applied on a system implementation?
+	\begin{itemize}
+		\item What is a reliable and extensible System Architecture that can be designed?
+		\item What are the computational and storage requirements of such a system?
+		\item What extensions can be proposed for that system?
+	\end{itemize}
+\end{enumerate}
+
+The proposed system extensions can spawn further research questions, namely on the topics of presenting the analysed data, reacting to the real time events and finally assessing the situations that arise and providing feedback to the system.
+
+
+\section{Related work}
+There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called MINDS, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security' \cite{minds}.  Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user. 
+
+\section{Experimental installation requirements}
+\parbox{\linewidth}{
+Most of the work is going to be carried out on end workstations (desktops, laptops, etc.). Depending on the amount of data collected, additional computational or storage resources might be required. In that case our assigned OS3 servers can be used. As for software requirements, there are several open software tools (Database Systems, IR Systems, Web Crawlers, etc.) that can help us carry out the work. For each component of the system that has to be implemented manually the appropriate programming languages as well as libraries are going to be selected. One example is the very strong Python NLP-toolkit.\cite{nltk} }
+
+\newpage
+\section{Information Retrieval System}
+
+This chapter introduces a system for collecting information from public sources. First subsection will define what websites are providing interest for detecting threats, malwares and phishing sites. For this specific sources next subsections come as an extension for further investigation and implementation. 
+
+\subsection{Defining reliable sources}
+
+For many companies finding  in real time possible attacks became a crucial point. Discovering this type of dangerous threats with a plausible margin of error, it is a challenging task as Internet provides an enormous database with "random messages/information". Hence it is important to gather all data needed from reliable sources. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
+\\
+\\
+First, what is meant by reliable source? Should any type of source or social network be considered as reliable? What about forums and IRC channels? Should we draw our attention over this once as well?
+
+How many real threats or warnings have been encountered till now on the websites that we want to consider as reliable?   
+
+%\subsection{Specific source analyse}
+\subsubsection*{Phishtank}
+\addcontentsline{toc}{subsection}{Phishtank}
+\subsubsection{API Investigation/Inspection}
+\subsubsection{Collecting data}
+\subsubsection{Implementation}
+\subsubsection*{Pastebin}
+\addcontentsline{toc}{subsection}{Pastebin}
+
+Pastebin \cite{pastebin}it is a webiste where everyone with or without registration can share real time text or code snippets. It attracted many users during past years including malware writers. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of the public messages pasted some possible future attacks can be determined.
+
+\subsubsection{API Investigation}
+
+As for each API, Pastebin offers few options for developers once they obtain the unique Developer API Key and this include creating new pastes, listing trending pastes and pastes from a particular user. 
+Unfortunately, Pastebin API it is not completely promising when it comes to  information retrieval from database. Search method using keywords it is provided by "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. It comes with a price those, if one wants to use it as a free user will be limited to 1000 pastes per day. 
+
+\subsubsection{Collecting data}
+
+\subsubsection{Implementation}
+
+\subsubsection*{Twitter}
+\addcontentsline{toc}{subsection}{Twitter}
+\subsubsection{API Investigation}
+\subsubsection{Collecting data}
+\subsubsection{Implementation}
+\subsubsection*{Reddit}
+\addcontentsline{toc}{subsection}{Reddit}
+\subsubsection{API Investigation}
+\subsubsection{Collecting data}
+\subsubsection{Implementation}
+
+\newpage
+\section{Data Analyse}
+\subsection{Threat Types/What are we looking for? Security related data}
+\subsection{Defining data mining model}
+\subsection{Implementation}
+\newpage
+\section*{Conclusions}
+\addcontentsline{toc}{section}{Conclusions}
+\newpage
+\section*{Implications}
+\addcontentsline{toc}{section}{Implications}
+\newpage
+\section*{Further Research}
+\addcontentsline{toc}{section}{Further Research}
+\newpage
+\section*{Ethical implications}
+\addcontentsline{toc}{section}{Ethical implications}
+The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
+\newpage
+\section*{Appendices}
+\newpage
+
+\begin{thebibliography}{99}
+\bibitem{cyber}
+	Anon, (2015). [online] US cybercrime: Rising risks, reduced readiness, PWC, Available at: \url{http://www.pwc.com/en_US/us/increasing-it-effectiveness/publications/assets/2014-us-state-of-cybercrime.pdf}
+\bibitem{sony}
+	 D. Sanger, N. Perlroth.  U.S. Said to Find North Korea Ordered Cyberattack on Sony. [online] Nytimes.com. \\Available at: \url{http://www.nytimes.com/2014/12/18/world/asia/us-links-north-korea-to-sony-hacking.html?_r=0}
+\bibitem{socialweb}
+  Russell, MA (2014). Mining the Social Web, O'Reily Media, USA
+\bibitem{minds}
+    V. Chandola et al. Data Mining for Cyber Security, Department of Computer Science, University of Minnesota, Springer, 2006
+\bibitem{police}
+   RCP van der Veer, H.T. Roo,  A. van der Zanden, Data mining for intelligence led policing, Sentient, Amsterdam Police Force, Amsterdam, The Netherlands, 2009
+\bibitem{nltk}
+Nltk.org, (2015). Natural Language Toolkit - NLTK 3.0 documentation. [online] Available at: \url{http://www.nltk.org/}
+
+\bibitem{pastebin}
+Pastebin, (2015). Pastebin.com - \#1 paste tool since 2002!. [online] Available at:\url{http://pastebin.com/}
+
+\end{thebibliography}
+
+\end{document}
