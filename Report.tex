@@ -142,17 +142,20 @@ Most of the work is going to be carried out on end workstations (desktops, lapto
 
 \newpage
 \section{Information Retrieval System}
-
-This chapter introduces a system for collecting information from public sources. First subsection will define what websites are providing interest for detecting threats, malwares and phishing sites. For this specific sources next subsections come as an extension for further investigation and implementation. 
-
+\parbox{\linewidth}{
+\paragraph{}
+This chapter describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part. 
+}
 \subsection{Defining reliable sources}
-
-For many companies finding  in real time possible attacks became a crucial point. Discovering this type of dangerous threats with a plausible margin of error, it is a challenging task as Internet provides an enormous database with "random messages/information". Hence it is important to gather all data needed from reliable sources. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
-\\
-\\
-First, what is meant by reliable source? Should any type of source or social network be considered as reliable? What about forums and IRC channels? Should we draw our attention over this once as well?
-
-How many real threats or warnings have been encountered till now on the websites that we want to consider as reliable?   
+\parbox{\linewidth}{
+\paragraph{}
+Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites significant information related to Security Intelligence can be found. Hence it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
+\paragraph{}
+Which sources can be considered as reliable? In order to answer this question inside research has been provided by experts. From a company perspective it is important to have an overview over all general possible attacks or specific targeted client. Among all the possible targets, four are considered at this moment mostly valuable. Sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and requirements from company. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly these are considered fundamental for the reason that past activity showed that vulnerabilities were revealed between posted messages. 
+\paragraph{}
+Further all the mentioned sources will be analysed in particular.
+}
+   
 
 %\subsection{Specific source analyse}
 \subsubsection*{Phishtank}
@@ -163,26 +166,26 @@ How many real threats or warnings have been encountered till now on the websites
 \subsubsection*{Pastebin}
 \addcontentsline{toc}{subsection}{Pastebin}
 
-Pastebin \cite{pastebin}it is a webiste where everyone with or without registration can share real time text or code snippets. It attracted many users during past years including malware writers. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of the public messages pasted some possible future attacks can be determined.
+Pastebin \cite{pastebin},a website where everyone with or without registration can share real time text or code snippets. It attracted many users during past years including malware writers. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of the public messages pasted some possible future attacks can be determined.
 
 \subsubsection{API Investigation}
 
 As for each API, Pastebin offers few options for developers once they obtain the unique Developer API Key and this include creating new pastes, listing trending pastes and pastes from a particular user. 
 Unfortunately, Pastebin API it is not completely promising when it comes to  information retrieval from database. Search method using keywords it is provided by "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. It comes with a price those, if one wants to use it as a free user will be limited to 1000 pastes per day. 
 
-\subsubsection{Collecting data}
+\subsubsection{Data collection}
 
 \subsubsection{Implementation}
 
 \subsubsection*{Twitter}
 \addcontentsline{toc}{subsection}{Twitter}
 \subsubsection{API Investigation}
-\subsubsection{Collecting data}
+\subsubsection{Data collection}
 \subsubsection{Implementation}
 \subsubsection*{Reddit}
 \addcontentsline{toc}{subsection}{Reddit}
 \subsubsection{API Investigation}
-\subsubsection{Collecting data}
+\subsubsection{Data collection}
 \subsubsection{Implementation}
 
 \newpage
@@ -190,6 +193,9 @@ Unfortunately, Pastebin API it is not completely promising when it comes to  inf
 \subsection{Threat Types/What are we looking for? Security related data}
 \subsection{Defining data mining model}
 \subsection{Implementation}
+
+\newpage
+\section{System Architecture}
 \newpage
 \section*{Conclusions}
 \addcontentsline{toc}{section}{Conclusions}
