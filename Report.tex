@@ -246,7 +246,7 @@ To determine what keywords are relevant for retrieving specific information from
 \end{itemize}
 
 There are many type of threats and the previous list can be expended.  
-
+\newpage
 \section{Keyword Search Implementation}
 As a first step we need to ensure that the data hosted in database does not contain duplicates and empty pastes, this will only increase storage and time in retrieving useful information.
 \begin{spverbatim}
@@ -261,6 +261,32 @@ Applying a regular expression containing the defined keywords only documents tha
 \begin{spverbatim}
 %query = {"paste":{'$regex':'.*'+keyword[i]+'.*'}}
 \end{spverbatim}
+
+\begin{figure}[h!]
+\begin{spverbatim}
+--------------------------URL-------------------------
+http://pastebin.com/MKC8wVXq
+-----------------PASTE--------------------------------
+[u'link : http://downupfiles.com/file/0Y9j68\r\n\r\nscreenshoot ; http://img11.hostingpics.net/pics/13402114fb.png\r\n
+\r\nFacebook hacking 2015 is easier than people think.There are different types of automated tools(both free and paid)
+ that can do it for you, brute force crackers,sql injectors,astreak decoders etc. I personally recommend this free bru
+te force cracker called chinaman facebook hacker. see link to it on my channel.why i recommend this? cuz its the easie
+st to use and guaranteed to crack your victims password(some softwares give you the wrong password) and it uses an onl
+ine server to crack passwords\r\nhack facebook password 2015']
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+----------------Keyword :  hack   appeared  3  times --------------
+
+
+--------------------------URL-------------------------
+http://pastebin.com/GdhGYTX4
+-----------------PASTE--------------------------------
+[u'the big hacker russian \r\nthe link read:\r\nhttp://sh.st/az2ZV']
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<
+----------------Keyword :  hack   appeared  1  times --------------
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{ Two examples of documents retrieved after searching by keyword "hack" }
+\end{figure}
 Moreover, the keywords will be counted to determine the importance of a document. At this stage the question might rise. Why we are not applying the TF-IDF alghorithm to determine the relevance and weight for the documents? 
 Following this insight a general overview of how this algorithm works and the obtained results will be further discussed. 
 
