@@ -3,5 +3,6 @@
 *.log
 *.toc
 *.aux
-
-
+*.out
+*.pdf
+*.gz
