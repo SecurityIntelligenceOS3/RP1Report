@@ -14,6 +14,9 @@
 \usepackage{listings}
 \usepackage[title,titletoc,toc]{appendix}
 \usepackage{kantlipsum}
+\usepackage{spverbatim}
+\usepackage{caption3}
+
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -46,7 +49,7 @@
 %----------------------------------------------------------------------------------------
 \HRule \\[0.4cm]
 { \huge \bfseries Security Intelligence Data Mining}\\[0.4cm] % Title of your document
-{ \large \bfseries Research Proposal}\\[0.4cm] % Title of your document
+{ \large \bfseries Research Paper}\\[0.4cm] % Title of your document
 \HRule \\[0.4cm]
 
 
@@ -79,7 +82,7 @@ Who should we mention?
 \item{Delloite NL specifically to our first supervisor Henri Hambartsumyan - for giving us access inside their company and offices, for all the experts and employees that we had the chance to meet}
  \begin{itemize}
  \item{Henri Hambartsumyan - who proposed Security Intelligence Data Mining}
- \item{Kremers, Joost  - supervisor }
+ \item{Kremers, Joost  - our main supervisor for guideline during the research }
  \item{Niels - Cyber Threat Intelligence project}
  \item{Ari Davies - proposed making the plugins also more depth in CTI }
  \item{Gijs Hollestelle - presented the actual CTI platform and the portal to it, proposed phishtank and cleared out the purpose for this project(making some agents for IR system) }
@@ -151,7 +154,7 @@ This chapter describes a system for collecting and mining information from publi
 \paragraph{}
 Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites, significant information related to Security Intelligence can be found. Therefore it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
 \paragraph{}
-Which sources can be considered as reliable? In order to answer this question inside research has been provided by experts. From a company perspective it is important to have an overview over all general possible attacks or to specific client. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.Furthermore mentioned sources will be analysed in particular.
+Which sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
 }
    
 
@@ -159,36 +162,102 @@ Which sources can be considered as reliable? In order to answer this question in
 \subsubsection*{Phishtank}
 \addcontentsline{toc}{subsection}{Phishtank}
 \subsubsection{API Investigation/Inspection}
-\subsubsection{Collecting data}
 \subsubsection{Implementation}
-\subsubsection*{Pastebin}
-\addcontentsline{toc}{subsection}{Pastebin}
-
-Pastebin \cite{pastebin},a website where everyone with or without registration can share real time text or code snippets. It attracted many users during past years including malware writers. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of the public messages pasted some possible future attacks can be determined.
+\subsubsection*{General "Pastebins" information}
+\addcontentsline{toc}{subsection}{Pastebins}
+\paragraph{}
+"Pastebins" websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible "pastebins" sources (e.g fpaste.org, paste2.org, pastie.org\cite{pastebin-pastie}, paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
 
 \subsubsection{API Investigation}
-
-As for each API, Pastebin offers few options for developers once they obtain the unique Developer API Key and this include creating new pastes, listing trending pastes and pastes from a particular user. 
-Unfortunately, Pastebin API it is not completely promising when it comes to  information retrieval from database. Search method using keywords it is provided by "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. It comes with a price those, if one wants to use it as a free user will be limited to 1000 pastes per day. 
-
-\subsubsection{Data collection}
+\parbox{\linewidth}{
+\paragraph{}
+Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
+Unfortunately, Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from all users, registered or not. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. Search method for retrieving information using keywords uses third party software namely, "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
+}
 
 \subsubsection{Implementation}
+
+To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's archive page contains last pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+
+ 
+ 
 
 \subsubsection*{Twitter}
 \addcontentsline{toc}{subsection}{Twitter}
 \subsubsection{API Investigation}
-\subsubsection{Data collection}
 \subsubsection{Implementation}
 \subsubsection*{Reddit}
 \addcontentsline{toc}{subsection}{Reddit}
+Reddit community comprises of social websites and news sites. It consists of over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
+\begin{itemize}
+\item /r/blackhat \cite{red-blackhat}
+\item r/malware \cite{r.malware}
+\item r/netsec \cite{r.netsec}
+\item r/pwned \cite{r.pwned}
+\item /r/vrd/ \cite{r.rvd}
+
+\end{itemize}
+
 \subsubsection{API Investigation}
-\subsubsection{Data collection}
+Reddit API\cite{reddit} provides a rich list of methods and it is easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, after/before,limit, count and show \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
+
 \subsubsection{Implementation}
 
+All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case /r/blackhat. 
+\begin{spverbatim}
+response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
+			.json?sort=new&limit=100')
+\end{spverbatim}
+\hfill \break
+In response variable we will get a file in json format, from which we will store the title associated to the url,number of comments and score. Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database.
+
+%\figurename{ Scraped Reddit data stored in MongoDB }
+\begin{figure}[h!]
+\begin{spverbatim}
+> db.redditData.find()
+{ "_id" : ObjectId("54be5613d177b4501eedaec0"), "title" : "XSS (Cross Site Scripting): Everything you need to know (Tutorial)", "url" : "http://h.acker.in/tutorials/xss/", "num_comments" : 4, "score" : 37, "ups" : 37 }
+{ "_id" : ObjectId("54be5613d177b4501eedaec1"), "title" : "2014 Top Security Tools", "url" : "http://www.digitalmunition.me/?p=3639", "num_comments" : 4, "score" : 30, "ups" : 30 }
+{ "_id" : ObjectId("54be5613d177b4501eedaec2"), "title" : "KeySweeper — Arduino-based Keylogger for Wireless Keyboards", "url" : "http://www.digitalmunition.me/?p=3629", "num_comments" : 1, "score" : 43, "ups" : 43 }
+{ "_id" : ObjectId("54be5613d177b4501eedaec3"), "title" : "Amazing Tricks - How to spy on Viber Messages?", "url" : "http://smstrackers.com/how-to-track-viber-messages/", "num_comments" : 1, "score" : 0, "ups" : 0 }
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{List of documents from mongoDB. Each document contains a unique objectID, url, title, number of comments and the associated score  }
+\end{figure}
+
 \newpage
+\section{Define Keywords}
+
+To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular will be depicted and a list with keywords, provided.
+
+\section{Keywords implementation}
+As a first step we need to ensure that the data hosted in database does not contain duplicates and empty pastes, this will only increase storage and time in retrieving useful information.
+\begin{spverbatim}
+#remove duplicates
+collection.ensure_index( [("paste",pymongo.ASCENDING),
+ ("unique",True), ("dropDups",True )] )
+#remove empty pastes
+collection.remove({"paste":[]})
+\end{spverbatim}
+\hfill \break
+Applying a regular expression containing the defined keywords only documents that obey this rule will be retrieved.
+\begin{spverbatim}
+%query = {"paste":{'$regex':'.*'+keyword[i]+'.*'}}
+\end{spverbatim}
+Moreover, the keywords will be counted to determine the importance of a document. At this stage the question might rise. Why we are not applying the TF-IDF alghorithm to determine the relevance and weight for the documents?
 \section{Data Analyse}
-\subsection{Threat Types/What are we looking for? Security related data}
+This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This include stop words removal, stemming and pos(part of speach) detection. 
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. 
+\begin{itemize}
+\item Classification
+\item Anomaly Detection
+\item Association Rule Detection
+\item Clustering
+\item Attribute Important 
+\item etc.
+\end{itemize}
+
+In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.  
+ 
 \subsection{Defining data mining model}
 \subsection{Implementation}
 
@@ -197,6 +266,7 @@ Unfortunately, Pastebin API it is not completely promising when it comes to  inf
 \newpage
 \section*{Conclusions}
 \addcontentsline{toc}{section}{Conclusions}
+Obtained results during this research from several sources, such as those that include social networking websites, "pastebin" and phishing clearly shows that monitoring them one can get information about the security intelligence. Moreover, analysing them and applying data mining techniques or searching by keywords in the database they can be filtered and from the thousands of messages collected only the "relevant" will be obtained. Built system can be expanded and included in the CTI project.
 \newpage
 \section*{Implications}
 \addcontentsline{toc}{section}{Implications}
@@ -225,9 +295,36 @@ The main part of this research comprises of exploring current techniques and the
 \bibitem{nltk}
 Nltk.org, (2015). Natural Language Toolkit - NLTK 3.0 documentation. [online] Available at: \url{http://www.nltk.org/}
 
+\bibitem{fpaste}
+Fedora Project Pastebin Fpaste.org, (2015). New paste • Fedora Project Pastebin. [online] Available at:  
+\url{http://fpaste.org }
 \bibitem{pastebin}
-Pastebin, (2015). Pastebin.com - \#1 paste tool since 2002!. [online] Available at:\url{http://pastebin.com/}
+Pastebin, (2015). Pastebin.com - \#1 paste tool since 2002!. [online] Available at:     \url{http://pastebin.com/}
 
+\bibitem{pastebin-magazine}
+Security Intelligence, (2015). Pastebin a Convenient Way for Cybercriminals to Remotely Host Malware. [online] Available at: \url{http://securityintelligence.com/news/pastebin-convenient-way-cybercriminals-remotely-host-malware/#.VMS25DX8vCI }
+\bibitem{pastebin-pastie}
+Pastie.org, (2015). New - Pastie. [online] Available at: \url{http://pastie.org} 
+\bibitem{pastebin-ubuntu}
+ Paste.ubuntu.org.cn, (2015). [online] Available at: \url{http://paste.ubuntu.org.cn/}
+\bibitem{scrapy}
+Scrapy.org, (2015). Scrapy | A Fast and Powerful Scraping and Web Crawling Framework. [online] Available at: \url{http://scrapy.org/} 
+\bibitem{reddit}
+Reddit.com, (2015). reddit: the front page of the internet. [online] Available at: \url{http://www.reddit.com/} 
+\bibitem{red-blackhat}
+Reddit, (2009). blackhat library: Documenting blackhat hacking techniques • /r/blackhat. [online] Available at: \url{https://www.reddit.com/r/blackhat}
+\bibitem{r.malware}
+Reddit, (2009). Malware Analysis \& Reports • /r/Malware. [online] Available at:   \url{http://www.reddit.com/r/malware}
+\bibitem{r.netsec}
+reddit, (2007). /r/netsec - Information Security News \& Discussion. [online] Available at: \url{https://www.reddit.com/r/netsec/} 
+\bibitem{r.pwned}
+Reddit, (2008). pwned • /r/pwned. [online] Available at: http://www.reddit.com/r/pwned 
+\bibitem{r.rvd}
+Reddit, (2012). Vulnerability Research and Development • /r/vrd. [online] Available at: \url{http://www.reddit.com/r/vrd/}
+\bibitem{oracle-list}
+Oracle.com, (2015). Oracle Data Mining Techniques and Algorithms. [online] Available at: \url{http://www.oracle.com/technetwork/database/enterprise-edition/odm-techniques-algorithms-097163.html}
+\bibitem{data-kdd}
+Han, Jiawei; Kamber, Micheline (2001). Data mining: concepts and techniques. Morgan Kaufmann. p. 5. ISBN 9781558604896. "Thus, data mining should have been more appropriately named "knowledge mining from data," which is unfortunately somewhat long"
 \end{thebibliography}
 
 \end{document}
