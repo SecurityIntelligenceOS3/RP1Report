@@ -154,7 +154,7 @@ This chapter describes a system for collecting and mining information from publi
 \paragraph{}
 Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites, significant information related to Security Intelligence can be found. Therefore it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
 \paragraph{}
-Which sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
+Which sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore, mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
 }
    
 
@@ -225,11 +225,29 @@ In response variable we will get a file in json format, from which we will store
 \end{figure}
 
 \newpage
-\section{Define Keywords}
+\section{Define Security Intelligence related Keywords}
 
-To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular will be depicted and a list with keywords, provided.
+To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular will be depicted and a list with keywords, provided. 
 
-\section{Keywords implementation}
+\begin{itemize}
+\item Denial-of-Service (DoS) (causes computer crush )
+\item Trojan horse programs (can change configuration files, install different programs without one knowing it)
+\begin{itemize}
+\item social engineering
+\item back door programs
+\end{itemize}
+\item Malicious spyware (spying on victims) 
+\item Back door and remote administration programs ( can get full control and access on Windows : BackOrifice, Netbus, and SubSeven) 
+\item Mobile code (Java/JavaScript/ActiveX)
+\item Spoofing
+\item Email borne viruses (viruses in attachments)
+\item Cross-site scripting
+\item Hidden file extension
+\end{itemize}
+
+There are many type of threats and the previous list can be expended.  
+
+\section{Keyword Search Implementation}
 As a first step we need to ensure that the data hosted in database does not contain duplicates and empty pastes, this will only increase storage and time in retrieving useful information.
 \begin{spverbatim}
 #remove duplicates
@@ -243,10 +261,13 @@ Applying a regular expression containing the defined keywords only documents tha
 \begin{spverbatim}
 %query = {"paste":{'$regex':'.*'+keyword[i]+'.*'}}
 \end{spverbatim}
-Moreover, the keywords will be counted to determine the importance of a document. At this stage the question might rise. Why we are not applying the TF-IDF alghorithm to determine the relevance and weight for the documents?
+Moreover, the keywords will be counted to determine the importance of a document. At this stage the question might rise. Why we are not applying the TF-IDF alghorithm to determine the relevance and weight for the documents? 
+Following this insight a general overview of how this algorithm works and the obtained results will be further discussed. 
+
+TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and it is used to statistically score the importance of a word in a document across/in multiple/collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears over the total number of words from that document and it will get a high score. But if it appears and in other documents it will not be as unique and will receive a lower score. Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
 \section{Data Analyse}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This include stop words removal, stemming and pos(part of speach) detection. 
-At this moment there are various data mining techniques \cite{oracle-list} that include text processing. 
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore a general analyse will be provided. 
 \begin{itemize}
 \item Classification
 \item Anomaly Detection
@@ -266,7 +287,7 @@ In data mining step or knowledge discovery from database(KDD) it is important to
 \newpage
 \section*{Conclusions}
 \addcontentsline{toc}{section}{Conclusions}
-Obtained results during this research from several sources, such as those that include social networking websites, "pastebin" and phishing clearly shows that monitoring them one can get information about the security intelligence. Moreover, analysing them and applying data mining techniques or searching by keywords in the database they can be filtered and from the thousands of messages collected only the "relevant" will be obtained. Built system can be expanded and included in the CTI project.
+Obtained results during this research from several sources, such as those that include social networking websites, "pastebin" and phishing clearly shows that monitoring them one can get information about the security intelligence. Moreover, analysing them and applying data mining techniques or searching by keywords in the database they can be filtered and from the thousands of messages collected only the "relevant" will be obtained.  Built system can be expanded and included in the CTI project.
 \newpage
 \section*{Implications}
 \addcontentsline{toc}{section}{Implications}
@@ -323,6 +344,8 @@ Reddit, (2008). pwned • /r/pwned. [online] Available at: http://www.reddit.com
 Reddit, (2012). Vulnerability Research and Development • /r/vrd. [online] Available at: \url{http://www.reddit.com/r/vrd/}
 \bibitem{oracle-list}
 Oracle.com, (2015). Oracle Data Mining Techniques and Algorithms. [online] Available at: \url{http://www.oracle.com/technetwork/database/enterprise-edition/odm-techniques-algorithms-097163.html}
+\bibitem{tf-idf}
+Tfidf.com, (2015). Tf-idf : A Single-Page Tutorial - Information Retrieval and Text Mining. [online] Available at: \url{http://www.tfidf.com/} 
 \bibitem{data-kdd}
 Han, Jiawei; Kamber, Micheline (2001). Data mining: concepts and techniques. Morgan Kaufmann. p. 5. ISBN 9781558604896. "Thus, data mining should have been more appropriately named "knowledge mining from data," which is unfortunately somewhat long"
 \end{thebibliography}
