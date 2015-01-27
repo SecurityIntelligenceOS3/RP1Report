@@ -16,6 +16,7 @@
 \usepackage{kantlipsum}
 \usepackage{spverbatim}
 \usepackage{caption3}
+\usepackage{longtable}
 
 
 \usepackage{array}
@@ -227,25 +228,62 @@ In response variable we will get a file in json format, from which we will store
 \newpage
 \section{Define Security Intelligence related Keywords}
 
-To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular will be depicted and a list with keywords, provided. 
+To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular \cite{owasp} will be depicted and an associated list of keywords that can be later expended provided.
+\begin{center} 
+\begin{longtable}{|l | l|}
+\hline
+Type of Attack & Related keywords \\
+\hline
+ Denial-of-Service (DoS) & ddos attack \\ 
+ 						& take down website \\ 
+ 						&  server/computer crush  \\
+ 						& server take down \\
 
-\begin{itemize}
-\item Denial-of-Service (DoS) (causes computer crush )
-\item Trojan horse programs (can change configuration files, install different programs without one knowing it)
-\begin{itemize}
-\item social engineering
-\item back door programs
-\end{itemize}
-\item Malicious spyware (spying on victims) 
-\item Back door and remote administration programs ( can get full control and access on Windows : BackOrifice, Netbus, and SubSeven) 
-\item Mobile code (Java/JavaScript/ActiveX)
-\item Spoofing
-\item Email borne viruses (viruses in attachments)
-\item Cross-site scripting
-\item Hidden file extension
-\end{itemize}
+\hline
+SQL Injection 	& plain text password\\
+				& clear text password \\
+				& plain text password username \\
+				& clear text password username\\
+				& dump customers \\
+				& dump passwords \\
+				& blackmail dump accounts \\
+				& leaked passwords \\
+				
+\hline
+ Trojan horse programs 	& (can change configuration files,\\
+  						& install different programs \\
+  						& without one knowing it) \\
 
-There are many type of threats and the previous list can be expended.  
+&social engineering\\
+&back door programs\\
+\cline{2-2}
+\hline
+Malicious spyware &(spying on victims)\\
+\hline
+Account hijacking & account hacked \\
+				  & account images changed hack \\
+				  & take control account \\
+				  & account add/remove content \\ 			  
+\hline
+Back door and remote &\\
+administration programs & ( can get full control and access on Windows\\
+
+& : BackOrifice, Netbus, and SubSeven) \\ 
+\hline
+Mobile code & (Java/JavaScript/ActiveX) \\
+\hline
+Spoofing & lla \\
+\hline
+Email borne viruses & (viruses in attachments) \\
+\hline
+Cross-site scripting & la \\
+\hline
+Hidden file extension & la \\
+\hline
+\end{longtable}
+\end{center}
+
+ 
 \newpage
 \section{Keyword Search Implementation}
 As a first step we need to ensure that the data hosted in database does not contain duplicates and empty pastes, this will only increase storage and time in retrieving useful information.
@@ -291,19 +329,65 @@ Moreover, the keywords will be counted to determine the importance of a document
 Following this insight a general overview of how this algorithm works and the obtained results will be further discussed. 
 
 TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and it is used to statistically score the importance of a word in a document across/in multiple/collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears over the total number of words from that document and it will get a high score. But if it appears and in other documents it will not be as unique and will receive a lower score. Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
+
+
 \section{Data Analyse}
-This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This include stop words removal, stemming and pos(part of speach) detection. 
-At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore a general analyse will be provided. 
+This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}. 
 \begin{itemize}
-\item Classification
-\item Anomaly Detection
-\item Association Rule Detection
-\item Clustering
+\item 
+Classification: Refers to the task of generalising known structures and applying them to new
+data. For example, an e-mail program might attempt to classify an e-mail as "legitimate" or as
+“spam”. Since this involves training of the algorithm before use, it might not be ideal for use in
+threat discovery. However, it can be very useful for providing feedback to the system and fine
+tuning it to be able to classify the documents for each threat category, acting together with the
+configuration step
+\item 
+Anomaly detection (Outlier/change/deviation detection): This task refers to identification of
+unusual data records that might imply unusual behaviour in the dataset. For example, in our
+use case, a first indication that something might be possibly wrong would be an exceptional
+mention of a company name within a certain period of time. The problem here is to determine
+what can be defined as exceptional. This of course is not possible without the use of old data
+so a certain threshold can be determined. Until sufficient amount of data has been gathered we
+can naively implement this by setting the thresholds manually. This operation is particularly
+popular in intrusion detection systems.
+\item 
+Association rule learning (Dependency modelling): This task refers to the search for
+relationships between variables. One example of this is the infamous beer and diapers story.
+This test requires no training set and can be performed on any structured set of data. In our
+use case this can help us determine trends between the occurrences of keywords, such as the
+name of a company together with the name of a name of an attack. The output of this test also
+contains metrics about the support (% of the documents supporting the association) as well as
+confidence (ratio of the support percentage of either part of each rule).
+\item 
+Clustering: Refers to the task of discovering groups and structures in the data that present
+some sort of similarity, without using known structures in the data. In our case this can help us
+determine new categories of documents that have not been predefined (remember the threat
+categorisation we mentioned in the beginning).
+\item
+Regression: This task attempts to find a function which models the data with the least error.
+This might not be directly applicable to our specific example but based on the experience
+gathered after a certain period of time that the system will be operated, we can attempt to
+design an analytic model using regression analysis techniques.
+\item
+Summarisation: This task aims to provide a more compact representation of the data set,
+including visualisation and report generation. In our case this applies to the creation of the
+alerts to be presented to the Security Analysts. The alerting will consist of a common format
+that will apply to automatically generated events that will be propagated to the appropriate
+parties. One proposed format could be the following:
+\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red,
+%backing_documents:\[1,3,4,6\]\}
+This presents the analyst with an event informing them about a security incident with a certain
+importance level. The way of determining the level of importance falls out of the scope of this
+document. Notice also the list of supporting documents resulting from different sources. At this
+point the analyst can go and inspect each one of this documents manually, assess the risk
+themselves and take the appropriate measures such as further informing the involved parties, or
+ignoring the alert.
 \item Attribute Important 
 \item etc.
 \end{itemize}
 
-In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.  
+  
  
 \subsection{Defining data mining model}
 \subsection{Implementation}
@@ -374,6 +458,9 @@ Oracle.com, (2015). Oracle Data Mining Techniques and Algorithms. [online] Avail
 Tfidf.com, (2015). Tf-idf : A Single-Page Tutorial - Information Retrieval and Text Mining. [online] Available at: \url{http://www.tfidf.com/} 
 \bibitem{data-kdd}
 Han, Jiawei; Kamber, Micheline (2001). Data mining: concepts and techniques. Morgan Kaufmann. p. 5. ISBN 9781558604896. "Thus, data mining should have been more appropriately named "knowledge mining from data," which is unfortunately somewhat long"
+\bibitem{owasp}
+Owasp.org, (2015). Category:OWASP Top Ten Project - OWASP. [online] Available at: \url{https://www.owasp.org/index.php/Top10#OWASP_Top_10_for_2013} 
+
 \end{thebibliography}
 
 \end{document}
