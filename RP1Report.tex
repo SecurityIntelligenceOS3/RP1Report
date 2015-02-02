@@ -175,39 +175,108 @@ There is a lot of literature around the field of Data Mining and more recently W
 %\addcontentsline{toc}{section}{Ethical implications}
 The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
 
+\newpage
 \section{Methodology}
 This project will be carried out with the aid of Deloitte Risk Services, Netherlands. The first step is to get acquainted with the Cyber-Risk Services and Data Analytics teams of the company and their people. When directed to the appropriate experts on each respective field (Security, Data Analytics, NLP, etc.) we will be working closely with them to collect the needed knowledge and expertise in order to reduce an effective risk assessment model. This will be made possible by applying Data Mining techniques that are already in use in other fields (economic risk assessment, marketing, etc.) on security issues. In parallel we will start designing and implementing the Information Retrieval part of the system. Once the appropriate amount of Data has been gathered from public sources we will apply the appropriate techniques that have been proposed to us on the collected dataset in order to design the risk assessment model. The next step will be to apply the designed model on new data and evaluate the effectiveness of the model. Lastly, based on the gathered experience and knowledge we will try to design a modular and extensible system architecture that deploys the designed techniques. Based on that design we will attempt to implement a simple proof of concept that will help us define the resource requirements and operational cost of such a system. 
 \subsection{Installation requirements}
 \parbox{\linewidth}{
+
 Most of the work is going to be carried out on end workstations (desktops, laptops, etc.). Depending on the amount of data collected, additional computational or storage resources might be required. In that case our assigned OS3 servers can be used. As for software requirements, there are several open software tools (Database Systems, IR Systems, Web Crawlers, etc.) that can help us carry out the work. For each component of the system that has to be implemented manually the appropriate programming languages as well as libraries are going to be selected. One example is the very strong Python NLP-toolkit.\cite{nltk} }
 \subsection{Proposed System}
  
 \subsubsection{General Outline (picture)}
 \subsubsection{Configuration}
 \subsubsubsection{Specification}
+To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular \cite{owasp} will be depicted and an associated list of keywords that can be later extended provided. To construct and select the relevant keywords, previously discussed news and messages related to specific threat were analysed \cite{list-2015-attacks}. 
+\begin{center} 
+\begin{longtable}{|l | l|}
+\hline
+Type of Attack & Related keywords \\
+\hline
+ Denial-of-Service (DoS) & ddos attack \\ 
+ 						& take down website \\ 
+ 						&  server/computer crush  \\
+ 						& server take down \\
+
+\hline
+SQL Injection 	& plain text password\\
+				& clear text password \\
+				& plain text password username \\
+				& clear text password username\\
+				& dump customers \\
+				& dump passwords \\
+				& blackmail dump accounts \\
+				& leaked passwords \\
+				
+\hline
+ Trojan horse programs 	& (can change configuration files,\\
+  						& install different programs \\
+  						& without one knowing it) \\
+
+&social engineering\\
+&back door programs\\
+\cline{2-2}
+\hline
+Malicious spyware &(spying on victims)\\
+\hline
+Account hijacking & account hacked \\
+				  & account images changed hack \\
+				  & take control account \\
+				  & account add/remove content \\ 			  
+\hline
+Back door and remote &\\
+administration programs & ( can get full control and access on Windows\\
+
+& : BackOrifice, Netbus, and SubSeven) \\ 
+\hline
+Mobile code & (Java/JavaScript/ActiveX) \\
+\hline
+Spoofing & lla \\
+\hline
+Email borne viruses & (viruses in attachments) \\
+\hline
+Cross-site scripting & la \\
+\hline
+Hidden file extension & la \\
+\hline
+\end{longtable}
+\end{center}
 \subsubsubsection{Implementation}
 \subsubsection{Data Aggregation Module}
-This chapter describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
-\subsubsubsection{Specification}
-
+\parbox{\linewidth}{
+\hfill \break
+\\
+This section describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
+}
+\subsubsubsection{Specifications}
+\parbox{\linewidth}{
+\hfill \break
+\\
 Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites, significant information related to Security Intelligence can be found. Therefore it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
-
-What sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore, mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
+\hfill \break
+\\
+What sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment relevant for collecting security related data. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore, mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
+}
 \subsubsubsection{Implementation}
 \paragraph*{Twitter}
 \addcontentsline{toc}{paragraph}{Twitter}
 \paragraph*{Pastebin}
 \addcontentsline{toc}{paragraph}{Pastebin}
 \hfill \break
-"Pastebins" websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible "pastebins" sources (e.g fpaste.org, paste2.org, pastie.org\cite{pastebin-pastie}, paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
-
+\\
+\textit{Pastebins} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible \textit{pastebins} sources (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
+paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
+\hfill \break
+\\
 Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
-
+\hfill \break
+\\
 At this moment Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from unregistered users. The option available would be to list messages from registered users, though all information provides interest. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. 
-
-Search method for retrieving information using keywords uses third party software namely, "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
-
-To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+\hfill \break
+Search method for retrieving information using combination of keywords, from the \textit{pastebin} website, uses third party software namely, \textit{Google Custom Search}. Therefore, if one desires to obtain full database related to the keywords specified, it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
+\hfill \break
+\\
+To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called \textit{scrapy} \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
 \paragraph*{Phishtank}
 \paragraph*{Reddit}
 \addcontentsline{toc}{paragraph}{Reddit}
@@ -221,16 +290,22 @@ Reddit community comprises social websites and news sites. It contains over 5000
 \item /r/vrd/ \cite{r.rvd}
 
 \end{itemize}
-
+\hfill \break
+\\
 Reddit API\cite{reddit} provides a rich list of methods which are easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, \textit{after/before, limit, count} and \textit{show} \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
-
+\hfill \break
+\\
 All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case to /r/blackhat. 
+
 \begin{spverbatim}
 response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
 			.json?sort=new&limit=100')
 \end{spverbatim}
 \hfill \break
-Response variable will retrieve a file in json format, from which the title associated to the url, number of comments and score will be stored, because this information provides interest for further processing. Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database. 
+Response variable will retrieve a file in json format. From the provided file we will store the title associated to the url, number of comments and score, because this information provides interest for further processing. It is important to check the date to a corresponding message, as a message posted that has many votes but was posted long time ago might get a higher score in comparison to one recently posted and having lower score. 
+\hfill \break
+\\
+Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database. 
 
 \paragraph*{Trigger System}
 \addcontentsline{toc}{paragraph}{Trigger System}
@@ -238,7 +313,7 @@ Response variable will retrieve a file in json format, from which the title asso
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternatives}
-A strict method for deflating documents has been previously introduced. This subsection will outline as alternatives known processes for cleaning documents by removing stop words, stemming and recognizing part of speech with a further extension to TF-IDF alghorithm for determining the relevance and weights for the documents.
+An aggressive method for deflating documents has been previously introduced. This subsection will outline as alternatives known processes for cleaning documents by removing stop words, stemming and recognizing part of speech with a further extension to TF-IDF alghorithm for determining the relevance and weights for the documents.
 \paragraph*{NLTK}
 NLTK or Natural Language Toolkit ...
 
@@ -250,8 +325,8 @@ TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and 
 \\
 \\
 %Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
-For determining the most relevant documents, by defining query terms which are related to the known threats categories, these will be further processed by the algorithm and as a result a statistical list of the most significant documents will be obtained. This is an automated method for sorting document that are more appropriate to a specific queried subject, given on-topic keywords list.
-
+To determine the most relevant documents related to given keywords, first is required to  define query terms which are related to the known threats categories. These will be further processed by the algorithm and as a result a statistical list of the most significant documents will be obtained. This is an automated method for sorting document that are more appropriate to a specific queried subject, given on-topic keywords list.
+\newpage
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
 At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
@@ -335,13 +410,15 @@ itweetlikegirls  hilarious  kardashian  kim  aigbtbpmvv
 Observing the resulted clusters we can claim that the algorithm behaved well considering that it is an unsupervised method and the top frequent terms for Cluster 13, highlights the most recent attack in Paris. In the Cluster 15 which is totally unrelated to the previously mentioned attack, the incident with leaked celebrities photos is outlined.
 \paragraph*{Classification}
 SVM Algorithm 
+
 \section{Results}
 \subsection{Demo}
+\newpage
 \section{Conclusions}
 \newpage
 \section{Future Work}
 
-At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment model would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
+At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
 
 \newpage
 \section{Appendix}
