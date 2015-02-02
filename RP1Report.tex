@@ -181,34 +181,148 @@ This project will be carried out with the aid of Deloitte Risk Services, Netherl
 \parbox{\linewidth}{
 Most of the work is going to be carried out on end workstations (desktops, laptops, etc.). Depending on the amount of data collected, additional computational or storage resources might be required. In that case our assigned OS3 servers can be used. As for software requirements, there are several open software tools (Database Systems, IR Systems, Web Crawlers, etc.) that can help us carry out the work. For each component of the system that has to be implemented manually the appropriate programming languages as well as libraries are going to be selected. One example is the very strong Python NLP-toolkit.\cite{nltk} }
 \subsection{Proposed System}
+ 
 \subsubsection{General Outline (picture)}
 \subsubsection{Configuration}
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsection{Data Aggregation Module}
+This chapter describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
 \subsubsubsection{Specification}
+
+Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites, significant information related to Security Intelligence can be found. Therefore it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
+
+What sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four are considered at this moment mostly valuable. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following sites: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered fundamental for the reason that past activity revealed vulnerabilities found through posted messages.  Furthermore, mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
 \subsubsubsection{Implementation}
-\paragraph{Twitter}
-\paragraph{Pastebin}
-\paragraph{Phishtank}
-\paragraph{Reddit}
-\paragraph{Trigger System}
+\paragraph*{Twitter}
+\addcontentsline{toc}{paragraph}{Twitter}
+\paragraph*{Pastebin}
+\addcontentsline{toc}{paragraph}{Pastebin}
+\hfill \break
+"Pastebins" websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible "pastebins" sources (e.g fpaste.org, paste2.org, pastie.org\cite{pastebin-pastie}, paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
+
+Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
+Unfortunately, Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from all users, registered or not. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. Search method for retrieving information using keywords uses third party software namely, "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
+
+To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's archive page contains last pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+\paragraph*{Phishtank}
+\paragraph*{Reddit}
+\addcontentsline{toc}{paragraph}{Reddit}
+\hfill \break
+Reddit community comprises of social websites and news sites. It consists of over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
+\begin{itemize}
+\item /r/blackhat \cite{red-blackhat}
+\item r/malware \cite{r.malware}
+\item r/netsec \cite{r.netsec}
+\item r/pwned \cite{r.pwned}
+\item /r/vrd/ \cite{r.rvd}
+
+\end{itemize}
+
+Reddit API\cite{reddit} provides a rich list of methods and it is easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, after/before,limit, count and show \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
+
+All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case /r/blackhat. 
+\begin{spverbatim}
+response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
+			.json?sort=new&limit=100')
+\end{spverbatim}
+\hfill \break
+In response variable we will get a file in json format, from which we will store the title associated to the url,number of comments and score. Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database.
+
+\paragraph*{Trigger System}
+\addcontentsline{toc}{paragraph}{Trigger System}
 \subsubsection{Deflation/Warehousing/Filtering}
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternatives}
-\paragraph{NLTK}
-\paragraph{TF-IFD}
+\paragraph*{NLTK}
+\paragraph*{TF-IFD}
+\hfill \break
+TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words from that document and it will get a high score. But if it appears and in other documents it will not be as unique and will receive a lower score. 
+%Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
+TF-IDF algorithm can further be used in data mining algorithms like k-means.
 \subsubsection{Analytics and Mining}
+This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsection{Feedback and Assessment}
 \subsubsubsection{Specification}
 \paragraph{Data mining tasks}
+\begin{itemize}
+\item 
+Classification: Refers to the task of generalising known structures and applying them to new
+data. For example, an e-mail program might attempt to classify an e-mail as "legitimate" or as
+“spam”. Since this involves training of the algorithm before use, it might not be ideal for use in
+threat discovery. However, it can be very useful for providing feedback to the system and fine
+tuning it to be able to classify the documents for each threat category, acting together with the
+configuration step
+\item 
+Anomaly detection (Outlier/change/deviation detection): This task refers to identification of
+unusual data records that might imply unusual behaviour in the dataset. For example, in our
+use case, a first indication that something might be possibly wrong would be an exceptional
+mention of a company name within a certain period of time. The problem here is to determine
+what can be defined as exceptional. This of course is not possible without the use of old data
+so a certain threshold can be determined. Until sufficient amount of data has been gathered we
+can naively implement this by setting the thresholds manually. This operation is particularly
+popular in intrusion detection systems.
+\item 
+Association rule learning (Dependency modelling): This task refers to the search for
+relationships between variables. One example of this is the infamous beer and diapers story.
+This test requires no training set and can be performed on any structured set of data. In our
+use case this can help us determine trends between the occurrences of keywords, such as the
+name of a company together with the name of a name of an attack. The output of this test also
+contains metrics about the support (% of the documents supporting the association) as well as
+confidence (ratio of the support percentage of either part of each rule).
+\item 
+Clustering: Refers to the task of discovering groups and structures in the data that present
+some sort of similarity, without using known structures in the data. In our case this can help us
+determine new categories of documents that have not been predefined (remember the threat
+categorisation we mentioned in the beginning).
+\item
+Regression: This task attempts to find a function which models the data with the least error.
+This might not be directly applicable to our specific example but based on the experience
+gathered after a certain period of time that the system will be operated, we can attempt to
+design an analytic model using regression analysis techniques.
+\item
+Summarisation: This task aims to provide a more compact representation of the data set,
+including visualisation and report generation. In our case this applies to the creation of the
+alerts to be presented to the Security Analysts. The alerting will consist of a common format
+that will apply to automatically generated events that will be propagated to the appropriate
+parties. One proposed format could be the following:
+\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red,
+%backing_documents:\[1,3,4,6\]\}
+This presents the analyst with an event informing them about a security incident with a certain
+importance level. The way of determining the level of importance falls out of the scope of this
+document. Notice also the list of supporting documents resulting from different sources. At this
+point the analyst can go and inspect each one of this documents manually, assess the risk
+themselves and take the appropriate measures such as further informing the involved parties, or
+ignoring the alert.
+\item Attribute Important 
+\item etc.
+\end{itemize}
 \subsubsubsection{Implementation}
-\paragraph{Association Rule}
-\paragraph{Clustering}
-\paragraph{Classification}
+\paragraph*{Association Rule}
+\addcontentsline{toc}{paragraph}{Association Rule}
+\paragraph*{Clustering}
+\addcontentsline{toc}{paragraph}{Clustering}
+\hfill \break
+\\
+For clustering N collected documents from the database in K categories an option would be, by using K-means\cite{k-means} algorithm also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, in which the information will be divided into. Assign each observation point/word to the closest centroid, where each collection of points/words form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead as well to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation will consider random cluster number that will be feasible chosen compared to the amount of data.
+\\
+\\
+In order to implement the proposed algorithm an open  source scikit- learn \cite{sklearn} tool was used for data analysing that provides a library called SKlearn which can be integrated in Python environment. Following an example provided in a tutorial from the sklearn website, which attemps to categorize 20 news group\cite{k-means-20news}, we adapted it to use the data provided in the database and show as well what are the documents that are related to each other in a cluster.  In this case we applied the algorithm on over 600000 twitter messages and the expected outcome was to categories this messages in 20 groups. From the clusters obtained two showed big interest as it presents real events that happened in the past weeks.
+\begin{spverbatim}
+Cluster 13:  paris  charlie  hebdo  attack  http  mayor  nypd  
+rt  victims  french  honor  visited  nyc  france  terror  muslim 
+ bolsters  security  jewish  cover
+Cluster 15:  photos  leaked  upton  kate  jennifer  lawrence 
+ nude  victoria  justice  megan  fox  http  seen  rt  hoeuu2dubr  
+itweetlikegirls  hilarious  kardashian  kim  aigbtbpmvv
+\end{spverbatim}
+\hfill \break
+Observing the resulted clusters we can claim that the algorithm behaved well considering that it is an unsupervised method and the top frequent terms describe in Cluster 13 the most recent attack in Paris, while the Cluster 15 which is totally unrelated to this attack outlines the incident with the leaked photos of celebrities.
+\paragraph*{Classification}
 \section{Results}
 \subsection{Demo}
 \section{Conclusions}
