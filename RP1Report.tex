@@ -202,14 +202,17 @@ What sources can be considered as reliable? In order to answer this question ins
 "Pastebins" websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible "pastebins" sources (e.g fpaste.org, paste2.org, pastie.org\cite{pastebin-pastie}, paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
 
 Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
-Unfortunately, Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from all users, registered or not. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. Search method for retrieving information using keywords uses third party software namely, "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
 
-To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's archive page contains last pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+At this moment Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from unregistered users. The option available would be to list messages from registered users, though all information provides interest. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. 
+
+Search method for retrieving information using keywords uses third party software namely, "Google Custom Search". Therefore, if one desires to obtain full database it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
+
+To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
 \paragraph*{Phishtank}
 \paragraph*{Reddit}
 \addcontentsline{toc}{paragraph}{Reddit}
 \hfill \break
-Reddit community comprises of social websites and news sites. It consists of over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
+Reddit community comprises social websites and news sites. It contains over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
 \begin{itemize}
 \item /r/blackhat \cite{red-blackhat}
 \item r/malware \cite{r.malware}
@@ -219,15 +222,15 @@ Reddit community comprises of social websites and news sites. It consists of ove
 
 \end{itemize}
 
-Reddit API\cite{reddit} provides a rich list of methods and it is easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, after/before,limit, count and show \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
+Reddit API\cite{reddit} provides a rich list of methods which are easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, \textit{after/before, limit, count} and \textit{show} \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
 
-All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case /r/blackhat. 
+All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case to /r/blackhat. 
 \begin{spverbatim}
 response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
 			.json?sort=new&limit=100')
 \end{spverbatim}
 \hfill \break
-In response variable we will get a file in json format, from which we will store the title associated to the url,number of comments and score. Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database.
+Response variable will retrieve a file in json format, from which the title associated to the url, number of comments and score will be stored, because this information provides interest for further processing. Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database. 
 
 \paragraph*{Trigger System}
 \addcontentsline{toc}{paragraph}{Trigger System}
@@ -235,12 +238,19 @@ In response variable we will get a file in json format, from which we will store
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternatives}
+A strict method for deflating documents has been previously introduced. This subsection will outline as alternatives known processes for cleaning documents by removing stop words, stemming and recognizing part of speech with a further extension to TF-IDF alghorithm for determining the relevance and weights for the documents.
 \paragraph*{NLTK}
+NLTK or Natural Language Toolkit ...
+
 \paragraph*{TF-IFD}
 \hfill \break
+\\
 TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words from that document and it will get a high score. But if it appears and in other documents it will not be as unique and will receive a lower score. 
+\\
+\\
 %Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
-TF-IDF algorithm can further be used in data mining algorithms like k-means.
+For determining the most relevant documents, by defining query terms which are related to the known threats categories, these will be further processed by the algorithm and as a result a statistical list of the most significant documents will be obtained. This is an automated method for sorting document that are more appropriate to a specific queried subject, given on-topic keywords list.
+
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
 At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
@@ -306,7 +316,7 @@ ignoring the alert.
 \addcontentsline{toc}{paragraph}{Association Rule}
 \paragraph*{Clustering}
 \addcontentsline{toc}{paragraph}{Clustering}
-\hfill \break
+\hfill \break 
 \\
 For clustering N collected documents from the database in K categories an option would be, by using K-means\cite{k-means} algorithm also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, in which the information will be divided into. Assign each observation point/word to the closest centroid, where each collection of points/words form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead as well to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation will consider random cluster number that will be feasible chosen compared to the amount of data.
 \\
@@ -326,7 +336,11 @@ Observing the resulted clusters we can claim that the algorithm behaved well con
 \section{Results}
 \subsection{Demo}
 \section{Conclusions}
+
 \section{Future Work}
+
+At this moment we have a system 
+
 \newpage
 \section{Appendix}
 \newpage
