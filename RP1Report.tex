@@ -187,7 +187,10 @@ Most of the work is going to be carried out on end workstations (desktops, lapto
 \subsubsection{General Outline (picture)}
 \subsubsection{Configuration}
 \subsubsubsection{Specification}
-To determine what keywords are relevant for retrieving specific information from database, threat types will be outlined. At this point depends on what category of possible attacks one wants to be alerted on. Assuming that our target are all possible general attacks the most common and popular \cite{owasp} will be depicted and an associated list of keywords that can be later extended provided. To construct and select the relevant keywords, previously discussed news and messages related to specific threat were analysed \cite{list-2015-attacks}. 
+
+It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack), for each company we should make an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company. Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
+
+Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.
 \begin{center} 
 \begin{longtable}{|l | l|}
 \hline
@@ -209,36 +212,12 @@ SQL Injection 	& plain text password\\
 				& leaked passwords \\
 				
 \hline
- Trojan horse programs 	& (can change configuration files,\\
-  						& install different programs \\
-  						& without one knowing it) \\
-
-&social engineering\\
-&back door programs\\
-\cline{2-2}
-\hline
-Malicious spyware &(spying on victims)\\
-\hline
 Account hijacking & account hacked \\
 				  & account images changed hack \\
 				  & take control account \\
 				  & account add/remove content \\ 			  
 \hline
-Back door and remote &\\
-administration programs & ( can get full control and access on Windows\\
 
-& : BackOrifice, Netbus, and SubSeven) \\ 
-\hline
-Mobile code & (Java/JavaScript/ActiveX) \\
-\hline
-Spoofing & lla \\
-\hline
-Email borne viruses & (viruses in attachments) \\
-\hline
-Cross-site scripting & la \\
-\hline
-Hidden file extension & la \\
-\hline
 \end{longtable}
 \end{center}
 \subsubsubsection{Implementation}
@@ -260,6 +239,7 @@ What sources can be considered as reliable? In order to answer this question ins
 \subsubsubsection{Implementation}
 \paragraph*{Twitter}
 \addcontentsline{toc}{paragraph}{Twitter}
+\newpage
 \paragraph*{Pastebin}
 \addcontentsline{toc}{paragraph}{Pastebin}
 \hfill \break
@@ -271,16 +251,19 @@ paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} wi
 Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
 \hfill \break
 \\
-At this moment Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from unregistered users. The option available would be to list messages from registered users, though all information provides interest. This makes the crawling module challenging but not impossible. A method will be introduced to overcome this limitation. 
+At this moment Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from unregistered users. The only option available now, would be to list messages from registered users, however all information provides interest. This makes the crawling module challenging but not impossible. A method will be introduced to surpass this limitation. 
 \hfill \break
+\\
 Search method for retrieving information using combination of keywords, from the \textit{pastebin} website, uses third party software namely, \textit{Google Custom Search}. Therefore, if one desires to obtain full database related to the keywords specified, it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
 \hfill \break
 \\
-To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called \textit{scrapy} \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+To overcome API extension limitation and mine all new pastes that arrive in real time a web crawler module was implemented. Python offers an open source framework called \textit{scrapy} \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
 \paragraph*{Phishtank}
+\newpage
 \paragraph*{Reddit}
 \addcontentsline{toc}{paragraph}{Reddit}
 \hfill \break
+\\
 Reddit community comprises social websites and news sites. It contains over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
 \begin{itemize}
 \item /r/blackhat \cite{red-blackhat}
@@ -394,7 +377,10 @@ ignoring the alert.
 \addcontentsline{toc}{paragraph}{Clustering}
 \hfill \break 
 \\
-For clustering N collected documents from the database in K categories an option would be using K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, in which the information will be divided into. Assign each observation point/word to the closest centroid, where each collection of points/words form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation will consider random cluster number that will be feasible chosen compared to the amount of data.
+Clustering task is important in automating the process of finding new type of attacks or vulnerabilities that might occur in a specific period of time. The proposed method will categorize related documents that belong to a certain cluster and the most frequent related keywords associated to the specific cluster.
+\\
+\\
+For clustering N collected documents from the database in K categories an option would be using K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, chosen randomly, in which the information will be divided into. Assign each observation point(word) to the closest centroid, where each collection of points(words) form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation, and we will consider random cluster number that will be feasible chosen compared to the amount of data.
 \\
 \\
 In order to implement the proposed algorithm an open  source scikit- learn \cite{sklearn} tool was used for data analysing that provides a library called SKlearn which can be integrated in Python environment. Following an example provided in a tutorial from the sklearn website, which attemps to categorize 20 news group\cite{k-means-20news}, we adapted it to use the data provided in the database and show what are the documents that are related to each other in a cluster.  In this case we applied the algorithm on over 600000 twitter messages and the expected outcome was to categories this messages in 20 groups. From the clusters obtained two showed big interest as it presents real events that happened in the past weeks.
