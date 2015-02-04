@@ -25,6 +25,9 @@
 \renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}}
 \renewcommand\thesubparagraph{\theparagraph.\arabic{subparagraph}}
 
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
 \titleformat{\subsubsubsection}
   {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
 \titlespacing*{\subsubsubsection}
@@ -49,8 +52,8 @@
 \@addtoreset{subsubsubsection}{subsection}
 \@addtoreset{paragraph}{subsubsubsection}
 \makeatother
-\setcounter{secnumdepth}{6}
-\setcounter{tocdepth}{6}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 %-----------------------------------------------%
 
 \usepackage{array}
@@ -174,16 +177,19 @@ There is a lot of literature around the field of Data Mining and more recently W
 \subsection{Ethical implications}
 %\addcontentsline{toc}{section}{Ethical implications}
 The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
-
+\newpage
 \section{Methodology}
 WRITE SMALL INTRO HERE
-This project was carried out in collaboration with Deloitte Risk Services, Netherlands. The first step is to get acquainted with the Cyber-Risk Services and Data Analytics teams of the company and their people. When directed to the appropriate experts on each respective field (Security, Data Analytics, NLP, etc.) we will be working closely with them to collect the needed knowledge and expertise in order to reduce an effective risk assessment model. This will be made possible by applying Data Mining techniques that are already in use in other fields (economic risk assessment, marketing, etc.) on security issues. In parallel we will start designing and implementing the Information Retrieval part of the system. Once the appropriate amount of Data has been gathered from public sources we will apply the appropriate techniques that have been proposed to us on the collected dataset in order to design the risk assessment model. The next step will be to apply the designed model on new data and evaluate the effectiveness of the model. Lastly, based on the gathered experience and knowledge we will try to design a modular and extensible system architecture that deploys the designed techniques. Based on that design we will attempt to implement a simple proof of concept that will help us define the resource requirements and operational cost of such a system. 
+This project was carried out in collaboration with Deloitte Risk Services, Netherlands. We first got acquainted with the Cyber-Risk Services team and were introduced to the effort already carried out towards the development of a Cyber Threat Intelligence (CTI) system.
+
+
+ When directed to the appropriate experts on each respective field (Security, Data Analytics, NLP, etc.) we will be working closely with them to collect the needed knowledge and expertise in order to reduce an effective risk assessment model. This will be made possible by applying Data Mining techniques that are already in use in other fields (economic risk assessment, marketing, etc.) on security issues. In parallel we will start designing and implementing the Information Retrieval part of the system. Once the appropriate amount of Data has been gathered from public sources we will apply the appropriate techniques that have been proposed to us on the collected dataset in order to design the risk assessment model. The next step will be to apply the designed model on new data and evaluate the effectiveness of the model. Lastly, based on the gathered experience and knowledge we will try to design a modular and extensible system architecture that deploys the designed techniques. Based on that design we will attempt to implement a simple proof of concept that will help us define the resource requirements and operational cost of such a system. 
 
 \subsection{Hardware \& Software Used}
 \parbox{\linewidth}{
 Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used (oxford.studlab.os3.nl).\\ 
 For the storage of the raw well as the processed data we used MongoDB, a free and open source NoSQL database system.\\ 
-All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrap}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sclera}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.}
+All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrap}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.}
 
 \subsection{Proposed System}
 As an outcome of our research we propose a system that will be able to aggregate information from the public web which it will preprocess and analyse in order to gather Intelligence regarding IT Security incidents and raise real time alerts. 
@@ -208,16 +214,28 @@ We distinguish five different steps in the system each one of them corresponding
 
 \noindent Having introduced the last step it becomes apparent that the system operates as a feedback loop since the system returns to the configuration step after assessment, in order to achieve better accuracy. \\
 
-\noindent The previously described steps can be captured in the following schematic:\\[0.5cm]
+\noindent The previously described steps can be captured in the schematic presented on Figure~\ref{fig:arch}\\
+\noindent Each part of the system is described in detail in the following sections. All steps taken towards building an initial proof of concept for this system are described as well. \\
 
-\begin{centering}
-	\includegraphics[scale=0.3]{./images/Architecture.png}
-\end{centering}
+\begin{figure}[h]
+    \centering
+   \includegraphics[scale=0.33]{./images/Architecture.png}
+    \caption{System Architecture overview}
+    \label{fig:arch}
+\end{figure}	
 
-\noindent Each part of the system is described in detail in the following sections. All steps taken towards building an initial proof of concept for this system are described as well. 
-
+\newpage
 \subsubsection{Configuration}
+The system needs to be as versatile as possible. To that aim each separate part of the system must be able to read a set configuration options that will be inserted into the system through a common control portal. These configuration sets can include (but not be limited to) Data Mining criteria, filtering thresholds, execution intervals for the distinct modules, search keywords, etc. 
+
 \subsubsubsection{Specification}
+The most crucial configuration set to the operation of the system is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. \\
+
+The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. \\
+
+Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.\\
+General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
+
 \subsubsubsection{Implementation}
 \subsubsection{Data Aggregation Module}
 This chapter describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
@@ -267,7 +285,11 @@ Response variable will retrieve a file in json format, from which the title asso
 
 \paragraph*{Trigger System}
 \addcontentsline{toc}{paragraph}{Trigger System}
-\subsubsection{Deflation/Warehousing/Filtering}
+
+\subsubsection{Preprocessing \& Filtering}
+The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
+
+
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternatives}
@@ -286,7 +308,7 @@ For determining the most relevant documents, by defining query terms which are r
 
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
-At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsection{Feedback and Assessment}
@@ -315,7 +337,7 @@ relationships between variables. One example of this is the infamous beer and di
 This test requires no training set and can be performed on any structured set of data. In our
 use case this can help us determine trends between the occurrences of keywords, such as the
 name of a company together with the name of a name of an attack. The output of this test also
-contains metrics about the support (% of the documents supporting the association) as well as
+contains metrics about the support (percentage of the documents supporting the association) as well as
 confidence (ratio of the support percentage of either part of each rule).
 \item 
 Clustering: Refers to the task of discovering groups and structures in the data that present
@@ -333,8 +355,7 @@ including visualisation and report generation. In our case this applies to the c
 alerts to be presented to the Security Analysts. The alerting will consist of a common format
 that will apply to automatically generated events that will be propagated to the appropriate
 parties. One proposed format could be the following:
-\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red,
-%backing_documents:\[1,3,4,6\]\}
+%\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
 This presents the analyst with an event informing them about a security incident with a certain
 importance level. The way of determining the level of importance falls out of the scope of this
 document. Notice also the list of supporting documents resulting from different sources. At this
