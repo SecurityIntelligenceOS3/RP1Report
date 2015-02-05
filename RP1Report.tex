@@ -25,6 +25,9 @@
 \renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}}
 \renewcommand\thesubparagraph{\theparagraph.\arabic{subparagraph}}
 
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
 \titleformat{\subsubsubsection}
   {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
 \titlespacing*{\subsubsubsection}
@@ -49,8 +52,8 @@
 \@addtoreset{subsubsubsection}{subsection}
 \@addtoreset{paragraph}{subsubsubsection}
 \makeatother
-\setcounter{secnumdepth}{6}
-\setcounter{tocdepth}{6}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 %-----------------------------------------------%
 
 \usepackage{array}
@@ -177,17 +180,67 @@ The main part of this research comprises of exploring current techniques and the
 
 \newpage
 \section{Methodology}
-This project will be carried out with the aid of Deloitte Risk Services, Netherlands. The first step is to get acquainted with the Cyber-Risk Services and Data Analytics teams of the company and their people. When directed to the appropriate experts on each respective field (Security, Data Analytics, NLP, etc.) we will be working closely with them to collect the needed knowledge and expertise in order to reduce an effective risk assessment model. This will be made possible by applying Data Mining techniques that are already in use in other fields (economic risk assessment, marketing, etc.) on security issues. In parallel we will start designing and implementing the Information Retrieval part of the system. Once the appropriate amount of Data has been gathered from public sources we will apply the appropriate techniques that have been proposed to us on the collected dataset in order to design the risk assessment model. The next step will be to apply the designed model on new data and evaluate the effectiveness of the model. Lastly, based on the gathered experience and knowledge we will try to design a modular and extensible system architecture that deploys the designed techniques. Based on that design we will attempt to implement a simple proof of concept that will help us define the resource requirements and operational cost of such a system. 
-\subsection{Installation requirements}
+This project was carried out in collaboration with Deloitte Risk Services, Netherlands. We first got acquainted with the Cyber-Risk Services team and were introduced to the effort already carried out towards the development of a Cyber Threat Intelligence (CTI) system. \\
+Based on the expert knowledge collected we defined the parts needed for complementing the portal developed by Deloitte, in order to derive a generalised System Architecture. The next step was to start developing the building blocks of the System to a level that would allow the creation of a functional Proof of Concept. We first developed Data Aggregators for four distinct data sources. We then looked into methods for determining the interesting parts of information as well as prepossessing the raw data into a format suitable for further analysis. After that we researched various Data Mining techniques and algorithms and realised and tested some of them against a realistic data sample. \\
+The last steps were to evaluate our results, put together a limited proof of concept and proposed system extensions and future work. \\
+The above will be described in detail in the following sections. 
+
+\subsection{Hardware \& Software Used}
 \parbox{\linewidth}{
 
-Most of the work is going to be carried out on end workstations (desktops, laptops, etc.). Depending on the amount of data collected, additional computational or storage resources might be required. In that case our assigned OS3 servers can be used. As for software requirements, there are several open software tools (Database Systems, IR Systems, Web Crawlers, etc.) that can help us carry out the work. For each component of the system that has to be implemented manually the appropriate programming languages as well as libraries are going to be selected. One example is the very strong Python NLP-toolkit.\cite{nltk} }
+Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used (oxford.studlab.os3.nl).\\ 
+For the storage of the raw well as the processed data we used MongoDB, a free and open source NoSQL database system.\\ 
+All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrap}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.}
+
+
 \subsection{Proposed System}
+As an outcome of our research we propose a system that will be able to aggregate information from the public web which it will preprocess and analyse in order to gather Intelligence regarding IT Security incidents and raise real time alerts. 
  
-\subsubsection{General Outline (picture)}
+\subsubsection{General Outline}
+The proposed system will be modular in the sense that there will be standalone software processes responsible for a very specific task. The output of each module feeds the next module in succession thus forming a pipeline of modules that compose the whole system. \\
+Moreover we propose the integration of the system under a central Control Portal that will be responsible for the initial configuration and overview of the status of each Software module.\\
+We distinguish five different steps in the system each one of them corresponding to a different software module. These are:
+
+\begin{enumerate}
+	\item \textbf{Configuration}\\ 
+	The System Operator defines a set of configuration options (keywords, data sources, thresholds etc.) that will be propagated to each separate module.
+	\item \textbf{Data Aggregation}\\
+	The agents belonging to the Aggregator module collect raw data from their designated sources. At this point a first structure is given to the raw data collected before they are stored to the corresponding database. 
+	\item \textbf{Data Deflation \& Filtering}\\
+	A common format is given to all the data collected from different sources. We have to be able to distinguish the interesting from the uninteresting documents so at this point some sort of scoring system is applied for each document collected. The documents that have been distinguished are then inserted into the warehouse in a format suitable for further processing.
+	\item \textbf{Analytics \& Alerting}\\
+	A series of Data Mining operations is run against the collected dataset to extract previously unnoticed patterns. Based on the outcome, and after the application of certain predefined criteria, the corresponding module will have to be able to raise alerts and notify the appropriate parties for any probable security incident in progress.
+	\item \textbf{Feedback \& Reconfiguration}\\
+	A Security Analyst checks the raised alerts and assesses the real risk. The divergence from the estimated risk is calculated and according to that a set of readjustments is propagated to the configurable parts of the system.
+\end{enumerate}
+
+\noindent Having introduced the last step it becomes apparent that the system operates as a feedback loop since the system returns to the configuration step after assessment, in order to achieve better accuracy. \\
+
+\noindent The previously described steps can be captured in the schematic presented on Figure~\ref{fig:arch}\\
+\noindent Each part of the system is described in detail in the following sections. All steps taken towards building an initial proof of concept for this system are described as well. \\
+
+\begin{figure}[h]
+    \centering
+   \includegraphics[scale=0.33]{./images/Architecture.png}
+    \caption{System Architecture overview}
+    \label{fig:arch}
+\end{figure}	
+
+\newpage
 \subsubsection{Configuration}
+The system needs to be as versatile as possible. To that aim each separate part of the system must be able to read a set configuration options that will be inserted into the system through a common control portal. These configuration sets can include (but not be limited to) Data Mining criteria, filtering thresholds, execution intervals for the distinct modules, search keywords, etc. 
+
 \subsubsubsection{Specification}
 
+
+The most crucial configuration set to the operation of the system is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. \\
+
+The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. \\
+
+Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.\\
+General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
+%% GIVE EXAMPLES OF THE MODEL FROM THE PDF
+%% CHECK AGAIN
 It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we should make an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company. Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
 
 Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.
@@ -221,6 +274,10 @@ Account hijacking & account hacked \\
 \end{longtable}
 \end{center}
 \subsubsubsection{Implementation}
+There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the afformentioned CTI portal that will act as the configuration module. 
+
+
+
 \subsubsection{Data Aggregation Module}
 \parbox{\linewidth}{
 \hfill \break
@@ -239,7 +296,26 @@ What sources can be considered as reliable? In order to answer this question ins
 \subsubsubsection{Implementation}
 \paragraph*{Twitter}
 \addcontentsline{toc}{paragraph}{Twitter}
-\newpage
+\hfill \break
+Twitter exposes both Streaming and RESTful APIs. While the RESTful approach requires separate HTTP connections for each request to the API, Streaming requires keeping a persistent HTTP connection open \cite{twitteroverview}.\\
+
+For our example we selected the Streaming API approach which provides developers with low latency access to Twitter’s global stream of Tweet data \cite{twitteroverview}.\\
+
+Connecting to the Streaming API requires to provide with authentication details via an OAuth signature. To generate this signature the user has to register their application and generate four parameters named Consumer key, Consumer secret, Access Token and Access token secret.\\
+
+One particular endpoint, provided by the Public Stream \cite{twitterpublic}, was used, namely "POST statuses / filter". This endpoint can be reached via the following URL:\url{https://stream.twitter.com/1.1/statuses/filter.json}.\\
+
+Status filtering allows the user to retrieve tweets that contain certain keywords (up to 400 keywords can be specified), follow specific Twitter users (up to 5000 different users) or retrieve tweets originating from a specific location \cite{twitterfilter}.\\
+
+In our demonstration we only used the keyword (track) option in order to track specific tweets containing security related words (e.g. attack, hack, vulnerability, etc.)\\
+
+The data returned from this particular API call are JSON fomated.\\
+
+The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.\\ This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.\\
+
+The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
+
+
 \paragraph*{Pastebin}
 \addcontentsline{toc}{paragraph}{Pastebin}
 \hfill \break
@@ -259,7 +335,16 @@ Search method for retrieving information using combination of keywords, from the
 \\
 To overcome API extension limitation and mine all new pastes that arrive in real time a web crawler module was implemented. Python offers an open source framework called \textit{scrapy} \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
 \paragraph*{Phishtank}
-\newpage
+\hfill \break
+Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
+
+Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits. \\
+
+The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. \\
+
+Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
+ 
+
 \paragraph*{Reddit}
 \addcontentsline{toc}{paragraph}{Reddit}
 \hfill \break
@@ -292,7 +377,11 @@ Python provides an open json library for processing this type of files. All scra
 
 \paragraph*{Trigger System}
 \addcontentsline{toc}{paragraph}{Trigger System}
-\subsubsection{Deflation/Warehousing/Filtering}
+
+\subsubsection{Preprocessing \& Filtering}
+The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
+
+
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternatives}
@@ -312,7 +401,7 @@ To determine the most relevant documents related to given keywords, first is req
 \newpage
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
-At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or knowledge discovery from database(KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
+At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
 \subsubsection{Feedback and Assessment}
@@ -341,7 +430,7 @@ relationships between variables. One example of this is the infamous beer and di
 This test requires no training set and can be performed on any structured set of data. In our
 use case this can help us determine trends between the occurrences of keywords, such as the
 name of a company together with the name of a name of an attack. The output of this test also
-contains metrics about the support (% of the documents supporting the association) as well as
+contains metrics about the support (percentage of the documents supporting the association) as well as
 confidence (ratio of the support percentage of either part of each rule).
 \item 
 Clustering: Refers to the task of discovering groups and structures in the data that present
@@ -359,8 +448,7 @@ including visualisation and report generation. In our case this applies to the c
 alerts to be presented to the Security Analysts. The alerting will consist of a common format
 that will apply to automatically generated events that will be propagated to the appropriate
 parties. One proposed format could be the following:
-\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red,
-%backing_documents:\[1,3,4,6\]\}
+%\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
 This presents the analyst with an event informing them about a security incident with a certain
 importance level. The way of determining the level of importance falls out of the scope of this
 document. Notice also the list of supporting documents resulting from different sources. At this
