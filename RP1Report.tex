@@ -53,7 +53,7 @@
 \@addtoreset{paragraph}{subsubsubsection}
 \makeatother
 \setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+\setcounter{tocdepth}{5}
 %-----------------------------------------------%
 
 \usepackage{array}
@@ -242,9 +242,12 @@ General sources are much more unpredictable and unstructured. The data collected
 
 %% GIVE EXAMPLES OF THE MODEL FROM THE PDF
 %% CHECK AGAIN
+\paragraph{Keyword definition}
 It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we should make an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company. Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
 
-Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.
+Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.\\
+
+
 \begin{center} 
 \begin{longtable}{|l | l|}
 \hline
@@ -274,29 +277,27 @@ Account hijacking & account hacked \\
 
 \end{longtable}
 \end{center}
+\paragraph{Source Definition}
+\hfill \break \\
+Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. \\
+
+The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The impotance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.\\
+Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
+
 \subsubsubsection{Implementation}
 There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the afformentioned CTI portal that will act as the configuration module. 
 
 
+\subsubsection{Data Aggregation}
+After the desired configuration options have been submitted, the  system can start its operation by collecing raw data from the various speficied sources. Since we are dealing with more or less unstructured data, some first form of structure must be given during this step.
 
-\subsubsection{Data Aggregation Module}
-\parbox{\linewidth}{
-\hfill \break
-\\
-This section describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
-}
-\subsubsubsection{Specifications}
-\parbox{\linewidth}{
-\hfill \break
-\\
-Discovering real time threats with a plausible margin of error, became a challenging task as Internet provides an enormous database with random messages and information. Among these sites, significant information related to Security Intelligence can be found. Therefore it is important to define reliable sources that being monitored can provide significant valuable data for detecting future or present possible attacks. Special attention has to be provided in establishing which are the optimum sources that will provide the seeking information. 
-\hfill \break
-\\
-What sources can be considered as reliable? In order to answer this question inside research has been given by experts. From a company perspective it is important to have an overview over all general possible attacks or client specific. Among all the possible feed sources, four were recommended at this moment to collect security related data. Other sources that provide RSS feeds or IRC channels will not be investigated due to time limitations and company requirements. This research will primarily focus on the following suggested websites suite: Phishtank, Pastebin, Twitter and Reddit. Mainly, these are considered important for the reason that past activity revealed vulnerabilities found through posted messages\cite{list-2015-attacks}.  Furthermore, mentioned sources will be analysed in particular and be judged by the relevance of the subjects involved in discussion. 
-}
+
+\subsubsubsection{Specification}
+
 \subsubsubsection{Implementation}
-\paragraph*{Twitter}
-\addcontentsline{toc}{paragraph}{Twitter}
+
+
+\paragraph{Twitter}
 \hfill \break
 Twitter exposes both Streaming and RESTful APIs. While the RESTful approach requires separate HTTP connections for each request to the API, Streaming requires keeping a persistent HTTP connection open \cite{twitteroverview}.\\
 
@@ -316,25 +317,29 @@ The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}
 
 The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
 
-
+\newpage
 \paragraph*{Pastebin}
 \addcontentsline{toc}{paragraph}{Pastebin}
 \hfill \break
 \\
-\textit{Pastebins} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share real time text or code snippets. It attracted many users during past years including cybercriminals like malware writers\cite{pastebin-magazine}. The enormous flow of information include from database dumps containing e-mails and passwords to harmful backdoor programs. At a deeper examination of these public pasted messages possible future attacks can be determined. From all possible \textit{pastebins} sources (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
-paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} will be further inspected and monitored.
+\textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.\\
+\hfill \break
+From all possible \textit{pastebins} (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
+paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} has been selected to be further inspected.
 \hfill \break
 \\
-Pastebin API offers different options for developers, more specifically, creating new pastes, listing trending pastes and pastes from a particular user. This extensions can be used once one obtains the unique Developer API Key. 
+Pastebin exposes an API that offers different options for developers. More specifically these include creating new pastes, listing trending pastes or the posts of a particular user. The above functionallities can be used once one obtains a unique Developer API Key. 
 \hfill \break
 \\
-At this moment Pastebin API \cite{pastebin} does not offer complete information retrieval option for listing all new messages that arrive from unregistered users. The only option available now, would be to list messages from registered users, however all information provides interest. This makes the crawling module challenging but not impossible. A method will be introduced to surpass this limitation. 
+At this moment Pastebin API \cite{pastebin} does not offer any option for listing all new messages posted by unregistered users. The only option available, is to list the posts of a specific registered user. However, any information posted might be of potential interest. 
+This makes our work rather challenging but not impossible.  
 \hfill \break
 \\
-Search method for retrieving information using combination of keywords, from the \textit{pastebin} website, uses third party software namely, \textit{Google Custom Search}. Therefore, if one desires to obtain full database related to the keywords specified, it would have to use Google's API. Free users account will be limited to 1000 pastes per day. 
+One could possibly use the search method provided by \textit{Pastebin.com} for retrieving posts containing a combination of keywords.
+This functionality, however, makes use of \textit{Google Custom Search}. Therefore, if one desires to retrieve all posts related to certain specified keywords, they would have to use the Google custom search API. This, however, limits free users to 1000 searches per day. 
 \hfill \break
 \\
-To overcome API extension limitation and mine all new pastes that arrive in real time a web crawler module was implemented. Python offers an open source framework called \textit{scrapy} \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
+To overcome the above limitations and collect all new pastes that arrive, a web crawler module was implemented. \textit{Scrapy} \cite{scrapy}, an open source framework for building extensible webcrawlers was used, integrated into a Python script. Pastebin's \texttt{Archive} page contains all pastes posted during the last 10 minutes. For that reason, we will crawl and fetch the contents of this page each 10 minutes. Not all data from the page provides interest this is why we will scrape the html and keep only the information that is relevant for further examination. This includes the url, the paste, the posting date and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse these nodes and extract only the raw paste text. Once all this data has been gathered, it will be stored in the database.
 \paragraph*{Phishtank}
 \hfill \break
 Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
@@ -345,39 +350,41 @@ The aggregator code simply downloads the whole database from the following url \
 
 Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
  
-
-\paragraph*{Reddit}
-\addcontentsline{toc}{paragraph}{Reddit}
+\paragraph{Reddit}
 \hfill \break
 \\
-Reddit community comprises social websites and news sites. It contains over 5000 channels called "subreddits" which belong to different categories. This research will mine Reddit \cite{reddit} data from the following branches:
+The Reddit community comprises of social media and news sites. It contains over 5000 channels called "subreddits" which belong to different categories. In this project we will collect Reddit \cite{reddit} data originating from the following subreddits:
 \begin{itemize}
-\item /r/blackhat \cite{red-blackhat}
-\item r/malware \cite{r.malware}
-\item r/netsec \cite{r.netsec}
-\item r/pwned \cite{r.pwned}
+\item /r/blackhat \cite{r.blackhat}
+\item /r/malware \cite{r.malware}
+\item /r/netsec \cite{r.netsec}
+\item /r/pwned \cite{r.pwned}
 \item /r/vrd/ \cite{r.rvd}
 
 \end{itemize}
 \hfill \break
 \\
-Reddit API\cite{reddit} provides a rich list of methods which are easy to use. For listing new, top, controversial etc. messages is sufficient to add "/" to the subreddit one wants to obtain information. Endpoints can be used to filter and sort posts namely, \textit{after/before, limit, count} and \textit{show} \cite{reddit}. This parameters will be later used in retrieving lists of messages in json format. 
+Although the Reddit API \cite{reddit} provides a rich list of methods, we have chosen a few of them for the purposes of this project.\\
+\hfill \break
+In order for a user to list new, top, controversial, etc. messages they would just have to add "/" and the name of the operation they want to perform to the end of the subreddit url in question. The user can provide additional parameters in order to filter, sort, and limit the number of posts retrieved. 
 \hfill \break
 \\
-All ingredients for implementing a retrieval agent for Reddit are supplied by its API. The only part we need to do is to filter and obtain data that further investigated and processed can help defining the relevance of this information. First a connection needs to be opened to the the targeted subreddit, in this case to /r/blackhat. 
+All ingredients needed for implementing an aggregation agent for Reddit are supplied by the API. The only part we need to add is some filtering capabilities that will allow us to keep the parts of the information that can help with defining the relevance of each document.
+\hfill \break
+\\
+First a connection needs to be opened to the the targeted subreddit, for example /r/blackhat. This is what the following line of code does:
 
 \begin{spverbatim}
 response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
 			.json?sort=new&limit=100')
 \end{spverbatim}
 \hfill \break
-Response variable will retrieve a file in json format. From the provided file we will store the title associated to the url, number of comments and score, because this information provides interest for further processing. It is important to check the date to a corresponding message, as a message posted that has many votes but was posted long time ago might get a higher score in comparison to one recently posted and having lower score. 
+\\
+The response will be a JSON formated string. From all the fields in the structure we will only store the title, the number of comments and score. It is important to also store the date of each retrieved message, in order to monitor its voting trends within a specific time period.
 \hfill \break
 \\
-Python provides an open json library for processing this type of files. All scraped Reddit data will be stored in mongoDB database. 
+All the collected data are stored in the database. 
 
-\paragraph*{Trigger System}
-\addcontentsline{toc}{paragraph}{Trigger System}
 
 \subsubsection{Preprocessing \& Filtering}
 The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
@@ -385,20 +392,20 @@ The documents collected from all the public sources must be given a common forma
 
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
-\subsubsubsection{Alternatives}
-An aggressive method for deflating documents has been previously introduced. This subsection will outline as alternatives known processes for cleaning documents by removing stop words, stemming and recognizing part of speech with a further extension to TF-IDF alghorithm for determining the relevance and weights for the documents.
-\paragraph*{NLTK}
+\subsubsubsection{Alternative Approaches}
+Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
+\paragraph{Natural Language Processing}
 NLTK or Natural Language Toolkit ...
 
-\paragraph*{TF-IFD}
-\addcontentsline{toc}{paragraph}{TF-IFD}
+%removing stop words, stemming and recognizing part of speech with a further
+
+\paragraph{TF-IFD}
 \hfill \break
 \\
-TF-IDF \cite{tf-idf} stands for term frequency–inverse document frequency and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words from that document and it will get a high score. But if it appears and in other documents it will not be as unique and will receive a lower score. 
+TF-IDF \cite{tf-idf} stands for \textit{Term Frequency–Inverse Document Frequency} and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words within that document. If that word appears in other documents as well it will be less unique and thus receive a lower score. That score refers to the IDF calculation. 
+\hfill \break 
 \\
-\\
-%Having this in mind we implemented and applied the algorithm  on the retrieved data but the results turned out to be not sufficient to grade the value of the documents.
-To determine the most relevant documents related to given keywords, first is required to  define query terms which are related to the known threats categories. These will be further processed by the algorithm and as a result a statistical list of the most significant documents will be obtained. This is an automated method for sorting document that are more appropriate to a specific queried subject, given on-topic keywords list.
+To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The the algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
 \newpage
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
@@ -410,7 +417,7 @@ At this moment there are various data mining techniques \cite{oracle-list} that 
 \paragraph{Data mining tasks}
 \begin{itemize}
 \item 
-Classification: Refers to the task of generalising known structures and applying them to new
+\textbf{Classification}: Refers to the task of generalising known structures and applying them to new
 data. For example, an e-mail program might attempt to classify an e-mail as "legitimate" or as
 “spam”. Since this involves training of the algorithm before use, it might not be ideal for use in
 threat discovery. However, it can be very useful for providing feedback to the system and fine
@@ -450,14 +457,7 @@ alerts to be presented to the Security Analysts. The alerting will consist of a 
 that will apply to automatically generated events that will be propagated to the appropriate
 parties. One proposed format could be the following:
 %\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
-This presents the analyst with an event informing them about a security incident with a certain
-importance level. The way of determining the level of importance falls out of the scope of this
-document. Notice also the list of supporting documents resulting from different sources. At this
-point the analyst can go and inspect each one of this documents manually, assess the risk
-themselves and take the appropriate measures such as further informing the involved parties, or
-ignoring the alert.
-\item Attribute Important 
-\item etc.
+This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
 \subsubsubsection{Implementation}
 \paragraph*{Association Rule}
@@ -466,7 +466,7 @@ ignoring the alert.
 \addcontentsline{toc}{paragraph}{Clustering}
 \hfill \break 
 \\
-Clustering task is important in automating the process of finding new type of attacks or vulnerabilities that might occur in a specific period of time. The proposed method will categorize related documents that belong to a certain cluster and the most frequent related keywords associated to the specific cluster.
+For our specific use case clustering is important for automating the process of finding new type of Secuity threats that occur in a specific period of time. The proposed method groups related documents that belong to a certain cluster (meaning they refer to a spefic topic) and provides a list of the most frequent terms appearing in the cluster.
 \\
 \\
 For clustering N collected documents from the database in K categories an option would be using K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, chosen randomly, in which the information will be divided into. Assign each observation point(word) to the closest centroid, where each collection of points(words) form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation, and we will consider random cluster number that will be feasible chosen compared to the amount of data.
@@ -532,7 +532,7 @@ Pastie.org, (2015). New - Pastie. [online] Available at: \url{http://pastie.org}
 Scrapy.org, (2015). Scrapy | A Fast and Powerful Scraping and Web Crawling Framework. [online] Available at: \url{http://scrapy.org/} 
 \bibitem{reddit}
 Reddit.com, (2015). reddit: the front page of the internet. [online] Available at: \url{http://www.reddit.com/} 
-\bibitem{red-blackhat}
+\bibitem{r.blackhat}
 Reddit, (2009). blackhat library: Documenting blackhat hacking techniques • /r/blackhat. [online] Available at: \url{https://www.reddit.com/r/blackhat}
 \bibitem{r.malware}
 Reddit, (2009). Malware Analysis \& Reports • /r/Malware. [online] Available at:   \url{http://www.reddit.com/r/malware}
