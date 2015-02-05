@@ -234,8 +234,12 @@ The next step is to define the sources of information. This can be a very cumber
 
 Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.\\
 General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
-
+%% GIVE EXAMPLES OF THE MODEL FROM THE PDF
 \subsubsubsection{Implementation}
+There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the afformentioned CTI portal that will act as the configuration module. 
+
+
+
 \subsubsection{Data Aggregation Module}
 This chapter describes a system for collecting and mining information from public sources. First subsection will define the relevant websites that provide interest in detecting threats, malwares and phishing sites. For each specific source, next subsections will investigate API functionality and steps in implementing crawling part.
 \subsubsubsection{Specification}
@@ -246,6 +250,26 @@ What sources can be considered as reliable? In order to answer this question ins
 \subsubsubsection{Implementation}
 \paragraph*{Twitter}
 \addcontentsline{toc}{paragraph}{Twitter}
+\hfill \break
+Twitter exposes both Streaming and RESTful APIs. While the RESTful approach requires separate HTTP connections for each request to the API, Streaming requires keeping a persistent HTTP connection open \cite{twitteroverview}.\\
+
+For our example we selected the Streaming API approach which provides developers with low latency access to Twitter’s global stream of Tweet data \cite{twitteroverview}.\\
+
+Connecting to the Streaming API requires to provide with authentication details via an OAuth signature. To generate this signature the user has to register their application and generate four parameters named Consumer key, Consumer secret, Access Token and Access token secret.\\
+
+One particular endpoint, provided by the Public Stream \cite{twitterpublic}, was used, namely "POST statuses / filter". This endpoint can be reached via the following URL:\url{https://stream.twitter.com/1.1/statuses/filter.json}.\\
+
+Status filtering allows the user to retrieve tweets that contain certain keywords (up to 400 keywords can be specified), follow specific Twitter users (up to 5000 different users) or retrieve tweets originating from a specific location \cite{twitterfilter}.\\
+
+In our demonstration we only used the keyword (track) option in order to track specific tweets containing security related words (e.g. attack, hack, vulnerability, etc.)\\
+
+The data returned from this particular API call are JSON fomated.\\
+
+The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.\\ This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.\\
+
+The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
+
+
 \paragraph*{Pastebin}
 \addcontentsline{toc}{paragraph}{Pastebin}
 \hfill \break
@@ -259,6 +283,15 @@ Search method for retrieving information using keywords uses third party softwar
 
 To overpass API extension limitation and mine all new pastes that arrive in real time a web crawler module will be implemented. Python offers an open source framework called "scrapy" \cite{scrapy} for building an extensible webcrawler. Pastebin's \texttt{Archive} page contains latest pastes posted in the last 10 minutes at least. We will crawl and fetch this page each 10 minutes and store data into mongoDB database. Not all data from the page provides interest this is why we will scrape only information that is relevant for further examination. This includes the url, paste, the date it was posted and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse this nodes and extract only the text. Once all this data has been gathered, it will be dumped in the database.
 \paragraph*{Phishtank}
+\hfill \break
+Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
+
+Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits. \\
+
+The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. \\
+
+Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
+ 
 \paragraph*{Reddit}
 \addcontentsline{toc}{paragraph}{Reddit}
 \hfill \break
