@@ -285,36 +285,49 @@ The question might arise, which sources can be considered as reliable? In order 
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
 
 \subsubsubsection{Implementation}
-There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the afformentioned CTI portal that will act as the configuration module. 
+There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the aforementioned CTI portal that will act as the configuration module. 
 
+%%====DATA AGGREGATION====%%
 
 \subsubsection{Data Aggregation}
-After the desired configuration options have been submitted, the  system can start its operation by collecing raw data from the various speficied sources. Since we are dealing with more or less unstructured data, some first form of structure must be given during this step.
 
+After the desired configuration options have been submitted, the  system can start its operation by collecting raw data from the various specified sources. Since we are dealing with more or less unstructured data, some first form of structure must be given during this step.
 
 \subsubsubsection{Specification}
 
+The corresponding module will be composed of several agents, each one responsible for a different source of raw data. Each agent must read its configuration from the appropriate file which will be of a certain format for all the agents. The configuration file will contain information such as the source code directory of the specific agent, associated API keys, the type of each retrieval method (e.g. request based, streaming, etc.), the time intervals that each must be executed etc. Sensitive data such as API keys and Passwords, must be kept in a separate, protected file.
+\hfill \break \\This module will also be responsible for filtering out unrelated information such as profile pictures and uninteresting user details (Twitter, Facebook, etc.) or surrounding html code for sources that have no other means of collection rather than traditional scraping.
+\hfill \break \\As it has been mentioned before some structure can be given at this point to aid further processing. Text based documents, however, must be kept as close to the original content as possible so that if manual inspection is needed the document can be retrieved even if the related Web Resource has been removed.
+
+
 \subsubsubsection{Implementation}
 
+This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible so that if a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include them in the system with minimal effort. 
+\hfill \break \\
+A tool chaining script was written to allow the agents to be triggered automatically and share common configurations. blah blah blah.......
+
+The script reads the list of available agents and loads their respective configuration options. It then parses the parameters given by the user regarding which agents need to be run and at what time interval. If the user provides no parameters then the default configuration options are chosen. The user can specify if they need a certain agent not to be executed by passing a -1 parameter. The script reads all the agents selected for execution and loads their source code dynamically on runtime. This last step accounts for extensibility. 
+\hfill \break \\
+The system must be in a way to determine if the agent opens new connections per request or runs over a persistent connection (e.g. streaming). This must be specified in a common configuration file that lists all the agents. In our particular example this file is formatted in YAML. 
 
 \paragraph{Twitter}
 \hfill \break
-Twitter exposes both Streaming and RESTful APIs. While the RESTful approach requires separate HTTP connections for each request to the API, Streaming requires keeping a persistent HTTP connection open \cite{twitteroverview}.\\
-
-For our example we selected the Streaming API approach which provides developers with low latency access to Twitter’s global stream of Tweet data \cite{twitteroverview}.\\
-
-Connecting to the Streaming API requires to provide with authentication details via an OAuth signature. To generate this signature the user has to register their application and generate four parameters named Consumer key, Consumer secret, Access Token and Access token secret.\\
-
-One particular endpoint, provided by the Public Stream \cite{twitterpublic}, was used, namely "POST statuses / filter". This endpoint can be reached via the following URL:\url{https://stream.twitter.com/1.1/statuses/filter.json}.\\
-
-Status filtering allows the user to retrieve tweets that contain certain keywords (up to 400 keywords can be specified), follow specific Twitter users (up to 5000 different users) or retrieve tweets originating from a specific location \cite{twitterfilter}.\\
-
-In our demonstration we only used the keyword (track) option in order to track specific tweets containing security related words (e.g. attack, hack, vulnerability, etc.)\\
-
-The data returned from this particular API call are JSON fomated.\\
-
-The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.\\ This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.\\
-
+Twitter exposes both Streaming and RESTful APIs. While the RESTful approach requires separate HTTP connections for each request to the API, Streaming requires keeping a persistent HTTP connection open \cite{twitteroverview}.
+\hfill \break \\
+For our example we selected the Streaming API approach which provides developers with low latency access to Twitter's global stream of Tweet data \cite{twitteroverview}.
+\hfill \break \\
+Connecting to the Streaming API requires authentication via an OAuth signature. To generate this signature the user has to register their application and generate four parameters named Consumer key, Consumer secret, Access Token and Access token secret.
+\hfill \break \\
+One particular endpoint, provided by the Public Stream \cite{twitterpublic}, was used, namely "POST statuses / filter". This endpoint can be reached via the following URL:\url{https://stream.twitter.com/1.1/statuses/filter.json}.
+\hfill \break \\
+Status filtering allows the user to retrieve tweets that contain certain keywords (up to 400 keywords can be specified), follow specific Twitter users (up to 5000 different users) or retrieve tweets originating from a specific location \cite{twitterfilter}.
+\hfill \break \\
+In our demonstration we only used the keyword (track) option in order to track specific tweets containing security related words (e.g. attack, hack, vulnerability, etc.)
+\hfill \break \\
+The data returned from this particular API call are JSON fomated.
+\hfill \break \\
+The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.\\ This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.
+\hfill \break \\
 The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
 
 \newpage
