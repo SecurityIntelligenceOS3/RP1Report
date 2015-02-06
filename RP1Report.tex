@@ -403,14 +403,39 @@ All the collected data are stored in the database.
 
 \subsubsection{Preprocessing \& Filtering}
 The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. 
-\hfill \break
+\hfill \break\\
 \subsubsubsection{Specification}
 We propose a 'deflation' and scoring model that will help reduce the raw data into a common format as well as help determine the documents that present interest for further analysis. 
-\hfill \break
+\hfill \break\\
 The proposed model works in a very targeted and aggressive way, counting the occurences of each predifined word and deflating the whole document to a list of these keywords. 
-\hfill \break
+\hfill \break\\
 Then it multiplies the number of occurences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
+\hfill \break\\
+The proposed format for the deflated documents is the following:\\
+
+\{document: "DocID", keywords: \lbrack \lbrack keyword1, occurences\rbrack,\lbrack keyword2, occurences\rbrack, ..., \lbrack keywordN, occurences\rbrack \rbrack\,vendors:\lbrack\lbrack vendor1, occurences\rbrack, \lbrack vendor2, occurences\rbrack, ... \lbrack vendorN, occurences\rbrack  \rbrack, clients :\lbrack\lbrack client1, occurences\rbrack, \lbrack client2, occurences\rbrack, ... \lbrack clientN, occurences\rbrack  \rbrack\, score: "score"\}
+
+\hfill \break\\
+Certain issues have to be taken into account when following the above approach. First of all we have to make sure that even one occurence of a client's name will mark the document as interesting. That can be achived either by associating the client list with a weight higher than the threshold or by perfoming binary checks for the occurences of client names (is present or not). 
+\hfill \break\\
+It is also possible that many occurences of a certain keyword, even if its importance level is minimal, can mark a certain document as interesting even though it carries no interest. This can be avoided by perfoming more sophisticated checks by calculating the entropy of each document. This however falls out of the scope of this research.
+\hfill \break\\
+It also becomes apparent that since this approach creates documents containing only the predefined keywords, other interesting but previously unknown keywords, might be filtered out. Certain ways to mitigate this problem are described in the next sections. 
+
 \subsubsubsection{Implementation}
+To test this approach we created a few thousands of fake documents containing random computer terminology, using a free python script called 'Bullshit Generator' \cite{bullgen}. We slightly modified the script to include certain additional keywords as well as to produce exactly 10000 documents and store them in our database. 
+\hfill \break\\
+We tested the previously defined model to test its effiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic ammount of data. Here is an example output produced by one execution of the software:\\\\
+\{'count': [['amro', 4], ['apple', 3], ['exploit', 0], ['vulnerability', 0], ['attack', 0], ['ddos', 0], ['deloitte', 0], ['ing', 4], ['bug', 0]], 'doc': ObjectId('54d0bf08aa4ece1e08930ec6'), 'score': 110.0\}\\
+\{'count': [['amro', 3], ['apple', 2], ['exploit', 2], ['vulnerability', 1], ['attack', 0], ['ddos', 3], ['deloitte', 2], ['ing', 3], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930f3e'), 'score': 109.0\}\\
+\{'count': [['amro', 2], ['apple', 6], ['exploit', 0], ['vulnerability', 2], ['attack', 1], ['ddos', 1], ['deloitte', 1], ['ing', 1], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930fb4'), 'score': 105.0\}\\
+\{'count': [['amro', 3], ['apple', 3], ['exploit', 3], ['vulnerability', 0], ['attack', 0], ['ddos', 0], ['deloitte', 1], ['ing', 5], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930ff1'), 'score': 122.4\}\\
+\{'count': [['amro', 4], ['apple', 2], ['exploit', 2], ['vulnerability', 0], ['attack', 1], ['ddos', 2], ['deloitte', 1], ['ing', 4], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08931039'), 'score': 115.8\}\\
+.\\
+.\\
+.\\
+\hfill \break\\
+The above results are produced after applying a threshold of 100. This is probably an unrealistic scenario, however. 
 \subsubsubsection{Alternative Approaches}
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
 \paragraph{Natural Language Processing}
