@@ -108,9 +108,13 @@
 \end{titlepage}
 
 \newpage
-\section*{Abstract}
+\begin{abstract}
+\noindent
+This project deals with gathering Intelligence about IT Security incidents by mining data originating from the public Web. Our aim is to propose the architecture of a software system that is able to collect, preprocess and mine public information as well as alert and assess the threat level. \\
+A small Proof of Concept implementation for the proposed System Architecture is an outcome of this research. 
+\end{abstract}
 \newpage
-\section*{Acknowledgement}
+\section*{Acknowledgements}
 
 We would like to express our gratitude and appreciation for all support, expert knowledge and guidelines during this research project. It has been a great opportunity for us to explore the real feel of working with a successful company. 
 \\
@@ -260,8 +264,6 @@ sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\
 - Threat Class N:
 
 sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\\\
-
-\hfill \break \\
 Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.
 \hfill \break \\
 General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
@@ -274,7 +276,7 @@ At this point it is useful to mention that we also can monitor certain 'anti-key
 %% CHECK AGAIN
 \paragraph{Keyword definition}
 It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we should make an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company. Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
-
+\hfill \break \\
 Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.\\
 
 
@@ -309,8 +311,8 @@ Account hijacking & account hacked \\
 \end{center}
 \paragraph{Source Definition}
 \hfill \break \\
-Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. \\
-
+Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. 
+\hfill \break \\
 The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The impotance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.\\
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
 
@@ -363,12 +365,10 @@ The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}
 The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
 
 \newpage
-\paragraph*{Pastebin}
-\addcontentsline{toc}{paragraph}{Pastebin}
-\hfill \break
-\\
-\textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.\\
-\hfill \break
+\paragraph{Pastebin}
+\hfill \break\\
+\textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.
+\hfill \break\\
 From all possible \textit{pastebins} (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
 paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} has been selected to be further inspected.
 \hfill \break
@@ -386,13 +386,13 @@ This functionality, however, makes use of \textit{Google Custom Search}. Therefo
 \\
 To overcome the above limitations and collect all new pastes that arrive, a web crawler module was implemented. \textit{Scrapy} \cite{scrapy}, an open source framework for building extensible webcrawlers was used, integrated into a Python script. Pastebin's \texttt{Archive} page contains all pastes posted during the last 10 minutes. For that reason, we will crawl and fetch the contents of this page each 10 minutes. Not all data from the page provides interest this is why we will scrape the html and keep only the information that is relevant for further examination. This includes the url, the paste, the posting date and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse these nodes and extract only the raw paste text. Once all this data has been gathered, it will be stored in the database.
 \paragraph*{Phishtank}
-\hfill \break
-Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
-
-Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits. \\
-
-The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. \\
-
+\hfill \break\\
+Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.
+\hfill \break\\
+Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits.
+\hfill \break\\
+The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. 
+\hfill \break\\
 Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
  
 \paragraph{Reddit}
@@ -433,7 +433,7 @@ All the collected data are stored in the database.
 
 \subsubsection{Preprocessing \& Filtering}
 The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. 
-\hfill \break\\
+
 \subsubsubsection{Specification}
 We propose a 'deflation' and scoring model that will help reduce the raw data into a common format as well as help determine the documents that present interest for further analysis. 
 \hfill \break\\
@@ -464,7 +464,7 @@ We tested the previously defined model to test its effiency and time consumption
 .\\
 .\\
 .\\
-\hfill \break\\
+\hfill \break
 The above results are produced after applying a threshold of 100. This is probably an unrealistic scenario, however. 
 \subsubsubsection{Alternative Approaches}
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
@@ -495,7 +495,7 @@ threat discovery. However, it can be very useful for providing feedback to the s
 tuning it to be able to classify the documents for each threat category, acting together with the
 configuration step
 \item 
-Anomaly detection (Outlier/change/deviation detection): This task refers to identification of
+\textbf{Anomaly detection} (Outlier/change/deviation detection): This task refers to identification of
 unusual data records that might imply unusual behaviour in the dataset. For example, in our
 use case, a first indication that something might be possibly wrong would be an exceptional
 mention of a company name within a certain period of time. The problem here is to determine
@@ -504,7 +504,7 @@ so a certain threshold can be determined. Until sufficient amount of data has be
 can naively implement this by setting the thresholds manually. This operation is particularly
 popular in intrusion detection systems.
 \item 
-Association rule learning (Dependency modelling): This task refers to the search for
+\textbf{Association rule learning} (Dependency modelling): This task refers to the search for
 relationships between variables. One example of this is the infamous beer and diapers story.
 This test requires no training set and can be performed on any structured set of data. In our
 use case this can help us determine trends between the occurrences of keywords, such as the
@@ -512,21 +512,17 @@ name of a company together with the name of a name of an attack. The output of t
 contains metrics about the support (percentage of the documents supporting the association) as well as
 confidence (ratio of the support percentage of either part of each rule).
 \item 
-Clustering: Refers to the task of discovering groups and structures in the data that present
+\textbf{Clustering}: Refers to the task of discovering groups and structures in the data that present
 some sort of similarity, without using known structures in the data. In our case this can help us
 determine new categories of documents that have not been predefined (remember the threat
 categorisation we mentioned in the beginning).
 \item
-Regression: This task attempts to find a function which models the data with the least error.
+\textbf{Regression}: This task attempts to find a function which models the data with the least error.
 This might not be directly applicable to our specific example but based on the experience
 gathered after a certain period of time that the system will be operated, we can attempt to
 design an analytic model using regression analysis techniques.
 \item
-Summarisation: This task aims to provide a more compact representation of the data set,
-including visualisation and report generation. In our case this applies to the creation of the
-alerts to be presented to the Security Analysts. The alerting will consist of a common format
-that will apply to automatically generated events that will be propagated to the appropriate
-parties. One proposed format could be the following:
+\textbf{Summarisation}: This task aims to provide a more compact representation of the data set, including visualisation and report generation. In our case this applies to the creation of the alerts to be presented to the Security Analysts. The alerting will consist of a common format that will apply to automatically generated events that will be propagated to the appropriate parties. One proposed format could be the following:
 %\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
 This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
@@ -570,8 +566,6 @@ Unfortunatelly the exact way of how this is going to be realised, also falls out
 \subsection{Demo}
 \newpage
 \section{Conclusions}
-
-
 
 \newpage
 \section{Future Work}
