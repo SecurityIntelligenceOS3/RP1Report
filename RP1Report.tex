@@ -296,16 +296,18 @@ After the desired configuration options have been submitted, the  system can sta
 \subsubsubsection{Specification}
 
 The corresponding module will be composed of several agents, each one responsible for a different source of raw data. Each agent must read its configuration from the appropriate file which will be of a certain format for all the agents. The configuration file will contain information such as the source code directory of the specific agent, associated API keys, the type of each retrieval method (e.g. request based, streaming, etc.), the time intervals that each must be executed etc. Sensitive data such as API keys and Passwords, must be kept in a separate, protected file.
-\hfill \break \\This module will also be responsible for filtering out unrelated information such as profile pictures and uninteresting user details (Twitter, Facebook, etc.) or surrounding html code for sources that have no other means of collection rather than traditional scraping.
-\hfill \break \\As it has been mentioned before some structure can be given at this point to aid further processing. Text based documents, however, must be kept as close to the original content as possible so that if manual inspection is needed the document can be retrieved even if the related Web Resource has been removed.
+\hfill \break \\
+This module will also be responsible for filtering out unrelated information such as profile pictures and uninteresting user details (Twitter, Facebook, etc.) or surrounding html code for sources that have no other means of collection rather than traditional scraping.
+\hfill \break \\
+As it has been mentioned before some structure can be given at this point to aid further processing. Text based documents, however, must be kept as close to the original content as possible so that if manual inspection is needed the document can be retrieved even if the related Web Resource has been removed.
 
 
 \subsubsubsection{Implementation}
 
-This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible so that if a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include them in the system with minimal effort. 
+This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible. If a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include the new agents to the system with minimal effort. 
 \hfill \break \\
-A tool chaining script was written to allow the agents to be triggered automatically and share common configurations. blah blah blah.......
-
+A tool chaining script was written to allow the agents to be triggered simultaneously and share common configurations. 
+\hfill \break \\
 The script reads the list of available agents and loads their respective configuration options. It then parses the parameters given by the user regarding which agents need to be run and at what time interval. If the user provides no parameters then the default configuration options are chosen. The user can specify if they need a certain agent not to be executed by passing a -1 parameter. The script reads all the agents selected for execution and loads their source code dynamically on runtime. This last step accounts for extensibility. 
 \hfill \break \\
 The system must be in a way to determine if the agent opens new connections per request or runs over a persistent connection (e.g. streaming). This must be specified in a common configuration file that lists all the agents. In our particular example this file is formatted in YAML. 
@@ -400,10 +402,14 @@ All the collected data are stored in the database.
 
 
 \subsubsection{Preprocessing \& Filtering}
-The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
-
-
+The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. 
+\hfill \break
 \subsubsubsection{Specification}
+We propose a 'deflation' and scoring model that will help reduce the raw data into a common format as well as help determine the documents that present interest for further analysis. 
+\hfill \break
+The proposed model works in a very targeted and aggressive way, counting the occurences of each predifined word and deflating the whole document to a list of these keywords. 
+\hfill \break
+Then it multiplies the number of occurences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
 \subsubsubsection{Implementation}
 \subsubsubsection{Alternative Approaches}
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
@@ -425,8 +431,6 @@ This section will sketch few methods that can be applied over the congregated in
 At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
 \subsubsubsection{Specification}
 \subsubsubsection{Implementation}
-\subsubsection{Feedback and Assessment}
-\subsubsubsection{Specification}
 \paragraph{Data mining tasks}
 \begin{itemize}
 \item 
@@ -499,6 +503,9 @@ Observing the resulted clusters we can claim that the algorithm behaved well con
 \paragraph*{Classification}
 SVM Algorithm 
 
+\subsubsection{Feedback and Assessment}
+\subsubsubsection{Specification}
+
 \section{Results}
 \subsection{Demo}
 \newpage
@@ -510,6 +517,8 @@ SVM Algorithm
 \section{Future Work}
 
 At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
+
+
 
 \newpage
 \section{Appendix}
