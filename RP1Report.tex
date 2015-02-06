@@ -451,11 +451,10 @@ TF-IDF \cite{tf-idf} stands for \textit{Term Frequency–Inverse Document Freque
 \\
 To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The the algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
 \newpage
-\subsubsection{Analytics and Mining}
+\subsubsection{Analytics \& Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
 At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
 \subsubsubsection{Specification}
-\subsubsubsection{Implementation}
 \paragraph{Data mining tasks}
 \begin{itemize}
 \item 
@@ -529,7 +528,14 @@ Observing the resulted clusters we can claim that the algorithm behaved well con
 SVM Algorithm 
 
 \subsubsection{Feedback and Assessment}
-\subsubsubsection{Specification}
+During the last step of the operation the system will have to be able to produce reconfiguation sets in order to adjust its behavior and produce more accurate results in the future.
+\hfill \break\\
+At this point a Security Analyst will have to be presented with a way of assessing each alert and  determining the real importance level of each presented event.
+\hfill \break\\
+Their assessment will be recorded in the events database along with the initial alert record so that the divergence between the estimated and the actual threat level can be calculated. This result will be propagated to the various modules of the system which can afterwards re-adjust their configurable parts to achieve better accuracy.
+\hfill \break\\
+Unfortunatelly the exact way of how this is going to be realised, also falls out of the scope of this project due to time limitations. However, we are in a possition to suggest that certain Data Mining techniques discussed in the previous sections (e.g. Clustering, Classification, Regression) can be employed during this phase as well. Once large enough training sets have been built these techniques can provide valuable guidelines to the system. 
+
 
 \section{Results}
 \subsection{Demo}
