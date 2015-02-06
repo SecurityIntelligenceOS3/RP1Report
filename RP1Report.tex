@@ -17,6 +17,7 @@
 \usepackage{spverbatim}
 \usepackage{caption3}
 \usepackage{longtable}
+\usepackage{alltt}
 % This is for adding extra subsections
 \usepackage{titlesec}
 \titleclass{\subsubsubsection}{straight}[\subsection]
@@ -54,7 +55,18 @@
 \makeatother
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{5}
+
+
 %-----------------------------------------------%
+
+%Add package for acronyms
+
+% Load the package
+\usepackage{glossaries}
+ 
+% Generate the glossary
+\makeglossaries
+%-------------------------------------------------
 
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -243,47 +255,24 @@ General sources are much more unpredictable and unstructured. The data collected
 %% GIVE EXAMPLES OF THE MODEL FROM THE PDF
 %% CHECK AGAIN
 \paragraph{Keyword definition}
-It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we should make an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company. Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
+\hfill \break \\
+It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison.
 
-Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be a bad selection of keywords.\\
+For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we have an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company there should be multiple instances . Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
+
+Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be an incorrect selection of keywords.\\
 
 
-\begin{center} 
-\begin{longtable}{|l | l|}
-\hline
-Type of Attack & Related keywords \\
-\hline
- Denial-of-Service (DoS) & ddos attack \\ 
- 						& take down website \\ 
- 						&  server/computer crush  \\
- 						& server take down \\
 
-\hline
-SQL Injection 	& plain text password\\
-				& clear text password \\
-				& plain text password username \\
-				& clear text password username\\
-				& dump customers \\
-				& dump passwords \\
-				& blackmail dump accounts \\
-				& leaked passwords \\
-				
-\hline
-Account hijacking & account hacked \\
-				  & account images changed hack \\
-				  & take control account \\
-				  & account add/remove content \\ 			  
-\hline
-
-\end{longtable}
-\end{center}
 \paragraph{Source Definition}
 \hfill \break \\
 Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. \\
 
 The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The impotance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.\\
+
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
 
+\newpage
 \subsubsubsection{Implementation}
 There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the aforementioned CTI portal that will act as the configuration module. 
 
@@ -353,7 +342,7 @@ This functionality, however, makes use of \textit{Google Custom Search}. Therefo
 \hfill \break
 \\
 To overcome the above limitations and collect all new pastes that arrive, a web crawler module was implemented. \textit{Scrapy} \cite{scrapy}, an open source framework for building extensible webcrawlers was used, integrated into a Python script. Pastebin's \texttt{Archive} page contains all pastes posted during the last 10 minutes. For that reason, we will crawl and fetch the contents of this page each 10 minutes. Not all data from the page provides interest this is why we will scrape the html and keep only the information that is relevant for further examination. This includes the url, the paste, the posting date and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse these nodes and extract only the raw paste text. Once all this data has been gathered, it will be stored in the database.
-\paragraph*{Phishtank}
+\paragraph{Phishtank}
 \hfill \break
 Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
 
@@ -398,7 +387,7 @@ The response will be a JSON formated string. From all the fields in the structur
 \\
 All the collected data are stored in the database. 
 
-
+\newpage
 \subsubsection{Preprocessing \& Filtering}
 The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
 
@@ -408,17 +397,182 @@ The documents collected from all the public sources must be given a common forma
 \subsubsubsection{Alternative Approaches}
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
 \paragraph{Natural Language Processing}
-NLTK or Natural Language Toolkit ...
+\hfill \break
+\\
+\parbox{\linewidth}{
+Natural Language Processing comprises numerous tasks such as automatic summarization, parsing, relationship extraction, topic segmentation and recognition etc. All of the mentioned functionalities are important in processing text, thus part-of-speech tagging can be used in this case to distinguish meaning of a certain fragment of text, sentence. Knowing if a certain word is a noun, verb or adjective can help in discovering the importance of that specific word for a specific topic. Mostly we are interested in distinguishing which are the nouns as they determine the topics in a sentence.  }
+\hfill \break
+\\
+Compared to the deflation method, this method does not imply specifying certain keywords. Mainly because this functionality would allow us to build structured tables of data or trees in order to extract meaningful entities. Aggregator module provides unstructured data, in order to get meaning and relevance from a certain text, this has to be first processed and structured. How? First step would imply removing all stop words such as \textit{the, an, a, about, what, where etc.}. This list can be expanded further to contain all data that one would not consider as important such as digits, punctuations. Another step called stemming will apply a suffix removal. 
+\hfill \break
+\\
+We tested how this procedure works applied on \textit{pastebin.com} messages. Because many messages contain pieces of code it is a cumbersome task in attempting to recognize topics, especially the removing stop words. Previously research papers have shown promising results if applied on grammatically structured articles, this was the reason why we tested it on \textit{Reddit.com} data.
+\begin{figure} 
+\begin{footnotesize}
+\begin{spverbatim}
+----------------------------------------------------
+http://www.youtube.com/watch?v=wLtREbONtuI 
 
-%removing stop words, stemming and recognizing part of speech with a further
+----------------------------------------------------
+business phone line hacked, calls intercepted. no record or
+knowledge of calls in the system. how was it done?
+--------------------Analyze-------------------------
+Searched word appeared :  1  times
+This post has  15  score
+And it got  :  10  comments
+===================NLTK=============================
+	Num Sentences:           3
+	Num Words:               23
+	Num Unique Words:        21
+	Num Hapaxes:             19
+	Top 10 Most Frequent Words (excluding stop words):
+		system (1)
+		business (1)
+		calls (2)
+		knowledge (1)
+		intercepted (1)
+		phone (1)
+		done (1)
+		hacked (1)
+		line (1)
+		record (1)
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{NLTK result applied on \textit{Reddit} data}
+\end{footnotesize}
+\end{figure}
+\hfill \break
+\\
+The nltk library\cite{nltk} can be integrated in Python environment and provides methods to work with \textit{human language data}. We used few functions such as counting number of sentences involved, total words  and the most frequent words from this library, the result (Figure 2.2) mainly includes the following: the URL for the specific post, title associated to the URL and the analyse part. First, a keyword search was performed to find which posts correspond to the word \textit{hacked}. For this messages the nltk results can be used in determining its importance level, by calculating and considering a statistical view of the keyword that appeared in text. This knowledge can be further used in exploring more NLP capabilities and determine the importance level of such information.
 
-\paragraph{TF-IFD}
+\paragraph{TF-IDF}
 \hfill \break
 \\
 TF-IDF \cite{tf-idf} stands for \textit{Term Frequency–Inverse Document Frequency} and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words within that document. If that word appears in other documents as well it will be less unique and thus receive a lower score. That score refers to the IDF calculation. 
 \hfill \break 
 \\
-To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The the algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
+To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
+\hfill \break 
+\\
+For testing how it actually works we applied the algorithm on approximately 5000 real messages gathered from \textit{pastebin.com}. We queried mongo database to get the total number of documents in the pastebin collection as following:
+\begin{spverbatim}
+> show collections
+system.indexes
+test_collection
+> db.test_collection.count()
+5141
+\end{spverbatim}
+\hfill \break 
+We chose as main query words such as \texttt{\{attack, hack\}} just to see how the algorithm will behave and what possible documents might be associated with this type of words. Due to some implementation inconsistencies the result provided took longer time then expected. Considering that our main purpose was to test data mining algorithms we did not accomplished a more profound analyses of the code.
+\begin{figure}[h!] 
+\begin{footnotesize} 
+\begin{spverbatim}
+....
+TF Doc: 54c0d9c6d177b470832e5407 0.0181818181818 -> attack
+TF Doc: 54c00c7ad177b4685475c1d8 0.017094017094 -> attack
+TF Doc: 54c01d5ad177b468f5807552 0.0227272727273 -> attack
+TF Doc: 54c009ecd177b4682d5165c1 0.0120481927711 -> attack
+TF Doc: 54c0d1bfd177b46ff35304dd 0.00564971751412 -> attack
+TF Doc: 54c0d1a8d177b46ff35304b8 0.00564971751412 -> attack
+IDF:  attack -> 6.65463113416
+TF_IDF:  54c662c3d177b4279d30aecd attack -> 0.0610516617813
+TF_IDF:  54c014ddd177b4689699a889 attack -> 0.0375967860687
+TF_IDF:  54c7e373d177b43790433dde attack -> 0.0386897158963
+TF_IDF:  54c00c82d177b4685475c1e5 attack -> 0.0875609359758
+TF_IDF:  54c0eae7d177b4719596d5df attack -> 0.0924254324189
+TF_IDF:  54c0cf24d177b46fa541e084 attack -> 0.0373855681694
+TF_IDF:  54c01232d177b4687bd24088 attack -> 0.123999337904
+....
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{A sample from the complete TF-IDF algorithm result. For each function the documentID with associated score and query word is provided}
+\end{footnotesize}
+\end{figure}
+Thus the main problem with the computational cost was because of the \textit{tf-idf function}. This function will multiply the TF result with the IDF and get the overall score. For 5141 messages the total time the algorithm run, took around 15 minutes. If we want to get just the TF and IDF score then the algorithm will have the following time values:
+\begin{spverbatim}
+real	0m0.694s
+user	0m0.508s
+sys	0m0.023s
+\end{spverbatim}
+\hfill \break 
+Still the result provides a good statistical view on the importance of documents that are associated to the specified keywords. 
+\hfill \break 
+\begin{figure}[h!] 
+\begin{footnotesize}
+\begin{spverbatim}
+Overall TF-IDF scores for query 'attack hack'
+54c009ecd177b4682d5165c1 0.0801762787248
+54c00c7ad177b4685475c1d8 0.113754378362
+54c00c82d177b4685475c1e5 0.0875609359758
+54c01232d177b4687bd24088 0.123999337904
+54c014ddd177b4689699a889 0.0375967860687
+54c01d5ad177b468f5807552 0.151241616685
+54c0cf17d177b46fa541e070 0.0361664735552
+54c0cf24d177b46fa541e084 0.0373855681694
+54c0d1a8d177b46ff35304b8 0.0375967860687
+54c0d1bfd177b46ff35304dd 0.0375967860687
+54c0d9c6d177b470832e5407 0.120993293348
+54c0e83bd177b47185269e51 1.98389124491
+54c0eae7d177b4719596d5df 0.0924254324189
+54c0ee14d177b471b6f3f212 0.0489311112806
+54c22910d177b47c8bc1e305 0.0403310977828
+54c2613fd177b47f785493eb 0.0891636514564
+54c662c3d177b4279d30aecd 0.0610516617813
+54c69aefd177b429c8745051 0.193550365357
+54c75a8dd177b431883f5d1b 0.495972811226
+54c75ff7d177b431d9186d0d 0.0373855681694
+54c76b2ed177b432825caf8a 0.0545461568374
+54c76e02d177b432b0ca7d0b 0.610428075355
+54c7e373d177b43790433dde 0.0386897158963
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{Overall TF-IDF Result applied on \textit{Pastebin} data, that specifies document ID with the associated score, for the query terms \texttt{attack, hack}}
+\end{footnotesize}
+\end{figure}
+\hfill \break
+From the outcome what provides interest are the documents that show the \texttt{Overall TF-IDF scores for query "attack hack"}. Now the question might arise, what documents should we consider as being more relevant? For this we will look at the document with highest score (the once that have a score greater then 1 will not be added to final result), namely the document with ID:54c76e02d177b432b0ca7d0b and the score equal to 0.610428075355.
+\hfill \break 
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
+> db.test_collection.find({_id:ObjectId('54c76e02d177b432b0ca7d0b')})
+{ "_id" : ObjectId("54c76e02d177b432b0ca7d0b"), "url" :
+ "http://pastebin.com/QNxg2fGz", "uniq_visitors" : [ "152" ],
+  "paste" : [ "http://besthacksgames.com android cheat engine cheat engine for android cheat engine android android games hack cheat engine 5.5 android game hack android game hacks android cheat engine" ], "time" : [ "Tuesday 27th of January 2015 04:51:41 AM CDT" ] }
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{MongoDB result for retrieving the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
+
+> db.test_collection.find({_id:ObjectId('54c0d9c6d177b470832e5407')})
+{ "_id" : ObjectId("54c0d9c6d177b470832e5407"), "url" :
+ "http://pastebin.com/dKnHTH1H", "uniq_visitors" : [ "147" ],
+  "paste" : 
+ [ "<!DOCTYPE html> <html>    <head>        
+  <title>Scripting Attack Demo</title>        <link />        <script>       
+   // find out the location url      
+    name=decodeURIComponent(window.location.search.substring(1)); 
+    console.log(name); name=fred is the sort of thing we expect to append... 
+    //
+     %3Cscript%3Ealert%28%27You%20are%20under
+     %20attack%27%29%3C/script%3E     
+      or this... %3Cscript src=siteB/evil.js%3E%3C/script%3E        
+      // a trivial fixer        
+      name = name.replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\");                    document.write('Hello ' + name);      
+        </script>        <meta />   </head> <body></body></html>" ], "time" : [ "Thursday 22nd of January 2015 05:02:13 AM CDT" ] }
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{MongoDB result for retrieving the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time}}
+\end{footnotesize}
+\end{figure}
+\hfill \break 
+The word \texttt{hack} appears four times in this text(Figure 2.5), and is considered to have a higher value.
+If we analyse another document(Figure 2.6) for example the one with ID :  54c0d9c6d177b470832e5407, that has an associated score of  0.120993293348, it presents a lower score we see that the word \texttt{attack} appears less then four. However not only the frequency of the word \texttt{attack} in this text is taken in consideration but also its frequency across all documents.
 \newpage
 \subsubsection{Analytics and Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
@@ -485,7 +639,8 @@ For our specific use case clustering is important for automating the process of 
 For clustering N collected documents from the database in K categories an option would be using K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. The method\cite{k-means-example} proposed by this algorithm aims to find K non-overlapping clusters and it works as follows. User specifies how many K clusters will represent the initial centroids, chosen randomly, in which the information will be divided into. Assign each observation point(word) to the closest centroid, where each collection of points(words) form a cluster. The centroid is then updated depending of the words added to this cluster. The process stops when the words assigned will not change the clusters. At this moment there is no guarantee that the result retrieved is optimum. The outcome might be different each time, depending on how the initial centroids are chosen. Important factor to mention here is the selection of K, because an incorrect choice might lead to non-optimum results. There are several procedures\cite{procedures-for-kmeans} to calculate a favourable number of clusters but this is out of scope and the investigation, and we will consider random cluster number that will be feasible chosen compared to the amount of data.
 \\
 \\
-In order to implement the proposed algorithm an open  source scikit- learn \cite{sklearn} tool was used for data analysing that provides a library called SKlearn which can be integrated in Python environment. Following an example provided in a tutorial from the sklearn website, which attemps to categorize 20 news group\cite{k-means-20news}, we adapted it to use the data provided in the database and show what are the documents that are related to each other in a cluster.  In this case we applied the algorithm on over 600000 twitter messages and the expected outcome was to categories this messages in 20 groups. From the clusters obtained two showed big interest as it presents real events that happened in the past weeks.
+In order to implement the proposed algorithm an open  source scikit- learn \cite{sklearn} tool was used for data analysing that provides a library called SKlearn which can be integrated in Python environment. Following an example provided in a tutorial from the sklearn website, which attemps to categorize 20 news group\cite{k-means-20news}, we adapted it to use the data provided in the database and show what are the documents that are related to each other in a cluster.  In this case we applied the algorithm on over 600000 twitter messages and the expected outcome was to categories this messages in 20 groups. From the clusters obtained, two showed considerable interest as it presents real events that happened in the past weeks. Initially centroids are chosen randomly as this is and our scope, to find new events or possible attacks.
+
 \begin{spverbatim}
 Cluster 13:  paris  charlie  hebdo  attack  http  mayor  nypd  
 rt  victims  french  honor  visited  nyc  france  terror  muslim 
@@ -495,9 +650,13 @@ Cluster 15:  photos  leaked  upton  kate  jennifer  lawrence
 itweetlikegirls  hilarious  kardashian  kim  aigbtbpmvv
 \end{spverbatim}
 \hfill \break
-Observing the resulted clusters we can claim that the algorithm behaved well considering that it is an unsupervised method and the top frequent terms for Cluster 13, highlights the most recent attack in Paris. In the Cluster 15 which is totally unrelated to the previously mentioned attack, the incident with leaked celebrities photos is outlined.
-\paragraph*{Classification}
-SVM Algorithm 
+Observing the resulted clusters we can claim that the algorithm behaved well considering that it is an unsupervised method and the top frequent terms for Cluster 13, highlights the most recent attack in Paris. In the Cluster 15 which is totally unrelated to the previously mentioned attack, the incident with leaked celebrities photos is outlined. 
+\paragraph{Classification}
+\hfill \break
+\\
+Classification method can be used in mapping data into specific categories such as threats and attacks. To showcase how it works and that is a feasible attempt, we constructed a training set that contains a list of sentences. Each of these might have or not an associated city because it belongs to a class. Our targets are three cities: Amsterdam, Tokyo, New York which we will number as following: Amsterdam -\textgreater  0, Tokyo -\textgreater 1, New York -\textgreater 2. The algorithm attempts to recognize patterns for the new incoming sentences. How does it matches exactly to which city a new entry might belong? This can be completed by constructing a list to which we will associate the corresponding number or String(city name). First Natural Language Processing tasks such as stop removal words and stemming will be applied, after TF-IDF al    
+
+Why we need all this algorithms? Is not possible to accomplish an automated process with just using one algorithm? The answer is simple as each algorithm has its own function. As proved before clustering discovers new data sets, association will attempt to find which keywords are related to specific documents and not at least classification that can be used in predicting n
 
 \section{Results}
 \subsection{Demo}
@@ -512,7 +671,26 @@ SVM Algorithm
 At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
 
 \newpage
-\section{Appendix}
+\begin{appendices}
+\section{Code}
+\section{Results}
+\subsection{TF-TDF Result} \label{tf-idf-apendix}
+
+\end{appendices}
+
+\subsection{Acronyms}
+
+
+% just trying
+\newglossaryentry{utc}{name=UTC, description={Coordinated Universal Time}}
+\newglossaryentry{adt}{name=ADT, description={Atlantic Daylight Time}}
+\newglossaryentry{est}{name=EST, description={Eastern Standard Time}}
+ 
+% Use the terms
+\gls{utc} is 3 hours behind \gls{adt} and 10 hours ahead of \gls{est}.
+ 
+%Print the glossary
+\printglossaries
 \newpage
 
 \begin{thebibliography}{99}
