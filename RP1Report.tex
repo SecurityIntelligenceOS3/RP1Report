@@ -175,7 +175,7 @@ The proposed system extensions can spawn further research questions, namely on t
 \subsection{Related work}
 There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called MINDS, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security' \cite{minds}.  Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user. 
 \subsection{Ethical implications}
-%\addcontentsline{toc}{section}{Ethical implications}
+
 The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
 
 \newpage
@@ -186,11 +186,11 @@ The last steps were to evaluate our results, put together a limited proof of con
 The above will be described in detail in the following sections. 
 
 \subsection{Hardware \& Software Used}
-\parbox{\linewidth}{
+
 
 Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used (oxford.studlab.os3.nl).\\ 
 For the storage of the raw well as the processed data we used MongoDB, a free and open source NoSQL database system.\\ 
-All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrap}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.}
+All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
 
 
 \subsection{Proposed System}
@@ -232,13 +232,43 @@ The system needs to be as versatile as possible. To that aim each separate part 
 
 \subsubsubsection{Specification}
 
+The configuration set that is most crucial to the operation of the system, is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. These keyword lists must follow the format below:\\\\
+- Threat Class 1:
 
-The most crucial configuration set to the operation of the system is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}\\\\
+- Threat Class 2:
 
-The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}
+.\\
+.\\
+.\\
+- Threat Class N:
 
-Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.\\
-General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}
+ 
+\hfill \break \\
+The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. The source list must have a standard format as well:\\\\
+- Threat Class 1:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\\\
+- Threat Class 2:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\
+.\\
+.\\
+.\\
+- Threat Class N:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\\\
+
+\hfill \break \\
+Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.
+\hfill \break \\
+General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
+\hfill \break \\
+We also need to monitor the names of certain companies or organisations for which the service will be provided. Moreover, we would need to look for several software and hardware vendor name to discover vulnerabilities and known malfunctions for software tools and machinery that are used by companies and organisations. Thus the last thing the operator has to specify is a list of Clients and Vendors. These list must also have weights attached to them, which, however, must be the same for all their members. 
+\hfill \break \\
+At this point it is useful to mention that we also can monitor certain 'anti-keywords' with negative weights to sort out irrelevant information. For example the word 'attack' might be correlated with the word 'football' or the word 'bug' can be correlated with the word 'insects'. This is a good indication that the subject of the document is probably not security related. 
 
 %% GIVE EXAMPLES OF THE MODEL FROM THE PDF
 %% CHECK AGAIN
@@ -501,10 +531,9 @@ parties. One proposed format could be the following:
 This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
 \subsubsubsection{Implementation}
-\paragraph*{Association Rule}
-\addcontentsline{toc}{paragraph}{Association Rule}
-\paragraph*{Clustering}
-\addcontentsline{toc}{paragraph}{Clustering}
+\paragraph{Association Rule}
+
+\paragraph{Clustering}
 \hfill \break 
 \\
 For our specific use case clustering is important for automating the process of finding new type of Secuity threats that occur in a specific period of time. The proposed method groups related documents that belong to a certain cluster (meaning they refer to a spefic topic) and provides a list of the most frequent terms appearing in the cluster.
