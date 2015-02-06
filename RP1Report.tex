@@ -120,9 +120,13 @@
 \end{titlepage}
 
 \newpage
-\section*{Abstract}
+\begin{abstract}
+\noindent
+This project deals with gathering Intelligence about IT Security incidents by mining data originating from the public Web. Our aim is to propose the architecture of a software system that is able to collect, preprocess and mine public information as well as alert and assess the threat level. \\
+A small Proof of Concept implementation for the proposed System Architecture is an outcome of this research. 
+\end{abstract}
 \newpage
-\section*{Acknowledgement}
+\section*{Acknowledgements}
 
 We would like to express our gratitude and appreciation for all support, expert knowledge and guidelines during this research project. It has been a great opportunity for us to explore the real feel of working with a successful company. 
 \\
@@ -187,7 +191,7 @@ The proposed system extensions can spawn further research questions, namely on t
 \subsection{Related work}
 There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called MINDS, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security' \cite{minds}.  Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user. 
 \subsection{Ethical implications}
-%\addcontentsline{toc}{section}{Ethical implications}
+
 The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
 
 \newpage
@@ -198,11 +202,11 @@ The last steps were to evaluate our results, put together a limited proof of con
 The above will be described in detail in the following sections. 
 
 \subsection{Hardware \& Software Used}
-\parbox{\linewidth}{
+
 
 Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used (oxford.studlab.os3.nl).\\ 
 For the storage of the raw well as the processed data we used MongoDB, a free and open source NoSQL database system.\\ 
-All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrap}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.}
+All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
 
 
 \subsection{Proposed System}
@@ -244,17 +248,46 @@ The system needs to be as versatile as possible. To that aim each separate part 
 
 \subsubsubsection{Specification}
 
+The configuration set that is most crucial to the operation of the system, is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. These keyword lists must follow the format below:\\\\
+- Threat Class 1:
 
-The most crucial configuration set to the operation of the system is the categorisation of the most common security threats, such as DDoS attacks, malware, exploits and vulnerabilities, etc. This involves the definition of a set of search terms (keywords) associated with each class of threats. Each defined keyword must have an importance level attached to it (weight) denoting the contribution of an occurrence of this word to the score of each document. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}\\\\
+- Threat Class 2:
 
-The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}
+.\\
+.\\
+.\\
+- Threat Class N:
 
-Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.\\
-General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. \\
+keywords: \{[keyword1, weight], [keyword2, weight]...[keywordN, weight]\}
+ 
+\hfill \break \\
+The next step is to define the sources of information. This can be a very cumbersome task that demands expert knowledge and experience, as well as extensive field survey. This study focuses on data originating from public web sources. This can include websites dedicated to one or more security threats as well as social media (Twitter, Facebook, etc.) where general discussions take place. The source list must have a standard format as well:\\\\
+- Threat Class 1:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\\\
+- Threat Class 2:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\
+.\\
+.\\
+.\\
+- Threat Class N:
+
+sources: \{[url1, type], [url2, type]...[urlN, weight]\}\\\\
+Having mentioned that we can distinguish two separate categories of sources which we will name 'Targeted' and 'General'. Targeted sources are websites that provide real time information about security related issues. These sources usually provide their information in a format that is structured to some extent. Their constant monitoring can be used to raise alerts without much further processing.
+\hfill \break \\
+General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
+\hfill \break \\
+We also need to monitor the names of certain companies or organisations for which the service will be provided. Moreover, we would need to look for several software and hardware vendor name to discover vulnerabilities and known malfunctions for software tools and machinery that are used by companies and organisations. Thus the last thing the operator has to specify is a list of Clients and Vendors. These list must also have weights attached to them, which, however, must be the same for all their members. 
+\hfill \break \\
+At this point it is useful to mention that we also can monitor certain 'anti-keywords' with negative weights to sort out irrelevant information. For example the word 'attack' might be correlated with the word 'football' or the word 'bug' can be correlated with the word 'insects'. This is a good indication that the subject of the document is probably not security related. 
 
 %% GIVE EXAMPLES OF THE MODEL FROM THE PDF
 %% CHECK AGAIN
 \paragraph{Keyword definition}
+
 \hfill \break \\
 It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison.
 
@@ -262,12 +295,10 @@ For example once we perform an initial security test of a company with the globa
 
 Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be an incorrect selection of keywords.\\
 
-
-
 \paragraph{Source Definition}
 \hfill \break \\
-Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. \\
-
+Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. 
+\hfill \break \\
 The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The impotance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.\\
 
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
@@ -285,16 +316,18 @@ After the desired configuration options have been submitted, the  system can sta
 \subsubsubsection{Specification}
 
 The corresponding module will be composed of several agents, each one responsible for a different source of raw data. Each agent must read its configuration from the appropriate file which will be of a certain format for all the agents. The configuration file will contain information such as the source code directory of the specific agent, associated API keys, the type of each retrieval method (e.g. request based, streaming, etc.), the time intervals that each must be executed etc. Sensitive data such as API keys and Passwords, must be kept in a separate, protected file.
-\hfill \break \\This module will also be responsible for filtering out unrelated information such as profile pictures and uninteresting user details (Twitter, Facebook, etc.) or surrounding html code for sources that have no other means of collection rather than traditional scraping.
-\hfill \break \\As it has been mentioned before some structure can be given at this point to aid further processing. Text based documents, however, must be kept as close to the original content as possible so that if manual inspection is needed the document can be retrieved even if the related Web Resource has been removed.
+\hfill \break \\
+This module will also be responsible for filtering out unrelated information such as profile pictures and uninteresting user details (Twitter, Facebook, etc.) or surrounding html code for sources that have no other means of collection rather than traditional scraping.
+\hfill \break \\
+As it has been mentioned before some structure can be given at this point to aid further processing. Text based documents, however, must be kept as close to the original content as possible so that if manual inspection is needed the document can be retrieved even if the related Web Resource has been removed.
 
 
 \subsubsubsection{Implementation}
 
-This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible so that if a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include them in the system with minimal effort. 
+This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible. If a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include the new agents to the system with minimal effort. 
 \hfill \break \\
-A tool chaining script was written to allow the agents to be triggered automatically and share common configurations. blah blah blah.......
-
+A tool chaining script was written to allow the agents to be triggered simultaneously and share common configurations. 
+\hfill \break \\
 The script reads the list of available agents and loads their respective configuration options. It then parses the parameters given by the user regarding which agents need to be run and at what time interval. If the user provides no parameters then the default configuration options are chosen. The user can specify if they need a certain agent not to be executed by passing a -1 parameter. The script reads all the agents selected for execution and loads their source code dynamically on runtime. This last step accounts for extensibility. 
 \hfill \break \\
 The system must be in a way to determine if the agent opens new connections per request or runs over a persistent connection (e.g. streaming). This must be specified in a common configuration file that lists all the agents. In our particular example this file is formatted in YAML. 
@@ -320,12 +353,10 @@ The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}
 The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
 
 \newpage
-\paragraph*{Pastebin}
-\addcontentsline{toc}{paragraph}{Pastebin}
-\hfill \break
-\\
-\textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.\\
-\hfill \break
+\paragraph{Pastebin}
+\hfill \break\\
+\textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.
+\hfill \break\\
 From all possible \textit{pastebins} (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
 paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} has been selected to be further inspected.
 \hfill \break
@@ -342,13 +373,15 @@ This functionality, however, makes use of \textit{Google Custom Search}. Therefo
 \hfill \break
 \\
 To overcome the above limitations and collect all new pastes that arrive, a web crawler module was implemented. \textit{Scrapy} \cite{scrapy}, an open source framework for building extensible webcrawlers was used, integrated into a Python script. Pastebin's \texttt{Archive} page contains all pastes posted during the last 10 minutes. For that reason, we will crawl and fetch the contents of this page each 10 minutes. Not all data from the page provides interest this is why we will scrape the html and keep only the information that is relevant for further examination. This includes the url, the paste, the posting date and the number of unique views. By inspecting the elements required from the DOM tree, we then can parse these nodes and extract only the raw paste text. Once all this data has been gathered, it will be stored in the database.
+
 \paragraph{Phishtank}
-\hfill \break
-Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.\\
-
-Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits. \\
-
-The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. \\
+\hfill \break\\
+Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.
+\hfill \break\\
+Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits.
+\hfill \break\\
+The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. 
+\hfill \break\\
 
 Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
  
@@ -389,11 +422,40 @@ All the collected data are stored in the database.
 
 \newpage
 \subsubsection{Preprocessing \& Filtering}
-The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. To that aim we propose a 'deflation' and scoring model 
-
+The documents collected from all the public sources must be given a common format suitable for further analysis. Also the system must be able to easily distinguish which documents carry importance for further Security Analysis. 
 
 \subsubsubsection{Specification}
+We propose a 'deflation' and scoring model that will help reduce the raw data into a common format as well as help determine the documents that present interest for further analysis. 
+\hfill \break\\
+The proposed model works in a very targeted and aggressive way, counting the occurences of each predifined word and deflating the whole document to a list of these keywords. 
+\hfill \break\\
+Then it multiplies the number of occurences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
+\hfill \break\\
+The proposed format for the deflated documents is the following:\\
+
+\{document: "DocID", keywords: \lbrack \lbrack keyword1, occurences\rbrack,\lbrack keyword2, occurences\rbrack, ..., \lbrack keywordN, occurences\rbrack \rbrack\,vendors:\lbrack\lbrack vendor1, occurences\rbrack, \lbrack vendor2, occurences\rbrack, ... \lbrack vendorN, occurences\rbrack  \rbrack, clients :\lbrack\lbrack client1, occurences\rbrack, \lbrack client2, occurences\rbrack, ... \lbrack clientN, occurences\rbrack  \rbrack\, score: "score"\}
+
+\hfill \break\\
+Certain issues have to be taken into account when following the above approach. First of all we have to make sure that even one occurence of a client's name will mark the document as interesting. That can be achived either by associating the client list with a weight higher than the threshold or by perfoming binary checks for the occurences of client names (is present or not). 
+\hfill \break\\
+It is also possible that many occurences of a certain keyword, even if its importance level is minimal, can mark a certain document as interesting even though it carries no interest. This can be avoided by perfoming more sophisticated checks by calculating the entropy of each document. This however falls out of the scope of this research.
+\hfill \break\\
+It also becomes apparent that since this approach creates documents containing only the predefined keywords, other interesting but previously unknown keywords, might be filtered out. Certain ways to mitigate this problem are described in the next sections. 
+
 \subsubsubsection{Implementation}
+To test this approach we created a few thousands of fake documents containing random computer terminology, using a free python script called 'Bullshit Generator' \cite{bullgen}. We slightly modified the script to include certain additional keywords as well as to produce exactly 10000 documents and store them in our database. 
+\hfill \break\\
+We tested the previously defined model to test its effiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic ammount of data. Here is an example output produced by one execution of the software:\\\\
+\{'count': [['amro', 4], ['apple', 3], ['exploit', 0], ['vulnerability', 0], ['attack', 0], ['ddos', 0], ['deloitte', 0], ['ing', 4], ['bug', 0]], 'doc': ObjectId('54d0bf08aa4ece1e08930ec6'), 'score': 110.0\}\\
+\{'count': [['amro', 3], ['apple', 2], ['exploit', 2], ['vulnerability', 1], ['attack', 0], ['ddos', 3], ['deloitte', 2], ['ing', 3], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930f3e'), 'score': 109.0\}\\
+\{'count': [['amro', 2], ['apple', 6], ['exploit', 0], ['vulnerability', 2], ['attack', 1], ['ddos', 1], ['deloitte', 1], ['ing', 1], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930fb4'), 'score': 105.0\}\\
+\{'count': [['amro', 3], ['apple', 3], ['exploit', 3], ['vulnerability', 0], ['attack', 0], ['ddos', 0], ['deloitte', 1], ['ing', 5], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08930ff1'), 'score': 122.4\}\\
+\{'count': [['amro', 4], ['apple', 2], ['exploit', 2], ['vulnerability', 0], ['attack', 1], ['ddos', 2], ['deloitte', 1], ['ing', 4], ['bug', 0]], 'doc': ObjectId('54d0bf09aa4ece1e08931039'), 'score': 115.8\}\\
+.\\
+.\\
+.\\
+\hfill \break
+The above results are produced after applying a threshold of 100. This is probably an unrealistic scenario, however. 
 \subsubsubsection{Alternative Approaches}
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
 \paragraph{Natural Language Processing}
@@ -574,12 +636,9 @@ From the outcome what provides interest are the documents that show the \texttt{
 The word \texttt{hack} appears four times in this text(Figure 2.5), and is considered to have a higher value.
 If we analyse another document(Figure 2.6) for example the one with ID :  54c0d9c6d177b470832e5407, that has an associated score of  0.120993293348, it presents a lower score we see that the word \texttt{attack} appears less then four. However not only the frequency of the word \texttt{attack} in this text is taken in consideration but also its frequency across all documents.
 \newpage
-\subsubsection{Analytics and Mining}
+\subsubsection{Analytics \& Mining}
 This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
 At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
-\subsubsubsection{Specification}
-\subsubsubsection{Implementation}
-\subsubsection{Feedback and Assessment}
 \subsubsubsection{Specification}
 \paragraph{Data mining tasks}
 \begin{itemize}
@@ -591,7 +650,7 @@ threat discovery. However, it can be very useful for providing feedback to the s
 tuning it to be able to classify the documents for each threat category, acting together with the
 configuration step
 \item 
-Anomaly detection (Outlier/change/deviation detection): This task refers to identification of
+\textbf{Anomaly detection} (Outlier/change/deviation detection): This task refers to identification of
 unusual data records that might imply unusual behaviour in the dataset. For example, in our
 use case, a first indication that something might be possibly wrong would be an exceptional
 mention of a company name within a certain period of time. The problem here is to determine
@@ -600,7 +659,7 @@ so a certain threshold can be determined. Until sufficient amount of data has be
 can naively implement this by setting the thresholds manually. This operation is particularly
 popular in intrusion detection systems.
 \item 
-Association rule learning (Dependency modelling): This task refers to the search for
+\textbf{Association rule learning} (Dependency modelling): This task refers to the search for
 relationships between variables. One example of this is the infamous beer and diapers story.
 This test requires no training set and can be performed on any structured set of data. In our
 use case this can help us determine trends between the occurrences of keywords, such as the
@@ -608,29 +667,24 @@ name of a company together with the name of a name of an attack. The output of t
 contains metrics about the support (percentage of the documents supporting the association) as well as
 confidence (ratio of the support percentage of either part of each rule).
 \item 
-Clustering: Refers to the task of discovering groups and structures in the data that present
+\textbf{Clustering}: Refers to the task of discovering groups and structures in the data that present
 some sort of similarity, without using known structures in the data. In our case this can help us
 determine new categories of documents that have not been predefined (remember the threat
 categorisation we mentioned in the beginning).
 \item
-Regression: This task attempts to find a function which models the data with the least error.
+\textbf{Regression}: This task attempts to find a function which models the data with the least error.
 This might not be directly applicable to our specific example but based on the experience
 gathered after a certain period of time that the system will be operated, we can attempt to
 design an analytic model using regression analysis techniques.
 \item
-Summarisation: This task aims to provide a more compact representation of the data set,
-including visualisation and report generation. In our case this applies to the creation of the
-alerts to be presented to the Security Analysts. The alerting will consist of a common format
-that will apply to automatically generated events that will be propagated to the appropriate
-parties. One proposed format could be the following:
+\textbf{Summarisation}: This task aims to provide a more compact representation of the data set, including visualisation and report generation. In our case this applies to the creation of the alerts to be presented to the Security Analysts. The alerting will consist of a common format that will apply to automatically generated events that will be propagated to the appropriate parties. One proposed format could be the following:
 %\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
 This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
 \subsubsubsection{Implementation}
-\paragraph*{Association Rule}
-\addcontentsline{toc}{paragraph}{Association Rule}
-\paragraph*{Clustering}
-\addcontentsline{toc}{paragraph}{Clustering}
+\paragraph{Association Rule}
+
+\paragraph{Clustering}
 \hfill \break 
 \\
 For our specific use case clustering is important for automating the process of finding new type of Secuity threats that occur in a specific period of time. The proposed method groups related documents that belong to a certain cluster (meaning they refer to a spefic topic) and provides a list of the most frequent terms appearing in the cluster.
@@ -658,17 +712,27 @@ Classification method can be used in mapping data into specific categories such 
 
 Why we need all this algorithms? Is not possible to accomplish an automated process with just using one algorithm? The answer is simple as each algorithm has its own function. As proved before clustering discovers new data sets, association will attempt to find which keywords are related to specific documents and not at least classification that can be used in predicting n
 
+\subsubsection{Feedback and Assessment}
+During the last step of the operation the system will have to be able to produce reconfiguation sets in order to adjust its behavior and produce more accurate results in the future.
+\hfill \break\\
+At this point a Security Analyst will have to be presented with a way of assessing each alert and  determining the real importance level of each presented event.
+\hfill \break\\
+Their assessment will be recorded in the events database along with the initial alert record so that the divergence between the estimated and the actual threat level can be calculated. This result will be propagated to the various modules of the system which can afterwards re-adjust their configurable parts to achieve better accuracy.
+\hfill \break\\
+Unfortunatelly the exact way of how this is going to be realised, also falls out of the scope of this project due to time limitations. However, we are in a possition to suggest that certain Data Mining techniques discussed in the previous sections (e.g. Clustering, Classification, Regression) can be employed during this phase as well. Once large enough training sets have been built these techniques can provide valuable guidelines to the system. 
+
+
 \section{Results}
 \subsection{Demo}
 \newpage
 \section{Conclusions}
 
-
-
 \newpage
 \section{Future Work}
 
 At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
+
+
 
 \newpage
 \begin{appendices}

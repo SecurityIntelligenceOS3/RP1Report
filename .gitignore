@@ -1,9 +1,11 @@
 *.tex~
 *.*~
+*.ist
 *.log
 *.toc
 *.aux
 *.out
 *.pdf
 *.gz
+*.gl*
 Report.sycntex.gz
