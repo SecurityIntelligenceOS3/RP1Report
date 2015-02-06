@@ -381,8 +381,7 @@ Phishtank is the only 'targeted' source that we examined in this project. It is 
 Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits.
 \hfill \break\\
 The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. 
-\hfill \break\\
-
+\hfill \break\\\
 Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
  
 \paragraph{Reddit}
