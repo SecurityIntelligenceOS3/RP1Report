@@ -191,24 +191,38 @@ The proposed system extensions can spawn further research questions, namely on t
 
 
 \subsection{Related work}
-There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called MINDS, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security' \cite{minds}.  Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user. 
+There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). 
+\hfill \break \\
+There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called \texttt{MINDS}  \cite{minds}, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security'. 
+\hfill \break \\
+Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user.
+\hfill \break \\
+A related example to the previous discussed system, is a research study conducted by Shyam Varan Nath within Oracle Corporation, which highlights a technique for speeding up the process of solving crimes \cite{pattern-police} by identifying crime patterns using data mining. In order to accomplish the proposed task this paper suggests the usage of clustering task  along with geographic location for identifying and predicting possible crimes. 
+\hfill \break \\
+Another  system called \texttt{uberVU} \cite{ubervu} aims to \textit{find insights, detect influencer mentions, detect trending stories and suggest engaging content to post} from social networks such as \texttt{Twitter, Facebook or Youtube} and it is made for Marketers in order to retrieve Social Intelligence.  
+\newpage
 \subsection{Ethical implications}
 
 The main part of this research comprises of exploring current techniques and their application on IT security, as well as the specification of a system that employs Data Mining techniques to collect security intelligence. In order for the models to be defined some amount of information will have to be gathered. This information will originate solely from public sources and will be mostly historical data. In the unlikely case that any previously unnoticed security issues are encountered they will be handled with discretion and communicated only towards the appropriate targets and only with the approval of the OS3 core team and Deloitte Digital. The collection or storage of personal data is not intended and any collected information will be discarded after the end of this project. The usage of shared computational and network infrastructure will only be used for the needs of this project and within the legal limits.
 
 \newpage
 \section{Methodology and Results}
-This project was carried out in collaboration with Deloitte Risk Services, Netherlands. We first got acquainted with the Cyber-Risk Services team and were introduced to the effort already carried out towards the development of a Cyber Threat Intelligence (CTI) system. \\
-Based on the expert knowledge collected we defined the parts needed for complementing the portal developed by Deloitte, in order to derive a generalised System Architecture. The next step was to start developing the building blocks of the System to a level that would allow the creation of a functional Proof of Concept. We first developed Data Aggregators for four distinct data sources. We then looked into methods for determining the interesting parts of information as well as prepossessing the raw data into a format suitable for further analysis. After that we researched various Data Mining techniques and algorithms and realised and tested some of them against a realistic data sample. \\
-The last steps were to evaluate our results, put together a limited proof of concept and proposed system extensions and future work. \\
+This project was carried out in collaboration with Deloitte Risk Services, Netherlands. We first got acquainted with the Cyber-Risk Services team and were introduced to the effort already carried out towards the development of a Cyber Threat Intelligence (CTI) system. 
+\hfill \break \\
+Based on the expert knowledge collected we defined the parts needed for complementing the portal developed by Deloitte, in order to derive a generalised System Architecture. The next step was to start developing the building blocks of the System to a level that would allow the creation of a functional Proof of Concept. We first developed Data Aggregators for four distinct data sources. We then looked into methods for determining the interesting parts of information as well as prepossessing the raw data into a format suitable for further analysis. After that we researched various Data Mining techniques and algorithms and realised and tested some of them against a realistic data sample.
+\hfill \break \\
+The last steps were to evaluate our results, put together a limited proof of concept and proposed system extensions and future work. 
+\hfill \break \\
 The above will be described in detail in the following sections. 
 
 \subsection{Hardware and Software Used}
 
 
-Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used (oxford.studlab.os3.nl).\\ 
-For the storage of the raw well as the processed data we used MongoDB, a free and open source NoSQL database system.\\ 
-All software developed for the purposes of this project was written in the Python programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
+Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte\cite{deloitte} headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used.
+\hfill \break \\
+For the storage of the raw well as the processed data we used MongoDB\cite{mongo}, a free and open source NoSQL database system. All the applications implemented were tested on an Ubuntu Server 14.04 LTS \cite{ubuntu-server-14.04} operating system.
+\hfill \break \\ 
+All software developed for the purposes of this project was written in the Python\cite{python} programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
 
 
 \subsection{Proposed System}
@@ -839,12 +853,20 @@ terror amp deadly anxiety people terrorist tripoli video use
 \end{figure}
 \hfill \break
 By inspecting the clusters that the algorithm produced we can say with some certainty that the algorithm behaved well considering that it is an unsupervised method.
-We can clearly see that top frequent terms for Cluster 13, highlight the recent attack in Paris\cite{hebdo}. Also Cluster 15 is totally unrelated to the previous topic, and instead refers to the incident of the leaked celebrity photos\cite{fappening}. The same with Cluster 18 that discusses a terrorist attack in Israel\cite{tel-aviv}.  
+We can clearly see that top frequent terms for Cluster 13, highlight the recent attack in Paris\cite{paris-attack}. Also Cluster 15 is totally unrelated to the previous topic, and instead refers to the incident of the leaked celebrity photos\cite{fappening}. The same with Cluster 18 that discusses a terrorist attack in Israel\cite{tel-aviv}.  
+
+
 
 \paragraph{Classification}
 \hfill \break
 \\
-We used classification task to map specific data into categories such as certain threats or attacks. Because we have to classify the information given into multiple categories, we selected multi-label classification\cite{classiciation-multilabel} to implement this method. In this case we have to train each class corresponding to a label. To showcase how it works and that is a feasible attempt, we constructed a training set that contains a list of sentences as it can be seen in \textit{Figure 2.9}. In each sentence there might or might not be an \textit{attack} explicitly specified, as it belongs to a certain class that will be added to the training list.  The targeted categories are the following : \texttt{ddos,xss,spoof} with the associated number list \texttt{\{0,1,2\}} . The algorithm attempts to recognize patterns for the new incoming sentences by checking the list to which we associates corresponding numbers.    
+We propose the use of the Classification task to help us map our data into certain threat or attack categories. 
+\hfill \break
+\\
+For implementing an example of the method we selected the "one-vs-the-rest" multi-class strategy\cite{classiciation-multilabel}, since we have to classify the information given into multiple categories. This example will help showcase how the method works and that is a useful technique. We used the example code \cite{learn-classification} provided within the \textit{scikit-learn.org} website, with minor modifications.
+\hfill \break
+\\
+Classification is a supervised method and it requires a training set. Therefore we built a set that contains a list of sentences as it can be seen in \textit{Figure 2.9}. In each sentence an attack name might or might not be explicitly mentioned. This, however, does not constrain the algorithm, since each sentence already belongs to a certain class that has been added to the training list. The targeted categories are the following: \texttt{ddos,xss,spoof} with their corresponding numbers being  \texttt{\{0,1,2\}}. The algorithm attempts to recognize patterns in each incoming sentence by checking it against the list of predefined classes and assigns the sentence to its corresponding class. We should mention at this point that for more accurate results the number of the samples in the training set should be greater than the number of the members in the input dataset.
 
 \begin{figure}[h!]
 \begin{footnotesize}
@@ -867,7 +889,7 @@ target_names = ['ddos', 'xss','spoof']
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{A simple example of the built training set with the associated trained list and targeted categories }
+\caption{A simple example of a training set along with its associated trained list and targeted categories.}
 \label{fig:trainset}
 \end{figure}
 \begin{figure}[h!]
@@ -879,10 +901,9 @@ hello frm my spoofed mail and here boom ddos attack => ddos, spoof
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{The result matches to which class the specified label belongs}
+\caption{The result of the multi-label classification. It matches the class to which each input sentence belongs to.}
 \label{fig:trainset-result}
 \end{figure}
-
 \newpage
 \subsubsection{Feedback and Assessment}
 During the last step of the operation the system will have to be able to produce reconfiguration sets in order to adjust its behaviour and produce more accurate results in the future.
@@ -913,10 +934,22 @@ There is a lot of effort to be invested towards the correct implementation of th
 
 \newpage
 \section{Future Work} 
-
-At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a more detailed analysation. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
-
-
+\parbox{\linewidth}{
+At this moment we have specified a modular and pipelined system and implemented a Proof of Concept by using open source tools. The first future task would be to actually try to implement the full system architecture, and integrate it with the CTI portal that is being currently developed by Deloitte NL. }
+\hfill \break\\
+Once the system has been built, we can put it in production and use it to gather a significant amount of data over a certain period of time (approximately one year) which we can use to test the data mining algorithms thoroughly. 
+\hfill \break\\
+We can also use the data to build historical data sets that will help train the supervised data mining methods. This also allow us to implement even more methods such as Regression or Anomaly Detection. 
+\hfill \break\\
+A valuable extension to the analytics phase would be to take into account other metrics provided with each document such as votes on \textit{Reddit} or number of followers on \textit{Twitter} to determine the importance of each produced result.
+\hfill \break\\
+We can investigate Machine Learning techniques in order to implement the Feedback module and provide accurate readjustments to the System. Furthermore, methods that have already been mentioned such as Classification can be used for Sentiment Analysis something that would provide valuable insights that can be used for the feedback and sorting out false positives.
+\hfill \break\\
+By exploring NLP capabilities we can add support for other languages especially those that do not use Latin scripts (e.g. Chinese, Korean, Russian, Greek etc.).
+\hfill \break\\
+At this moment no special effort has been invested in determining best format for presenting the appropriate parties with security alerts. Special care has to be taken so the information is presented in a way that allows Security Analysts to respond as quickly as possible. 
+\hfill \break\\
+After the System has been built and tested, new requirements can be added that for example can contribute to better communication between the modules. For example this can include message brokers or triggering mechanisms that inform the System of the termination of the operation of a module.
 
 \newpage
 \begin{appendices}
@@ -951,6 +984,10 @@ US cybercrime: Rising risks, reduced readiness, PWC, Available at: \url{http://w
     V. Chandola et al. Data Mining for Cyber Security, Department of Computer Science, University of Minnesota, Springer, 2006
 \bibitem{police}
    RCP van der Veer, H.T. Roo,  A. van der Zanden, Data mining for intelligence led policing, Sentient, Amsterdam Police Force, Amsterdam, The Netherlands, 2009
+\bibitem{pattern-police}
+Shyam Varan Nath, Crime Pattern Detection Using Data Mining [online] Available at: http://cs.brown.edu/courses/csci2950-t/crime.pdf [Accessed 7 Feb. 2015].
+\bibitem{ubervu}
+Ubervu.com, (2015). uberVU - Instant Brand Insights powered by Social Media. [online] Available at: https://www.ubervu.com [Accessed 7 Feb. 2015].
 \bibitem{nltk}
 Nltk.org, (2015). Natural Language Toolkit - NLTK 3.0 documentation. [online] Available at: \url{http://www.nltk.org/}
 
@@ -1001,8 +1038,16 @@ Gonçalves, H. (2015). K-means clustering - algorithm and examples. [online] Onm
 \bibitem{k-means-20news}
 Scikit-learn.org, (2015). Clustering text documents using k-means — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/auto_examples/document_clustering.html} 
 
+\bibitem{paris-attack}
+Bbc.com, (2015). BBC News - Paris attacks. [online] Available at: \url{http://www.bbc.com/news/world-europe-30717580} 
+
+\bibitem{fappening}
+MIRROR, (2015). Nude celebrity photos leaked. [online] Available at: http://www.mirror.co.uk/all-about/nude-celebrity-photos-leaked [Accessed 7 Feb. 2015].
+\bibitem{tel-aviv}
+ Haaretz.com, (2015). 12 Israelis wounded in stabbing attack on Tel Aviv bus - Diplomacy and Defense. [online] Available at: http://www.haaretz.com/news/diplomacy-defense/1.638210 
 \bibitem{classiciation-multilabel}
 Scikit-learn.org,. '1.12. Multiclass And Multilabel Algorithms — Scikit-Learn 0.16.Dev Documentation'. N.p., 2015. Web. 
- 
+\bibitem{learn-classification}
+Scikit-learn.org, (2015). Classification of text documents using sparse features — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/auto_examples/document_classification_20newsgroups.html} 
 \end{thebibliography}
 \end{document}
