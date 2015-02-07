@@ -123,6 +123,7 @@
 \begin{abstract}
 \noindent
 This project deals with gathering Intelligence about IT Security incidents by mining data originating from the public Web. Our aim is to propose the architecture of a software system that is able to collect, preprocess and mine public information as well as alert and assess the threat level. \\
+\\
 A small Proof of Concept implementation for the proposed System Architecture is an outcome of this research. 
 \end{abstract}
 \newpage
@@ -282,14 +283,50 @@ We also need to monitor the names of certain companies or organisations for whic
 At this point it is useful to mention that we also can monitor certain 'anti-keywords' with negative weights to sort out irrelevant information. For example the word 'attack' might be correlated with the word 'football' or the word 'bug' can be correlated with the word 'insects'. This is a good indication that the subject of the document is probably not security related. 
 
 \paragraph{Keyword Definition}
-TODO
-%\hfill \break \\
-%It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison.
+\hfill \break \\
+It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. 
+\hfill \break \\
+To construct and select the relevant keywords\footnote{This keywords applied alone on social networks such as \textit{Twitter.com} or \textit{Pastebins} might produce a huge number of results but defining a list of keywords that might be discussed for a certain category of attacks in combination with a specific client name can narrow down the amount of results }, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed.
+\hfill \break \\
+Assuming that we are searching for all possible general attacks we can select three most common and popular once \cite{owasp} and associate a possible list of keywords to these threats. 
+\begin {table}[h!]
+\label{tab:title} 
+\begin{center} 
+\begin{longtable}{|l | l|}
+\hline
+Type of Attack & Related keywords \\ 
+\hline
+ Denial-of-Service (DoS) & ddos attack \\ 
+ 						& take down website \\ 
+ 						&  server/computer crush  \\
+ 						& server take down \\
+ 						& ... \\
 
-%For example once we perform an initial security test of a company with the global keywords( e.g. sql injection, ddos attack) for each company we have an instance of the agent, with company specific keywords, to add value to the monitored data and get the correct results for each company there should be multiple instances . Therefore, if we add to the aggregator module specific keywords they might give high performance on certain news highlights in a specific moment, but as we want to protect companies over time after clearing them of the most possible attacks such as sql injections to have a continuous monitoring of their system and to add value to our monitoring we should make a second monitoring instance that is more probed to their specific company needs. To construct and select the relevant keywords, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed. 
-
-%Assuming that our target are all possible general attacks we can select the most common and popular \cite{owasp} and if we associate a list of keywords to some of this threats and apply a search method with the defined list, for a short period of time this can give some good results, once we stretch the time period we will get thousand of hits and this would be an incorrect selection of keywords.\\
-
+\hline
+SQL Injection 	& plain text password\\
+				& clear text password \\
+				& plain text password username \\
+				& clear text password username\\
+				& dump customers \\
+				& dump passwords \\
+				& blackmail dump accounts \\
+				& leaked passwords \\
+				& ... \\
+				
+\hline
+Account hijacking & account hacked \\
+				  & account images changed hack \\
+				  & take control account \\
+				  & account add/remove content \\ 
+				  & ... \\	
+\hline
+... & ...\\		  
+\hline
+\end{longtable}
+\caption {The table contains some example keywords related to possible attacks. When used in combination with a Client or Company Name they might indicate an upcoming or passed attack.}
+\end{center} 
+\end {table}
+\newpage
 \paragraph{Source Definition}
 \hfill \break \\
 Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. 
@@ -298,7 +335,6 @@ The question might arise, which sources can be considered as reliable? In order 
 
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
 
-\newpage
 \subsubsubsection{Implementation}
 There has been no implementation effort from our side on this particular system module. However, as it has been mentioned before, there is ongoing effort inside the company towards the development of a CTI portal which will be in essence a configuration provider for the rest of the system. This project proposes the integration of the suggested system with the aforementioned CTI portal that will act as the configuration module. 
 
@@ -468,7 +504,7 @@ Besides the previously mentioned deflation method we have also tested different 
 \paragraph{Natural Language Processing}
 \hfill \break\\
 \parbox{\linewidth}{
-Natural Language Processing comprises of numerous different tasks such as automatic summarization, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
+Natural Language Processing consists of numerous different tasks such as automatic summarization, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
 \hfill \break
 \\
 Although all of the aforementioned functionalities are important for text processing, part-of-speech tagging in particular can be used in our case to distinguish the meaning of a certain fragment of text. Being able to tell if a certain word is a noun, verb or adjective can help discover the importance of that specific word within a specific topic.  We are mostly interested in distinguishing the nouns since they determine the topic of a sentence.}
@@ -480,7 +516,7 @@ Compared to the suggested deflation method, this technique does not require spec
 The aggregation module collects unstructured data, thus in order for us to get the meaning of a certain block of text and determine its relevance, we would have first process it and give it structure. 
 \hfill \break
 \\
-The first step would require removing all stop words such as \textit{the, an, a, about, what, where, etc.} This list can be further expanded to contain any word that one would consider not important, such as numbers, punctuation marks, technical abreviatons (e.g. http), etc.
+The first step would require removing all stop words such as \textit{the, an, a, about, what, where, etc.} This list can be further expanded to contain any word that one would consider not important, such as numbers, punctuation marks, technical abbreviations (e.g. http), etc.
 \hfill \break
 \\
 Another task called \textit{Stemming} performs suffix removal on verbs, adjectives, etc. 
@@ -524,7 +560,8 @@ And it got  :  10  comments
 \end{figure}
 \hfill \break
 \\
-The Natural Language Toolkit \cite{nltk} can be integrated into Python code. It provides methods that allow working with \textit{human language data}. We used a few of the functions provided performing sentence counting, total words coungint and most frequent words determination.  The result, seen in Figure~\ref{fig:nltk}, includes the following: the posted URL, the title associated to it, and the output of the nltk process. In this particular example, a keyword search was first performed to find the posts that contain the word \textit{hacked}. For these messages the produced results can be used to determine their importance level, by producing statistical view of the keywords that appear in the text. Using the gathered knowledge and by exploring more NLP capabilities we can determine the importance level of separate posts.
+\\
+The Natural Language Toolkit \cite{nltk} can be integrated into Python code. It provides methods that allow working with \textit{human language data}. We used a few of the functions provided to perform sentence counting, total words counting and most frequent words determination.  The result, seen in Figure~\ref{fig:nltk}, includes the following: the posted URL, the title associated to it, and the output of the nltk process. In this particular example, a keyword search was first performed to find the posts that contain the word \textit{hacked}. For these messages the produced results can be used to determine their importance level, by producing statistical view of the keywords that appear in the text. Using the gathered knowledge and by exploring more NLP capabilities we can determine the importance level of separate posts.
 \newpage
 \paragraph{TF-IDF}
 \hfill \break
@@ -533,52 +570,6 @@ TF-IDF \cite{tf-idf} stands for \textit{Term Frequency–Inverse Document Freque
 \hfill \break 
 \\
 To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
-\hfill \break 
-\\
-In order to test how this algorithm actually works we applied it on approximately 5000 real messages gathered from \textit{pastebin.com}. We queried the database to get the total number of documents in the collection:
-
-\begin{spverbatim}
-> show collections
-system.indexes
-pastebin
-> db.pastebin.count()
-5141
-\end{spverbatim}
-\hfill \break 
-We chose as our main query terms words like \texttt{\{attack, hack\}} to see how the algorithm will behave and which documents are possibly associated with our search. Due to implementation misconfigurations the execuion took longer then expected. Considering that our main purpose was to test Data Mining algorithms we did not perform a more profound analysis of the code.
-\begin{figure}[h!] 
-\begin{footnotesize} 
-\begin{spverbatim}
-....
-TF Doc: 54c0d9c6d177b470832e5407 0.0181818181818 -> attack
-TF Doc: 54c00c7ad177b4685475c1d8 0.017094017094 -> attack
-TF Doc: 54c01d5ad177b468f5807552 0.0227272727273 -> attack
-TF Doc: 54c009ecd177b4682d5165c1 0.0120481927711 -> attack
-TF Doc: 54c0d1bfd177b46ff35304dd 0.00564971751412 -> attack
-TF Doc: 54c0d1a8d177b46ff35304b8 0.00564971751412 -> attack
-IDF:  attack -> 6.65463113416
-TF_IDF:  54c662c3d177b4279d30aecd attack -> 0.0610516617813
-TF_IDF:  54c014ddd177b4689699a889 attack -> 0.0375967860687
-TF_IDF:  54c7e373d177b43790433dde attack -> 0.0386897158963
-TF_IDF:  54c00c82d177b4685475c1e5 attack -> 0.0875609359758
-TF_IDF:  54c0eae7d177b4719596d5df attack -> 0.0924254324189
-TF_IDF:  54c0cf24d177b46fa541e084 attack -> 0.0373855681694
-TF_IDF:  54c01232d177b4687bd24088 attack -> 0.123999337904
-....
-\end{spverbatim}
-\captionsetup{font=small}
-\caption{A sample from the complete TF-IDF algorithm result. For each function the documentID with associated score and query word is provided}
-\end{footnotesize}
-\end{figure}
-The main reason that contributes to high computational costs was the function that multiplies the TF with the IDF scores and produces the overall score. For 5141 messages the total execution time came to around 15 minutes. If we just calculate the TF and IDF scores the algorithm will run in the following time values:
-\begin{spverbatim}
-real	0m0.694s
-user	0m0.508s
-sys	0m0.023s
-\end{spverbatim}
-\hfill \break 
-However costly, this method still provides a good statistical view on the importance of the documents associated to the specified keywords. 
-\hfill \break 
 \begin{figure}[h!] 
 \begin{footnotesize}
 \begin{spverbatim}
@@ -612,20 +603,61 @@ Overall TF-IDF scores for query 'attack hack'
 \caption{Overall TF-IDF Result applied on \textit{Pastebin} data, that specifies document ID with the associated score, for the query terms \texttt{attack, hack}}
 \label{fig:overall}
 \end{figure}
+To test how this algorithm actually works we applied it on approximately 5000 real messages gathered from \textit{pastebin.com}. We queried the database to get the total number of documents in the collection:
+
+\begin{spverbatim}
+> show collections
+system.indexes
+pastebin
+> db.pastebin.count()
+5141
+\end{spverbatim}
+\hfill \break 
+We chose as our main query terms words such as \texttt{attack} and \texttt{hack} to see how the algorithm will behave and which documents are possibly associated with our search. Due to implementation misconfiguration the execution took longer then expected. Considering that our main purpose was to test Data Mining algorithms we did not perform a more profound analysis of the code.
+\begin{figure}[h!] 
+\begin{footnotesize} 
+\begin{spverbatim}
+....
+TF Doc: 54c0d9c6d177b470832e5407 0.0181818181818 -> attack
+TF Doc: 54c00c7ad177b4685475c1d8 0.017094017094 -> attack
+TF Doc: 54c01d5ad177b468f5807552 0.0227272727273 -> attack
+TF Doc: 54c009ecd177b4682d5165c1 0.0120481927711 -> attack
+TF Doc: 54c0d1bfd177b46ff35304dd 0.00564971751412 -> attack
+TF Doc: 54c0d1a8d177b46ff35304b8 0.00564971751412 -> attack
+IDF:  attack -> 6.65463113416
+TF_IDF:  54c662c3d177b4279d30aecd attack -> 0.0610516617813
+TF_IDF:  54c014ddd177b4689699a889 attack -> 0.0375967860687
+TF_IDF:  54c7e373d177b43790433dde attack -> 0.0386897158963
+TF_IDF:  54c00c82d177b4685475c1e5 attack -> 0.0875609359758
+TF_IDF:  54c0eae7d177b4719596d5df attack -> 0.0924254324189
+TF_IDF:  54c0cf24d177b46fa541e084 attack -> 0.0373855681694
+TF_IDF:  54c01232d177b4687bd24088 attack -> 0.123999337904
+....
+\end{spverbatim}
+\captionsetup{font=small}
+\caption{A sample from the complete TF-IDF algorithm result. For each function the documentID with associated score and query word is provided}
+\end{footnotesize}
+\end{figure}
+The main reason that contributes to high computational costs was the function that multiplies the TF with the IDF scores and produces the overall score. For 5141 messages the total execution time came to around 15 minutes. If we just calculate the TF and IDF scores the algorithm will run in the following time values: 
+\begin{spverbatim}
+real	0m0.694s	;	 	user	0m0.508s	;	sys	0m0.023s
+\end{spverbatim}
 \hfill \break
+However costly, this method still provides a good statistical view on the importance of the documents associated to the specified keywords. 
+\hfill \break \\
 What is actually interesting here is to look at the documents that are included in the \texttt{Overall TF-IDF scores for query "attack hack"} section (Figure~\ref{fig:overall}). The document with the highest score (the ones with a score greater than 1 should not be considered), is the most relevant. In this example it is the document \texttt{54c76e02d177b432b0ca7d0b} with a  score equal to 0.610428075355 (Figure~\ref{fig:android}).
 \hfill \break 
 \begin{figure}[h!]
 \begin{footnotesize}
 \begin{spverbatim}
-> db.test_collection.find({_id:ObjectId('54c76e02d177b432b0ca7d0b')})
+> db.pastebin.find({_id:ObjectId('54c76e02d177b432b0ca7d0b')})
 { "_id" : ObjectId("54c76e02d177b432b0ca7d0b"), "url" :
  "http://pastebin.com/QNxg2fGz", "uniq_visitors" : [ "152" ],
   "paste" : [ "http://besthacksgames.com android cheat engine cheat engine for android cheat engine android android games hack cheat engine 5.5 android game hack android game hacks android cheat engine" ], "time" : [ "Tuesday 27th of January 2015 04:51:41 AM CDT" ] }
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result for retrieving the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}}
+\caption{MongoDB result when retrieving the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that has a higher score for the word \texttt{hack}}
 \label{fig:android}
 \end{figure}
 
@@ -633,26 +665,25 @@ What is actually interesting here is to look at the documents that are included 
 \begin{footnotesize}
 \begin{spverbatim}
 
-> db.test_collection.find({_id:ObjectId('54c0d9c6d177b470832e5407')})
+> db.pastebin.find({_id:ObjectId('54c0d9c6d177b470832e5407')})
 { "_id" : ObjectId("54c0d9c6d177b470832e5407"), "url" :
  "http://pastebin.com/dKnHTH1H", "uniq_visitors" : [ "147" ],
   "paste" : 
- [ "<!DOCTYPE html> <html>    <head>        
-  <title>Scripting Attack Demo</title>        <link />        <script>       
-   // find out the location url      
-    name=decodeURIComponent(window.location.search.substring(1)); 
-    console.log(name); name=fred is the sort of thing we expect to append... 
-    //
-     %3Cscript%3Ealert%28%27You%20are%20under
-     %20attack%27%29%3C/script%3E     
-      or this... %3Cscript src=siteB/evil.js%3E%3C/script%3E        
-      // a trivial fixer        
-      name = name.replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\");                    document.write('Hello ' + name);      
+ 	[ "<!DOCTYPE html> <html>    <head>      <title>Scripting Attack 						Demo</title>        <link />        <script>       
+   	// find out the location url      
+   	 name=decodeURIComponent(window.location.search.substring(1)); 
+   	 console.log(name); name=fred is the sort of thing we expect to append... 
+   	 //
+    	 script alert  You are under
+    	  attack /script     
+    	  or this...  script src=siteB/evil.js /script         
+     	 // a trivial fixer        
+     	 name = name.replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\");                    document.write('Hello ' + name);      
         </script>        <meta />   </head> <body></body></html>" ], "time" : [ "Thursday 22nd of January 2015 05:02:13 AM CDT" ] }
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result for retrieving the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time}}
+\caption{MongoDB result when retrieving the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time},that has a lower score for the work \texttt{attack}}
 \label{fig:script}
 \end{figure}
 \hfill \break 
@@ -711,10 +742,10 @@ This presents the analyst with an event informing them about a security incident
 \paragraph{Clustering}
 \hfill \break 
 \\
-For our specific use case Clustering is important for automating the process of finding new types of Secuity Threats that arise during a specific period of time. 
+For our specific use case Clustering is important for automating the process of finding new types of Security Threats that arise during a specific period of time. 
 \hfill \break 
 \\
-The method described below, groups documents that refer to a spefic topic into clusters and provides a list of the most frequently occuring terms within each cluster.
+The method described below, groups documents that refer to a specific topic into clusters and provides a list of the most frequently occurring terms within each cluster.
 \hfill \break 
 \\
 For clustering a number of collected documents within the database in K categories we could use the K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. This algorithm \cite{k-means-example} attempts to find K non-overlapping clusters. It takes the desired number of clusters, K, and selects K initial centroids in a  random manner. Thus the information will be divided into K clusters. It assigns each observation point(word) to its closest centroid, where each collection of points(words) forms a cluster. Within the cluster a new centroid selected by calculating the eucledian distance between the gathered words. This process runs iteratively and stops when the clusters do not change any more.
@@ -723,7 +754,7 @@ For clustering a number of collected documents within the database in K categori
 There is no guarantee that the result produced will be optimal. The outcome might differ each time, depending on how the initial centroids have been chosen. An important factor that we need to mention at this point is the selection of number K, as an incorrect choice might lead to non-optimal results. There are several procedures\cite{procedures-for-kmeans} for calculatint the favourable number of clusters but this is out of scope of this project. For this example we will chose the number of clusters that will make sense compared to the amount of data gathered.
 \hfill \break 
 \\
-In order to implement the proposed algorithm the free and open source scikit-learn \cite{sklearn} toolkit was used. It provides a library collection called SKlearn which can be used in Python scripts. Following an example that attemps to categorize 20 news groups \cite{k-means-20news}, provided as a tutorial at the sklearn website, and adapting it to use our collected data we tried to find out which are the documents related to each other in each cluster. We applied the algorithm on over 600000 messages from Twitter and the expected to have them categorised in 20 groups. From all the clusters obtained, three of them showed considerable interest as they present real world events that took place recently (Figure~\ref{fig:clusters}). 
+In order to implement the proposed algorithm the free and open source scikit-learn \cite{sklearn} toolkit was used. It provides a library collection called SKlearn which can be used in Python scripts. Following an example that attempts to categorize 20 news groups \cite{k-means-20news}, provided as a tutorial at the sklearn website, and adapting it to use our collected data we tried to find out which are the documents related to each other in each cluster. We applied the algorithm on over 600000 messages from Twitter and the expected to have them categorised in 20 groups. From all the clusters obtained, three of them showed considerable interest as they present real world events that took place recently (Figure~\ref{fig:clusters}). 
 
 \begin{figure}[h!]
 \begin{footnotesize}
@@ -739,28 +770,64 @@ terror amp deadly anxiety people terrorist tripoli video use
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{K-means Clusters}
+\caption{A sample from the complete K-means Clusters Result produced from  600000 messages originated from \textit{Twitter.com} }
 \label{fig:clusters}
 \end{figure}
 \hfill \break
 By inspecting the clusters that the algorithm produced we can say with some certainty that the algorithm behaved well considering that it is an unsupervised method.
 We can clearly see that top frequent terms for Cluster 13, highlight the recent attack in Paris\cite{hebdo}. Also Cluster 15 is totally unrelated to the previous topic, and instead refers to the incident of the leaked celebrity photos\cite{fappening}. The same with Cluster 18 that discusses a terrorist attack in Israel\cite{tel-aviv}.  
 
-\paragraph{Classification} TODO
+\paragraph{Classification}
 \hfill \break
 \\
-%Classification method can be used in mapping data into specific categories such as threats and attacks. To showcase how it works and that is a feasible attempt, we constructed a training set that contains a list of sentences. Each of these might have or not an associated city because it belongs to a class. Our targets are three cities: Amsterdam, Tokyo, New York which we will number as following: Amsterdam -\textgreater  0, Tokyo -\textgreater 1, New York -\textgreater 2. The algorithm attempts to recognize patterns for the new incoming sentences. How does it matches exactly to which city a new entry might belong? This can be completed by constructing a list to which we will associate the corresponding number or String(city name). First Natural Language Processing tasks such as stop removal words and stemming will be applied, after TF-IDF al    
+We used classification task to map specific data into categories such as certain threats or attacks. Because we have to classify the information given into multiple categories, we selected multi-label classification\cite{classiciation-multilabel} to implement this method. In this case we have to train each class corresponding to a label. To showcase how it works and that is a feasible attempt, we constructed a training set that contains a list of sentences as it can be seen in \textit{Figure 2.9}. In each sentence there might or might not be an \textit{attack} explicitly specified, as it belongs to a certain class that will be added to the training list.  The targeted categories are the following : \texttt{ddos,xss,spoof} with the associated number list \texttt{\{0,1,2\}} . The algorithm attempts to recognize patterns for the new incoming sentences by checking the list to which we associates corresponding numbers.    
 
-%Why we need all this algorithms? Is not possible to accomplish an automated process with just using one algorithm? The answer is simple as each algorithm has its own function. As proved before clustering discovers new data sets, association will attempt to find which keywords are related to specific documents and not at least classification that can be used in predicting n
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
+X_train = np.array(["On the following site there is evidence of ddos attack ",
+                    "a lot of attacks have been ddos encountered",
+                    "some attacks are not only ddos or xss",
+                    "ddos will make your computer impossible to use",
+                    "e-mail addresses for spoofing",
+                    "there has been noticed some spoofing action",
+                    "someone's email got spoofed",
+                    "spoofing is for attackers fun",
+                    "nothing can compare with ddos attack and spoofing same time",
+                    "some ddos and spoofing has been monitored",
+                    "I just want to type something spoofing more about ddos"])
 
+y_train = [[0],[0],[0,1],[0],[2],[2],[2],[2],[0,2],[0,2],[2,0]]
+target_names = ['ddos', 'xss','spoof']
+
+\end{spverbatim}
+\end{footnotesize}
+\captionsetup{font=small}
+\caption{A simple example of the built training set with the associated trained list and targeted categories }
+\label{fig:trainset}
+\end{figure}
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
+Spoofed addresses found on this site => spoof
+ddos lala somewhere in the sky => ddos
+hello frm my spoofed mail and here boom ddos attack => ddos, spoof
+\end{spverbatim}
+\end{footnotesize}
+\captionsetup{font=small}
+\caption{The result matches to which class the specified label belongs}
+\label{fig:trainset-result}
+\end{figure}
+
+\newpage
 \subsubsection{Feedback and Assessment}
-During the last step of the operation the system will have to be able to produce reconfiguation sets in order to adjust its behavior and produce more accurate results in the future.
+During the last step of the operation the system will have to be able to produce reconfiguration sets in order to adjust its behaviour and produce more accurate results in the future.
 \hfill \break\\
 At this point a Security Analyst will have to be presented with a way of assessing each alert and  determining the real importance level of each presented event.
 \hfill \break\\
 Their assessment will be recorded in the events database along with the initial alert record so that the divergence between the estimated and the actual threat level can be calculated. This result will be propagated to the various modules of the system which can afterwards re-adjust their configurable parts to achieve better accuracy.
 \hfill \break\\
-Unfortunatelly the exact way of how this is going to be realised, also falls out of the scope of this project due to time limitations. However, we are in a possition to suggest that certain Data Mining techniques discussed in the previous sections (e.g. Clustering, Classification, Regression) can be employed during this phase as well. Once large enough training sets have been built these techniques can provide valuable guidelines to the system. 
+Unfortunately the exact way of how this is going to be realised, also falls out of the scope of this project due to time limitations. However, we are in a position to suggest that certain Data Mining techniques discussed in the previous sections (e.g. Clustering, Classification, Regression) can be employed during this phase as well. Once large enough training sets have been built these techniques can provide valuable guidelines to the system. 
 
 \newpage
 \section{Conclusions}
@@ -771,7 +838,7 @@ We proposed a uniform way of providing initial configuration options for the sys
 \hfill \break\\
 We developed aggregation agents for four different Web sources and collected 2GB of data which we used as a test dataset for the next parts of the system. 
 \hfill \break\\
-We tested different methods for preprossesing and filtering the collected documents. Due to the fact that mature methods such as Natural Language Processing techniques or TF-IDF needed to be investigated more deeply in order to fit our purpose, we instead proposed a different document deflation and scoring method. After putting this method to the test we can conclude that it is fast and efficient enough to be included at the preprossesing phase. 
+We tested different methods for preprocessing and filtering the collected documents. Due to the fact that mature methods such as Natural Language Processing techniques or TF-IDF needed to be investigated more deeply in order to fit our purpose, we instead proposed a different document deflation and scoring method. After putting this method to the test we can conclude that it is fast and efficient enough to be included at the preprocessing phase. 
 \hfill \break\\
 For the analysis of the collected data we tested several Data Mining tasks, namely Association Rule Learning, Clustering and Classification. The use of the remaining Data Mining techniques in our proposed system was briefly mentioned. The results produced by the tested algorithms were deemed as promising. 
 \hfill \break\\
@@ -781,9 +848,9 @@ There is a lot of effort to be invested towards the correct implementation of th
 
 
 \newpage
-\section{Future Work} TODO
+\section{Future Work} 
 
-%At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a further analyse. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
+At this moment we have implemented a modular and pipelined system by using open source tools. As a future extension, one target would be to have a full system implementation. This system can be further integrated with already developed CTI (Cyber Threat Intelligence) portal. Due to the lack of time, we have build a simple training set in the classification module, just to showcase that it is a feasible attempt to categorize a new given set of items based on the previous trained set. A normal step would be to build numerous training sets from the real world data, gathered from social websites, and test them on the new incoming data. This step requires time as new attacks might happen in a week, month or year. Therefore at least one year would be necessary to have a stable, favourable trained set. Classification method can also be used for exploring sentiment analyses for the collected messages. To build a set that will distinguish false positives, at first this can be done manually by a Security Analyst which could split a real attack from just a random message. Moreover, natural language processing capabilities can be explored to filter messages from all the unnecessary data and retrieve only the interesting data that can be further structured for a more detailed analysation. Clustering method that we proposed for finding new categories of attacks that might have been omitted, uses a random K number defined by user. For optimised results, a good solution would be to check the proposed methods for finding the optimal number of clusters in a given dataset. An expected outcome for the assessment module would be the ability to rise real time alerts in the moment a threat or attack to certain company or client is found.
 
 
 
@@ -869,6 +936,9 @@ Gonçalves, H. (2015). K-means clustering - algorithm and examples. [online] Onm
 \bibitem{procedures-for-kmeans}    Glenn W. Milligan, Martha C. Cooper , An examination of procedures for determining the number of clusters in a data set
 \bibitem{k-means-20news}
 Scikit-learn.org, (2015). Clustering text documents using k-means — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/auto_examples/document_clustering.html} 
+
+\bibitem{classiciation-multilabel}
+Scikit-learn.org,. '1.12. Multiclass And Multilabel Algorithms — Scikit-Learn 0.16.Dev Documentation'. N.p., 2015. Web. 
  
 \end{thebibliography}
 \end{document}
