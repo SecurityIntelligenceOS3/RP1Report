@@ -150,7 +150,11 @@ This has been a great opportunity for us to experience working with a large mult
 \section{Introduction (NEEDS REVISION)}
 %\addcontentsline{toc}{section}{Introduction}
 \parbox{\linewidth}{
-With the increasing number of cyber-attacks and the growth of computer crime worldwide, it becomes apparent that IT security is a major concern and crucial survival factor for large companies, organisations and institutions of any sort. Security Operations departments working to ensure confidentiality, integrity and availability for the system infrastructure of their organisation, invest huge  parts \cite{cyber} of their time and effort in detecting threats in real time. A very valuable source of security intelligence, vital to cyber-risk assessment, is information mined from data posted on public sites such as "pastebins" or social networks. However, this is a very cumbersome task due to the lack of Natural Language Processing capabilities in most of the existing tools. Moreover, as recent events have showcased \cite{sony}, several threats arise from governments and criminal associations originating from countries whose languages use non-latin scripts (Chinese, Russian, Korean, etc.). It is, hence, important to have data mining tools that provide support for such alphabets and languages, since a lot of a security intelligence can be discovered in such texts. The main goals of this research project will be to explore the various public data and detect the most appropriate among them. Moreover, numerous current data analytics techniques as well as their application on security related issues will be assessed. Lastly the above knowledge will be applied on the implementation of a simple system that will work as a proof-of-concept and help determine the technical feasibility, storage requirements and operational cost of such a system. This project was proposed by and will carried out in co-operation with Deloitte NL. 
+With the increasing number of cyber-attacks and the growth of computer crime worldwide, it becomes apparent that IT security is a major concern and crucial survival factor for large companies, organisations and institutions of any sort. Security Operations departments working to ensure confidentiality, integrity and availability for the system infrastructure of their organisation, invest huge  parts \cite{cyber} of their time and effort in detecting threats in real time. A very valuable source of security intelligence, vital to cyber-risk assessment, is information mined from data posted on public sites such as "pastebins" or social networks. However, this is a very cumbersome task due to the lack of Natural Language Processing capabilities in most of the existing tools.\hfill \break \\
+The aim of our research is to propose a system that is capable of detecting possible security threats and creating alerts about incidents by applying Data Mining tasks on data collected from various different public Web sources, that have been further structured and filtered. The system must be configurable in order to include \hfill \break \\
+For each distinct part in the proposed System Architecture, we define its specifications and give 
+
+This project was proposed by and carried out in co-operation with Deloitte Netherlands. 
 }
 \newpage
 \subsection{Research Questions}
@@ -502,7 +506,7 @@ Besides the previously mentioned deflation method we have also tested different 
 \paragraph{Natural Language Processing}
 \hfill \break\\
 \parbox{\linewidth}{
-Natural Language Processing consists of numerous different tasks such as automatic summarization, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
+Natural Language Processing consists of numerous different tasks such as automatic summarisation, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
 \hfill \break
 \\
 Although all of the aforementioned functionalities are important for text processing, part-of-speech tagging in particular can be used in our case to distinguish the meaning of a certain fragment of text. Being able to tell if a certain word is a noun, verb or adjective can help discover the importance of that specific word within a specific topic.  We are mostly interested in distinguishing the nouns since they determine the topic of a sentence.}
@@ -564,7 +568,7 @@ The Natural Language Toolkit \cite{nltk} can be integrated into Python code. It 
 \paragraph{TF-IDF}
 \hfill \break
 \\
-TF-IDF \cite{tf-idf} stands for \textit{Term Frequency–Inverse Document Frequency} and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words within that document. If that word appears in other documents as well it will be less unique and thus receive a lower score. That score refers to the IDF calculation. 
+TF-IDF \cite{tf-idf} stands for \textit{Term Frequency-Inverse Document Frequency} and it is used to statistically score the importance of a word in a document or across a collection of documents. A word will be considered important if it appears multiple times into a document. TF is calculated by counting how many times the specific word appears, over the total number of words within that document. If that word appears in other documents as well it will be less unique and thus receive a lower score. That score refers to the IDF calculation. 
 \hfill \break 
 \\
 To determine the documents most relevant to specific keywords, it is first required to define certain query terms relevant to known threat categories. The algorithm will take the query into account and will produce a statistical list of the most significant documents as a result. This is an automated method for sorting document importance according to a specified search term. 
@@ -742,13 +746,63 @@ This presents the analyst with an event informing them about a security incident
 \paragraph{Association Rule Learning}
 \hfill \break 
 \\
-Association Rule Learning is usually performed on databases that contain sales transactions (e.g. {milk, butter, bread, jam}) and for that reason it is sometimes referred to as Market Basket Analysis \cite{assoc1}. However, since we have documents deflated to contain only certain keywords, this method is very suitable to help us distinguish frequent item sets. 
+Association Rule Learning is usually performed on databases that contain sales transactions (e.g. \{milk, butter, bread, jam\}) and for that reason it is sometimes referred to as Market Basket Analysis \cite{assoc1}. However, since we have documents deflated to contain only certain keywords, this method is very suitable to help us distinguish frequent item sets. 
 \hfill \break 
 \\
-The most commonly used algorithm for performing this operation is called Apriori \cite{apriori1}. It  employs a "bottom up" approach, during which frequent subsets are extended one item at a time, a step known as \textit{candidate generation}. All groups of candidates are tested against the data. The algorithm terminates when no further successful extensions can be found.
+The most commonly used algorithm for performing this operation is called Apriori \cite{apriori1}. It  employs a "bottom up" approach, during which frequent subsets are extended one item at a time, a step known as \textit{candidate generation}. All groups of candidates are tested against the data. The algorithm terminates when no further successful extensions can be found. The algorithm produces two part rules that have the format $X \rightarrow Y$. This denotes that when subset $X$ occurs, subset $Y$ is likely to occur as well.  \hfill \break 
+\\
+We produced an example implementation of the algorithm by using the \texttt{associate}\cite{orange-assoc} package from the \texttt{Orange}\cite{orange} analytics and visualisation framework. The code was tested on actual documents originating from \texttt{Twitter}, deflated against certain keywords.  \hfill \break 
+\\
+For each association rule produced (Figure~\ref{fig:assoc}), three quantitative statistical measures that denote the importance of the rule. This measures are called \texttt{Support}, \texttt{Confidence} and \texttt{Lift}. Support refers to to the fraction of the documents that contain both $X$ and $Y$ parts of the rule, while Confidence measures how often each item in Y appears in documents that contain X. Lift is an expectance measure denoting the correlation between each part of the rule. A Lift value greater than 1, for example, shows that the two parts of the rule appear together more often than expected, i.e it is more possible to find these two sets together rather than alone. 
 \hfill \break 
 \\
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
 
+ supp    conf    lift,  rule
+0.014   0.276   9.196   "exploit" -> "vulnerability"
+0.014   0.465   9.196   "vulnerability" -> "exploit"
+0.032   0.640   2.165   "exploit" -> "attack"
+0.032   0.109   2.165   "attack" -> "exploit"
+0.014   0.154   1.072   "charlie" -> "paris"
+0.014   0.096   1.072   "paris" -> "charlie"
+0.012   0.133   0.960   "charlie" -> "paris" "attack"
+0.012   0.865   2.928   "charlie" "paris" -> "attack"
+0.012   0.165   1.148   "charlie" "attack" -> "paris"
+0.012   0.083   1.148   "paris" -> "charlie" "attack"
+0.012   0.086   0.960   "paris" "attack" -> "charlie"
+0.012   0.040   2.928   "attack" -> "charlie" "paris"
+0.072   0.808   2.735   "charlie" -> "attack"
+0.072   0.245   2.735   "attack" -> "charlie"
+0.079   0.517   1.565   "password" -> "account"
+0.079   0.240   1.565   "account" -> "password"
+0.013   0.082   0.340   "password" -> "hacked"
+0.013   0.052   0.340   "hacked" -> "password"
+0.122   0.758   5.199   "nude" -> "jennifer"
+0.122   0.836   5.199   "jennifer" -> "nude"
+0.011   0.071   2.197   "nude" -> "jennifer" "leaked"
+0.011   0.093   0.701   "nude" "jennifer" -> "leaked"
+0.011   0.230   1.580   "nude" "leaked" -> "jennifer"
+0.011   0.078   1.580   "jennifer" -> "nude" "leaked"
+0.011   0.353   2.197   "jennifer" "leaked" -> "nude"
+0.011   0.085   0.701   "leaked" -> "nude" "jennifer"
+0.015   0.211   1.584   "sony" -> "leaked"
+0.032   0.108   1.479   "attack" -> "sony"
+0.032   0.437   1.479   "sony" -> "attack"
+0.014   0.185   0.560   "sony" -> "account"
+0.014   0.041   0.560   "account" -> "sony"
+0.011   0.150   0.623   "sony" -> "hacked"
+0.011   0.046   0.623   "hacked" -> "sony"
+0.190   0.575   2.392   "account" -> "hacked"
+0.190   0.790   2.392   "hacked" -> "account"
+\end{spverbatim}
+\end{footnotesize}
+\captionsetup{font=small}
+\caption{Example output of the Association Rule implementation. The first 3 columns show the \texttt{Support}, \texttt{Confidence} and \texttt{Lift} for each produced rule.}
+\label{fig:assoc}
+\end{figure}
+\newpage
 \paragraph{Clustering}
 \hfill \break 
 \\
@@ -758,10 +812,10 @@ For our specific use case Clustering is important for automating the process of 
 The method described below, groups documents that refer to a specific topic into clusters and provides a list of the most frequently occurring terms within each cluster.
 \hfill \break 
 \\
-For clustering a number of collected documents within the database in K categories we could use the K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. This algorithm \cite{k-means-example} attempts to find K non-overlapping clusters. It takes the desired number of clusters, K, and selects K initial centroids in a  random manner. Thus the information will be divided into K clusters. It assigns each observation point(word) to its closest centroid, where each collection of points(words) forms a cluster. Within the cluster a new centroid selected by calculating the eucledian distance between the gathered words. This process runs iteratively and stops when the clusters do not change any more.
+For clustering a number of collected documents within the database in K categories we could use the K-means\cite{k-means} algorithm, also known as Lloyd's algorithm. This algorithm \cite{k-means-example} attempts to find K non-overlapping clusters. It takes the desired number of clusters, K, and selects K initial centroids in a  random manner. Thus the information will be divided into K clusters. It assigns each observation point(word) to its closest centroid, where each collection of points(words) forms a cluster. Within the cluster a new centroid selected by calculating the Euclidean distance between the gathered words. This process runs iteratively and stops when the clusters do not change any more.
 \hfill \break 
 \\ 
-There is no guarantee that the result produced will be optimal. The outcome might differ each time, depending on how the initial centroids have been chosen. An important factor that we need to mention at this point is the selection of number K, as an incorrect choice might lead to non-optimal results. There are several procedures\cite{procedures-for-kmeans} for calculatint the favourable number of clusters but this is out of scope of this project. For this example we will chose the number of clusters that will make sense compared to the amount of data gathered.
+There is no guarantee that the result produced will be optimal. The outcome might differ each time, depending on how the initial centroids have been chosen. An important factor that we need to mention at this point is the selection of number K, as an incorrect choice might lead to non-optimal results. There are several procedures\cite{procedures-for-kmeans} for calculating the favourable number of clusters but this is out of scope of this project. For this example we will chose the number of clusters that will make sense compared to the amount of data gathered.
 \hfill \break 
 \\
 In order to implement the proposed algorithm the free and open source scikit-learn \cite{sklearn} toolkit was used. It provides a library collection called SKlearn which can be used in Python scripts. Following an example that attempts to categorize 20 news groups \cite{k-means-20news}, provided as a tutorial at the sklearn website, and adapting it to use our collected data we tried to find out which are the documents related to each other in each cluster. We applied the algorithm on over 600000 messages from Twitter and the expected to have them categorised in 20 groups. From all the clusters obtained, three of them showed considerable interest as they present real world events that took place recently (Figure~\ref{fig:clusters}). 
