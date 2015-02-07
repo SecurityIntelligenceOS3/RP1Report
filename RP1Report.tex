@@ -373,7 +373,7 @@ To overcome the above limitations and collect all new pastes that arrive, a web 
 \hfill \break\\
 Phishtank is the only 'targeted' source that we examined in this project. It is a website dedicated to tracking Phishing attempts. Any registered user can submit websites that they suspect of Phishing. Other users can log in later and verify if the website is indeed Phishing or not. Phishtank also informs the user if the website is still online or not.
 \hfill \break\\
-Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialized PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is adviced to register their applications and obtain an access token in order not to be constricted by download limits.
+Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialised PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is advised to register their applications and obtain an access token in order not to be constricted by download limits.
 \hfill \break\\
 The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. 
 \hfill \break\\\
@@ -409,7 +409,7 @@ response = urllib2.urlopen('http://www.reddit.com/r/blackhat/new
 \end{spverbatim}
 \hfill \break
 \\
-The response will be a JSON formated string. From all the fields in the structure we will only store the title, the number of comments and score. It is important to also store the date of each retrieved message, in order to monitor its voting trends within a specific time period.
+The response will be a JSON formatted string. From all the fields in the structure we will only store the title, the number of comments and score. It is important to also store the date of each retrieved message, in order to monitor its voting trends within a specific time period.
 \hfill \break
 \\
 All the collected data are stored in the database. 
@@ -421,25 +421,25 @@ The documents collected from all the public sources must be given a common forma
 \subsubsubsection{Specification}
 We propose a 'deflation' and scoring model that will help reduce the raw data into a common format as well as help determine the documents that present interest for further analysis. 
 \hfill \break\\
-The proposed model works in a very targeted and aggressive way, counting the occurences of each predifined word and deflating the whole document to a list of these keywords. 
+The proposed model works in a very targeted and aggressive way, counting the occurrences of each predefined word and deflating the whole document to a list of these keywords. 
 \hfill \break\\
-Then it multiplies the number of occurences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
+Then it multiplies the number of occurrences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
 \hfill \break\\
 The proposed format for the deflated documents is the following:\\
 
 \{document: "DocID", keywords: \lbrack \lbrack keyword1, occurences\rbrack,\lbrack keyword2, occurences\rbrack, ..., \lbrack keywordN, occurences\rbrack \rbrack\,vendors:\lbrack\lbrack vendor1, occurences\rbrack, \lbrack vendor2, occurences\rbrack, ... \lbrack vendorN, occurences\rbrack  \rbrack, clients :\lbrack\lbrack client1, occurences\rbrack, \lbrack client2, occurences\rbrack, ... \lbrack clientN, occurences\rbrack  \rbrack\, score: "score"\}
 
 \hfill \break\\
-Certain issues have to be taken into account when following the above approach. First of all we have to make sure that even one occurence of a client's name will mark the document as interesting. That can be achived either by associating the client list with a weight higher than the threshold or by perfoming binary checks for the occurences of client names (is present or not). 
+Certain issues have to be taken into account when following the above approach. First of all we have to make sure that even one occurrence of a client's name will mark the document as interesting. That can be achieved either by associating the client list with a weight higher than the threshold or by performing binary checks for the occurrences of client names (is present or not). 
 \hfill \break\\
-It is also possible that many occurences of a certain keyword, even if its importance level is minimal, can mark a certain document as interesting even though it carries no interest. This can be avoided by perfoming more sophisticated checks by calculating the entropy of each document. This however falls out of the scope of this research.
+It is also possible that many occurrences of a certain keyword, even if its importance level is minimal, can mark a certain document as interesting even though it carries no interest. This can be avoided by performing more sophisticated checks by calculating the entropy of each document. This however falls out of the scope of this research.
 \hfill \break\\
 It also becomes apparent that since this approach creates documents containing only the predefined keywords, other interesting but previously unknown keywords, might be filtered out. Certain ways to mitigate this problem are described in the next sections. 
 
 \subsubsubsection{Implementation}
 To test this approach we created a few thousands of fake documents containing random computer terminology, using a free python script called 'Bullshit Generator' \cite{bullgen}. We slightly modified the script to include certain additional keywords as well as to produce exactly 10000 documents and store them in our database. 
 \hfill \break\\
-We tested the previously defined model to test its effiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic ammount of data. An example output produced by one execution of the software can be seen in Figure~\ref{fig:deflate}
+We tested the previously defined model to test its efficiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic ammount of data. An example output produced by one execution of the software can be seen in Figure~\ref{fig:deflate}
 
 \begin{figure}[t]
 \begin{footnotesize}
@@ -463,12 +463,12 @@ We tested the previously defined model to test its effiency and time consumption
 \hfill \break
 The above results are produced after applying a threshold of 100. This is probably an unrealistic scenario, however.
 \subsubsubsection{Alternative Approaches}
-Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF alghorithm for determining the relevance and importance of each document.
+Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF algorithm for determining the relevance and importance of each document.
 \newpage
 \paragraph{Natural Language Processing}
 \hfill \break\\
 \parbox{\linewidth}{
-Natural Language Processing comprises of numerous different tasks such as automatic summarization, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
+Natural Language Processing comprises of numerous different tasks such as automatic summarisation, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
 \hfill \break
 \\
 Although all of the aforementioned functionalities are important for text processing, part-of-speech tagging in particular can be used in our case to distinguish the meaning of a certain fragment of text. Being able to tell if a certain word is a noun, verb or adjective can help discover the importance of that specific word within a specific topic.  We are mostly interested in distinguishing the nouns since they determine the topic of a sentence.}
@@ -480,7 +480,7 @@ Compared to the suggested deflation method, this technique does not require spec
 The aggregation module collects unstructured data, thus in order for us to get the meaning of a certain block of text and determine its relevance, we would have first process it and give it structure. 
 \hfill \break
 \\
-The first step would require removing all stop words such as \textit{the, an, a, about, what, where, etc.} This list can be further expanded to contain any word that one would consider not important, such as numbers, punctuation marks, technical abreviatons (e.g. http), etc.
+The first step would require removing all stop words such as \textit{the, an, a, about, what, where, etc.} This list can be further expanded to contain any word that one would consider not important, such as numbers, punctuation marks, technical abbreviations (e.g. http), etc.
 \hfill \break
 \\
 Another task called \textit{Stemming} performs suffix removal on verbs, adjectives, etc. 
@@ -524,7 +524,7 @@ And it got  :  10  comments
 \end{figure}
 \hfill \break
 \\
-The Natural Language Toolkit \cite{nltk} can be integrated into Python code. It provides methods that allow working with \textit{human language data}. We used a few of the functions provided performing sentence counting, total words coungint and most frequent words determination.  The result, seen in Figure~\ref{fig:nltk}, includes the following: the posted URL, the title associated to it, and the output of the nltk process. In this particular example, a keyword search was first performed to find the posts that contain the word \textit{hacked}. For these messages the produced results can be used to determine their importance level, by producing statistical view of the keywords that appear in the text. Using the gathered knowledge and by exploring more NLP capabilities we can determine the importance level of separate posts.
+The Natural Language Toolkit \cite{nltk} can be integrated into Python code. It provides methods that allow working with \textit{human language data}. We used a few of the functions provided performing sentence counting, total words counting and most frequent words determination.  The result, seen in Figure~\ref{fig:nltk}, includes the following: the posted URL, the title associated to it, and the output of the nltk process. In this particular example, a keyword search was first performed to find the posts that contain the word \textit{hacked}. For these messages the produced results can be used to determine their importance level, by producing statistical view of the keywords that appear in the text. Using the gathered knowledge and by exploring more NLP capabilities we can determine the importance level of separate posts.
 \newpage
 \paragraph{TF-IDF}
 \hfill \break
@@ -545,7 +545,7 @@ pastebin
 5141
 \end{spverbatim}
 \hfill \break 
-We chose as our main query terms words like \texttt{\{attack, hack\}} to see how the algorithm will behave and which documents are possibly associated with our search. Due to implementation misconfigurations the execuion took longer then expected. Considering that our main purpose was to test Data Mining algorithms we did not perform a more profound analysis of the code.
+We chose as our main query terms words like \texttt{\{attack, hack\}} to see how the algorithm will behave and which documents are possibly associated with our search. Due to implementation misconfigurations the execution took longer then expected. Considering that our main purpose was to test Data Mining algorithms we did not perform a more profound analysis of the code.
 \begin{figure}[h!] 
 \begin{footnotesize} 
 \begin{spverbatim}
@@ -660,10 +660,13 @@ The word \texttt{hack} appears four times in this text(Figure 2.5), and is consi
 If we analyse another document(Figure 2.6) for example the one with ID :  54c0d9c6d177b470832e5407, that has an associated score of  0.120993293348, it presents a lower score we see that the word \texttt{attack} appears less then four. However not only the frequency of the word \texttt{attack} in this text is taken in consideration but also its frequency across all documents.\\
 \hfill \break 
 \newpage
-\subsubsection{Analytics and Mining (NEEDS REVISION)}
-%This section will sketch few methods that can be applied over the congregated information. All the unstructured data has to be processed and converted to "clean" structured information which includes natural language processing. For this step Python provides an open source library nltk \cite{nltk}. We have to dip into several phases to get a good transformation of  paste, mesages or titles. This includes stop words removal, stemming and pos(part of speach) detection. 
-%At this moment there are various data mining techniques \cite{oracle-list} that include text processing. Investigating all this techniques is out of scope in this project, therefore the once that are mostly commonly used will be provided. In data mining step or Knowledge Discovery in Databases (KDD) it is important to find and extract patterns and knowledge from database not the data itself \cite{data-kdd}.
+\subsubsection{Analytics and Alerting}
+
+After the data has been collected and preprocessed into a common format it can be analysed in order for Security Intelligence to be extracted.  This will be achieved by employing various Data Mining tasks and using their output to create Security Incident alerts. 
+
 \subsubsubsection{Specification}
+Data Mining is the analysis step of the Knowledge Discovery in Databases (KDD) \cite{datamining}. Its aim is to extract previously unnoticed patterns and behaviours within the data set. Data mining involves six common classes of tasks \cite{datamining}. These tasks are described below and the manner they fit our use case is described briefly. The tasks that have been tested are described in further detail. 
+
 \paragraph{Data mining tasks}
 \begin{itemize}
 \item 
@@ -706,7 +709,15 @@ design an analytic model using regression analysis techniques.
 This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
 \subsubsubsection{Implementation}
-\paragraph{Association Rule}(TODO)
+\paragraph{Association Rule Learning}
+\hfill \break 
+\\
+Association Rule Learning is usually performed on databases that contain sales transactions (e.g. {milk, butter, bread, jam}) and for that reason it is sometimes referred to as Market Basket Analysis \cite{assoc1}. However, since we have documents deflated to contain only certain keywords, this method is very suitable to help us distinguish frequent item sets. 
+\hfill \break 
+\\
+The most commonly used algorithm for performing this operation is called Apriori \cite{apriori1}. It  employs a "bottom up" approach, during which frequent subsets are extended one item at a time, a step known as \textit{candidate generation}. All groups of candidates are tested against the data. The algorithm terminates when no further successful extensions can be found.
+\hfill \break 
+\\
 
 \paragraph{Clustering}
 \hfill \break 
