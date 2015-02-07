@@ -284,11 +284,9 @@ At this point it is useful to mention that we also can monitor certain 'anti-key
 
 \paragraph{Keyword Definition}
 \hfill \break \\
-It is fundamental to outline threat types and define the search keywords correctly as they compose the number of results that one will get from a database. Furthermore, commonly keywords should downgrade their importance when longer time measurements are taken since they will appear more often. The third important factor in defining the correct keywords and their weight is the volume of data being processed to filter out false positives and to get a good hit per ratio comparison. 
+As it has been mentioned before, it is fundamental to be able to detect different threat types and define the associated search keywords and their weights correctly. In order to be able to select the relevant keywords we can inspect security related news \cite{list-2015-attacks} or discussions related to specific threats. Those keywords that carry most information must be assigned bigger weights. In contrast, commonly appearing words should have a lower weight associated with them since they carry less information.  
 \hfill \break \\
-To construct and select the relevant keywords\footnote{This keywords applied alone on social networks such as \textit{Twitter.com} or \textit{Pastebins} might produce a huge number of results but defining a list of keywords that might be discussed for a certain category of attacks in combination with a specific client name can narrow down the amount of results }, previously discussed news \cite{list-2015-attacks} and messages related to specific threat can be analysed.
-\hfill \break \\
-Assuming that we are searching for all possible general attacks we can select three most common and popular once \cite{owasp} and associate a possible list of keywords to these threats. 
+For example we can select three of the most common and popular security threats\cite{owasp} and associate a possible list of keywords to them. 
 \begin {table}[h!]
 \label{tab:title} 
 \begin{center} 
@@ -323,7 +321,7 @@ Account hijacking & account hacked \\
 ... & ...\\		  
 \hline
 \end{longtable}
-\caption {The table contains some example keywords related to possible attacks. When used in combination with a Client or Company Name they might indicate an upcoming or passed attack.}
+\caption {The table contains some example keywords related to possible attacks. When used in combination with a Client or Company Name they might indicate an upcoming or past attack.}
 \end{center} 
 \end {table}
 \newpage
