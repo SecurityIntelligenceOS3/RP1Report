@@ -99,10 +99,7 @@
 %----------------------------------------------------------------------------------------
 \HRule \\[0.4cm]
 { \huge \bfseries Security Intelligence Data Mining}\\[0.4cm] % Title of your document
-{ \large \bfseries Research Proposal}\\[0.4cm] % Title of your document
 \HRule \\[0.4cm]
-
-
 
 
 %----------------------------------------------------------------------------------------
@@ -113,12 +110,12 @@
 \large Diana Rusu\\
 {\bfseries Diana.Rusu@os3.nl}\\[0.5cm]
 \large Nikolaos Petros Triantafyllidis\\
-{\bfseries Nikolaos.Triantafyllidis@os3.nl}\\[2cm]
+{\bfseries Nikolaos.Triantafyllidis@os3.nl}\\[1cm]
 \rule{10cm} {0.4pt}\\
 Supervisor:\\[0.2cm]
 \large Joost Kremers\\
 {\bfseries  JKremers@deloitte.nl}\\
-\large Deloitte Netherlands, Cyber Risk Services\\[1cm]
+\large Deloitte Netherlands, Cyber Risk Services\\[2cm]
 
 
 {\large \today} 
@@ -128,24 +125,29 @@ Supervisor:\\[0.2cm]
 \newpage
 \begin{abstract}
 \noindent
-This project deals with gathering Intelligence about IT Security incidents by mining data originating from the public Web. Our aim is to propose the architecture of a software system that is able to collect, preprocess and mine public information as well as alert and assess the threat level. \\
-\\
-A small Proof of Concept implementation for the proposed System Architecture is an outcome of this research. \\
-This project was proposed by and carried out in co-operation with Deloitte Netherlands. 
+\parbox{\linewidth}{
+This project deals with gathering Intelligence about IT Security incidents by mining data originating from the public Web. Our aim is to propose the architecture of a software system that is able to collect, preprocess and mine public information as well as alert and assess the threat level. }
+\hfill \break \\ 
+\parbox{\linewidth}{
+A small Proof of Concept implementation for the proposed System Architecture is an outcome of this research.
+} 
+\hfill \break \\ 
+\parbox{\linewidth}{
+This project was proposed by and carried out in cooperation with Deloitte Netherlands. }
 \end{abstract}
 \newpage
 \section*{Acknowledgements}
 
 We would like to express our gratitude and appreciation towards certain people that helped us during this Research Project as well as our studies so far, for all the support, expert knowledge and guidelines they provided. 
 \hfill \break \\ 
-First of all we would like to thank Deloitte Netherlands, for granting us access to their headquarters building, and providing us with all the resources needed for the completion of our research. We owe utmost gratitude to all the employs of Deloitte NL that took time out of their busy schedule to assist us with our project. 
+First of all we would like to thank Deloitte Netherlands, for granting us access to their headquarters building, and providing us with all the resources needed for the completion of our research. We owe utmost gratitude to all the employees of Deloitte NL that took time out of their busy schedule to assist us with our project. 
 \\ 
-To begin with we would like to thank Henri Hambartsumyan who came up with the idea of this project and who was the our first contact with the company. \\
-To our main supervisor Joost Kremers we express our warm thanks for always being there to assist us and provide feedback, even if his schedule would not permit it. Even before we started working on this project he made sure to guide and direct us to the right research path.\\
-Next we feel the need to thank the developers of the CTI portal, Niels Pompe for providing us with a list of Web resources relevant to our project and introducing us to the rest of the CTI team. Ari Davies, for guiding our development effort and Gijs Hollestelle for explaining the usage of their platform and the further needed requirements.\\
-Last but not least Vincent van de Ven from the Data Analytics team, for providing us valuable insights about Data Management techniques. 
+To begin with, we would like to thank mr.Henri Hambartsumyan who came up with the idea of this project and who was our first contact with the company. \\
+To our main supervisor mr.Joost Kremers we express our warm thanks for always being there to assist us and provide feedback, even if his schedule would not permit it. Even before we started working on this project he made sure to guide and direct us to the right research path.\\
+Next we feel the need to thank the developers of the CTI portal, mr.Niels Pompe for providing us with a list of Web resources relevant to our project and introducing us to the rest of the CTI team. Mr.Ari Davies, for guiding our development effort and mr.Gijs Hollestelle for explaining the usage of their platform and the further needed requirements.\\
+Last but not least mr.Vincent van de Ven from the Data Analytics team, for providing us valuable insights about Data Management techniques. 
 \hfill \break \\ 
-Secondly, we would like to thank the University of Amsterdam and the people from the OS3 core team for their support during our studies. Dr.Cees de Laat, co-ordinator of the Research Projects, our professors dr.Karst Koymans and dr.Jaap van Ginkel as well as our lab teachers dr. Arno Bakker and dr.Jeroen van der Ham. 
+Secondly, we would like to thank the University of Amsterdam and the people from the OS3 core team for their support during our studies. Dr.Cees de Laat, coordinator of the Research Projects, our professors dr.Karst Koymans and dr.Jaap van Ginkel as well as our lab teachers dr.Arno Bakker and dr.Jeroen van der Ham. 
 \hfill \break \\ 
 This has been a great opportunity for us to experience working with a large multinational company in a real business environment, even for this short period of time.
 
@@ -197,15 +199,25 @@ This question can be analysed into more specific parts that cover the topic to s
 The proposed system extensions can spawn further research questions, namely on the topics of presenting the analysed data, reacting to the real time events and finally assessing the situations that arise and providing feedback to the system.
 
 \subsection{Related work}
+\parbox{\linewidth}{
 There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book "Mining The Social Web", Second Edition by Matthew Russell \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). 
+}
 \hfill \break \\
-There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called \texttt{MINDS}  \cite{minds}, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security'. 
+\parbox{\linewidth}{
+There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called \texttt{MINDS}  \cite{minds}, that applies Anomaly Detection and Association Pattern Analysis for Intrusion Detection. Their input, however originates from Network flows and they do not deal with Web mining at all. The system is described in their paper 'Data Mining for Cyber Security'.
+} 
 \hfill \break \\
-Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user.
+\parbox{\linewidth}{
+Another example is a system proposed by the Dutch company Sentient in cooperation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user. Their system combines \textit{spatio-temporal clustering} with {Associative-spatial prediction} to help visualise criminal activities such as robberies, car burglaries, etc. 
+}
 \hfill \break \\
+\parbox{\linewidth}{
 An example related to the previously discussed system, is a study conducted by Shyam Varan Nath within Oracle Corporation\cite{oracle}, which presents a technique for speeding up the process of solving crimes \cite{pattern-police} by identifying crime patterns using data mining. In order to accomplish the proposed task this paper suggests the use of Clustering along with Geographic Location analysis for identifying and predicting possible criminal activity. 
+}
 \hfill \break \\
+\parbox{\linewidth}{
 Another system called \texttt{uberVU} aims to \textit{find insights, detect influencer mentions, detect trending stories and suggest engaging content to post}\cite{ubervu} from social networks such as \texttt{Twitter, Facebook or Youtube} and it is targeted to Marketing departments in order to gather Social Intelligence.  
+}
 \newpage
 \subsection{Ethical implications}
 
@@ -213,30 +225,38 @@ The main part of this research comprises of exploring current techniques and the
 
 \newpage
 \section{Methodology and Results}
+\parbox{\linewidth}{
 This project was carried out in collaboration with Deloitte Risk Services, Netherlands. We first got acquainted with the Cyber-Risk Services team and were introduced to the effort already carried out towards the development of a Cyber Threat Intelligence (CTI) system. 
+}
 \hfill \break \\
-Based on the expert knowledge collected we defined the parts needed for complementing the portal developed by Deloitte, in order to derive a generalised System Architecture. The next step was to start developing the building blocks of the System to a level that would allow the creation of a functional Proof of Concept. We first developed Data Aggregators for four distinct data sources. We then looked into methods for determining the interesting parts of information as well as prepossessing the raw data into a format suitable for further analysis. After that we researched various Data Mining techniques and algorithms and realised and tested some of them against a realistic data sample.
+\parbox{\linewidth}{
+Based on the expert knowledge collected we defined the parts needed for complementing the portal developed by Deloitte, in order to derive a generalised System Architecture. The next step was to start developing the building blocks of the System to a level that would allow the creation of a functional Proof of Concept. We first developed Data Aggregators for four distinct data sources. We then looked into methods for determining the interesting parts of information as well as prepossessing the raw data into a format suitable for further analysis. Afterwards, we researched various Data Mining techniques and algorithms and realised and tested some of them against a realistic data sample.
+}
 \hfill \break \\
 The last steps were to evaluate our results, put together a limited proof of concept and proposed system extensions and future work. 
 \hfill \break \\
 The above will be described in detail in the following sections. 
 
 \subsection{Hardware and Software Used}
+\parbox{\linewidth}{
 Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte\cite{deloitte} headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used.
+}
 \hfill \break \\
-For the storage of the raw well as the processed data we used MongoDB\cite{mongodb}, a free and open source NoSQL database system. All the applications implemented were tested on an Ubuntu Server 14.04 LTS \cite{ubuntu} operating system.
+\parbox{\linewidth}{
+For the storage of the raw, as well as the processed data we used MongoDB\cite{mongodb}, a free and open source NoSQL database system. All the applications implemented were tested on an Ubuntu Server 14.04 LTS \cite{ubuntu} operating system.
+}
 \hfill \break \\ 
+\parbox{\linewidth}{
 All software developed for the purposes of this project was written in the Python\cite{python} programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
-
-
+}
 \subsection{Proposed System}
 As an outcome of our research we propose a system that will be able to aggregate information from the public web which it will preprocess and analyse in order to gather Intelligence regarding IT Security incidents and raise real time alerts. 
- 
 \subsubsection{General Outline}
-The proposed system will be modular in the sense that there will be standalone software processes responsible for a very specific task. The output of each module feeds the next module in succession thus forming a pipeline of modules that compose the whole system. \\
-Moreover we propose the integration of the system under a central Control Portal that will be responsible for the initial configuration and overview of the status of each Software module.\\
+The proposed system will be modular in the sense that there will be standalone software processes responsible for a very specific task. The output of each module feeds the next module in succession thus forming a pipeline of modules that compose the whole system. 
+\hfill \break \\
+Moreover we propose the integration of the system under a central Control Portal that will be responsible for the initial configuration and overview of the status of each Software module.
+\hfill \break \\
 We distinguish five different steps in the system each one of them corresponding to a different software module. These are:
-
 \begin{enumerate}
 	\item \textbf{Configuration}\\ 
 	The System Operator defines a set of configuration options (keywords, data sources, thresholds etc.) that will be propagated to each separate module.
@@ -249,7 +269,6 @@ We distinguish five different steps in the system each one of them corresponding
 	\item \textbf{Feedback \& Reconfiguration}\\
 	A Security Analyst checks the raised alerts and assesses the real risk. The divergence from the estimated risk is calculated and according to that a set of readjustments is propagated to the configurable parts of the system.
 \end{enumerate}
-\hfill \break \\ 
 Having introduced the last step it becomes apparent that the system operates as a feedback loop since the system returns to the configuration step after assessment, in order to achieve better accuracy. 
 \hfill \break \\ 
 The previously described steps can be captured in the schematic presented on Figure~\ref{fig:arch}
@@ -265,7 +284,7 @@ Each part of the system is described in detail in the following sections. All st
 
 \newpage
 \subsubsection{Configuration}
-The system needs to be as versatile as possible. To that aim each separate part of the system must be able to read a set configuration options that will be inserted into the system through a common control portal. These configuration sets can include (but not be limited to) Data Mining criteria, filtering thresholds, execution intervals for the distinct modules, search keywords, etc. 
+The system needs to be as versatile as possible. To that aim, each separate part of the system must be able to read a set of configuration options that will be inserted into the system through a common control portal. These configuration sets can include (but not be limited to) Data Mining criteria, filtering thresholds, execution intervals for the distinct modules, search keywords, etc. 
 
 \subsubsubsection{Specification}
 
@@ -301,10 +320,11 @@ Having mentioned that we can distinguish two separate categories of sources whic
 \hfill \break \\
 General sources are much more unpredictable and unstructured. The data collected from such sources have to be further processed in order for the system to distinguish the important from the not important documents as well as to look for previously unknown patterns hidden in the dataset. 
 \hfill \break \\
-We also need to monitor the names of certain companies or organisations for which the service will be provided. Moreover, we would need to look for several software and hardware vendor name to discover vulnerabilities and known malfunctions for software tools and machinery that are used by companies and organisations. Thus the last thing the operator has to specify is a list of Clients and Vendors. These list must also have weights attached to them, which, however, must be the same for all their members. 
+We also need to monitor the names of certain companies or organisations for which the service will be provided. Moreover, we would need to look for several software and hardware vendor name to discover vulnerabilities and known malfunctions for software tools and machinery that are used by companies and organisations. Thus, the last thing the operator has to specify is a list of Clients and Vendors. This list must also have weights attached to them, which, however, must be the same for all their members. 
 \hfill \break \\
+\parbox{\linewidth}{
 At this point it is useful to mention that we also can monitor certain 'anti-keywords' with negative weights to sort out irrelevant information. For example the word 'attack' might be correlated with the word 'football' or the word 'bug' can be correlated with the word 'insects'. This is a good indication that the subject of the document is probably not security related. 
-
+}
 \paragraph{Keyword Definition}
 \hfill \break \\
 As it has been mentioned before, it is fundamental to be able to detect different threat types and define the associated search keywords and their weights correctly. In order to be able to select the relevant keywords we can inspect security related news \cite{list-2015-attacks} or discussions related to specific threats. Those keywords that carry most information must be assigned bigger weights. In contrast, commonly appearing words should have a lower weight associated with them since they carry less information.  
@@ -350,9 +370,9 @@ Account hijacking & account hacked \\
 \newpage
 \paragraph{Source Definition}
 \hfill \break \\
-Discovering real time threats within an accepable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaoitic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. 
+Discovering real time threats within an acceptable margin of error, is a challenging task. One of the reasons is that the Web is essentially an enormous database filled with random information. Within this chaotic data space, big amounts of security related knowledge can be discovered. Therefore, it is vital to be able to define the reliable sources that can provide valuable information that will allow us to build Security Intelligence. 
 \hfill \break \\
-The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The impotance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.
+The question might arise, which sources can be considered as reliable? In order to answer this question expert knowledge has to be gathered. At this point we were provided with a list of possible sources compiled by the developers of the CTI portal in Deloitte. Among all the possible raw data sources, four were recommended to collect a certain amount of data to be used as a testbed.These are Phishtank, Pastebin, Twitter and Reddit. The importance level of the above websites can be seen via the fact that critical vulnerabilities were revealed through posted messages\cite{list-2015-attacks}.
 \hfill \break \\ 
 Since this project is focused on the public Web, other sources such as RSS feeds or IRC channels will not be investigated due to time limitations.   
 
@@ -375,12 +395,17 @@ As it has been mentioned before some structure can be given at this point to aid
 
 
 \subsubsubsection{Implementation}
-
+\parbox{\linewidth}{
 This module was developed as a collection of separate agents, each aggregating a different web resource. Special care had to be given so that this part is easily extensible. If a developer needs to develop new agents for new sources, they will be presented with a uniform interface that will allow them to include the new agents to the system with minimal effort. 
+}
 \hfill \break \\
+\parbox{\linewidth}{
 A tool chaining script was written to allow the agents to be triggered simultaneously and share common configurations. 
+}
 \hfill \break \\
+\parbox{\linewidth}{
 The script reads the list of available agents and loads their respective configuration options. It then parses the parameters given by the user regarding which agents need to be run and at what time interval. If the user provides no parameters then the default configuration options are chosen. The user can specify if they need a certain agent not to be executed by passing a -1 parameter. The script reads all the agents selected for execution and loads their source code dynamically on runtime. This last step accounts for extensibility. 
+}
 \hfill \break \\
 The system must be in a way to determine if the agent opens new connections per request or runs over a persistent connection (e.g. streaming). This must be specified in a common configuration file that lists all the agents. In our particular example this file is formatted in YAML. 
 \newpage
@@ -398,22 +423,26 @@ Status filtering allows the user to retrieve tweets that contain certain keyword
 \hfill \break \\
 In our demonstration we only used the keyword (track) option in order to track specific tweets containing security related words (e.g. attack, hack, vulnerability, etc.)
 \hfill \break \\
-The data returned from this particular API call are JSON fomated.
+The data returned from this particular API call are JSON formatted.
 \hfill \break \\
-The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.\\ This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.
+The Twitter aggregation agent was developed with the use of Tweepy \cite{tweepy}, an external Python library that provided OAuth authentication and connection to the streaming API.
 \hfill \break \\
-The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colors, etc.) and stores the rest of the information in the database.  
-
-\newpage
+This agent reads its configuration from an external YAML file. This includes Authentication credentials, as well as the specific keywords that we want to track.
+\hfill \break \\
+\parbox{\linewidth}{
+The sofware parses the returned JSON object, scrapes all unnecessary information (user profile pictures, background colours, etc.) and stores the rest of the information in the database.  
+}
 \paragraph{Pastebin}
 \hfill \break\\
+\parbox{\linewidth}{
 \textit{Pastebin} websites \cite{fpaste} \cite{pastebin} allow everyone with or without registration to share blocks of text or code snippets. They have attracted many users during past years including cybercriminals such as malware developers\cite{pastebin-magazine}. The enormous flow of information ranges from database dumps, containing e-mails and passwords, to harmful backdoor programs. With a deeper examination of these publicly pasted messages possible future attacks may be discovered.
+}
 \hfill \break\\
 From all possible \textit{pastebins} (e.g. fpaste.org \cite{fpaste}, paste2.org, pastie.org\cite{pastebin-pastie}, 
 paste.ubuntu.org.cn \cite{pastebin-ubuntu} etc.) pastebin.com \cite{pastebin} has been selected to be further inspected.
 \hfill \break
 \\
-Pastebin exposes an API that offers different options for developers. More specifically these include creating new pastes, listing trending pastes or the posts of a particular user. The above functionallities can be used once one obtains a unique Developer API Key. 
+Pastebin exposes an API that offers different options for developers. More specifically these include creating new pastes, listing trending pastes or the posts of a particular user. The above functionalities can be used once one obtains a unique Developer API Key. 
 \hfill \break
 \\
 At this moment Pastebin API \cite{pastebin} does not offer any option for listing all new messages posted by unregistered users. The only option available, is to list the posts of a specific registered user. However, any information posted might be of potential interest. 
@@ -432,7 +461,9 @@ Phishtank is the only 'targeted' source that we examined in this project. It is 
 \hfill \break\\
 Developing over the Phishtank API is pretty simple and straight forward. Phishtank offers its whole database to be downloaded either in CSV, JSON, XML or serialised PHP format. The database includes all websites that are verified as phishing and are still online, and it is updated every hour. The user is advised to register their applications and obtain an access token in order not to be constricted by download limits.
 \hfill \break\\
-The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the json entries and stores in the database all useful information. 
+\parbox{\linewidth}{
+The aggregator code simply downloads the whole database from the following url \url{http://data.phishtank.com/data/online-valid.json}, parses the JSON entries and stores in the database all useful information. 
+}
 \hfill \break\\\
 Since Phishtank is a targeted source, all returned information can be handled directly from the system in order to raise security alerts without much further processing. 
  
@@ -446,10 +477,7 @@ The Reddit community comprises of social media and news sites. It contains over 
 \item /r/netsec \cite{r.netsec}
 \item /r/pwned \cite{r.pwned}
 \item /r/vrd/ \cite{r.rvd}
-
 \end{itemize}
-\hfill \break
-\\
 Although the Reddit API \cite{reddit} provides a rich list of methods, we have chosen a few of them for the purposes of this project.\\
 \hfill \break
 In order for a user to list new, top, controversial, etc. messages they would just have to add "/" and the name of the operation they want to perform to the end of the subreddit url in question. The user can provide additional parameters in order to filter, sort, and limit the number of posts retrieved. 
@@ -480,23 +508,30 @@ We propose a 'deflation' and scoring model that will help reduce the raw data in
 \hfill \break\\
 The proposed model works in a very targeted and aggressive way, counting the occurrences of each predefined word and deflating the whole document to a list of these keywords. 
 \hfill \break\\
+\parbox{\linewidth}{
 Then it multiplies the number of occurrences of each keyword with its associated weight and produces the score for each document. If that score passes a certain predefined threshold the document is marked as interesting and it is moved in its deflated format into the warehousing database. 
+}
 \hfill \break\\
 The proposed format for the deflated documents is the following:\\
 
 \{document: "DocID", keywords: \lbrack \lbrack keyword1, occurences\rbrack,\lbrack keyword2, occurences\rbrack, ..., \lbrack keywordN, occurences\rbrack \rbrack\,vendors:\lbrack\lbrack vendor1, occurences\rbrack, \lbrack vendor2, occurences\rbrack, ... \lbrack vendorN, occurences\rbrack  \rbrack, clients :\lbrack\lbrack client1, occurences\rbrack, \lbrack client2, occurences\rbrack, ... \lbrack clientN, occurences\rbrack  \rbrack\, score: "score"\}
-
-\hfill \break\\
+\hfill \break\\\\
+\parbox{\linewidth}{
 Certain issues have to be taken into account when following the above approach. First of all we have to make sure that even one occurrence of a client's name will mark the document as interesting. That can be achieved either by associating the client list with a weight higher than the threshold or by performing binary checks for the occurrences of client names (is present or not). 
+}
 \hfill \break\\
 It is also possible that many occurrences of a certain keyword, even if its importance level is minimal, can mark a certain document as interesting even though it carries no interest. This can be avoided by performing more sophisticated checks by calculating the entropy of each document. This however falls out of the scope of this research.
 \hfill \break\\
+\parbox{\linewidth}{
 It also becomes apparent that since this approach creates documents containing only the predefined keywords, other interesting but previously unknown keywords, might be filtered out. Certain ways to mitigate this problem are described in the next sections. 
+}
 
 \subsubsubsection{Implementation}
 To test this approach we created a few thousands of fake documents containing random computer terminology, using a free python script called 'Bullshit Generator' \cite{bullgen}. We slightly modified the script to include certain additional keywords as well as to produce exactly 10000 documents and store them in our database. 
 \hfill \break\\
-We tested the previously defined model to test its efficiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic ammount of data. An example output produced by one execution of the software can be seen in Figure~\ref{fig:deflate}
+\parbox{\linewidth}{
+We tested the previously defined model to test its efficiency and time consumption. For 10000 documents the code takes less than one second to run, thus we believe that this model can easily be used in any realistic amount of data. An example output produced by one execution of the software can be seen in Figure~\ref{fig:deflate}
+}
 
 \begin{figure}[t]
 \begin{footnotesize}
@@ -521,14 +556,16 @@ We tested the previously defined model to test its efficiency and time consumpti
 The above results are produced after applying a threshold of 100. This is probably an unrealistic scenario, however.
 \newpage
 \subsubsubsection{Alternative Approaches}
+\parbox{\linewidth}{
 Besides the previously mentioned deflation method we have also tested different options. This subsection will outline some alternative methods for cleaning documents by employing NLP techniques as well as the use of the TF-IDF algorithm for determining the relevance and importance of each document.
+}
 \paragraph{Natural Language Processing}
 \hfill \break\\
 \parbox{\linewidth}{
-Natural Language Processing consists of numerous different tasks such as automatic summarisation, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc.
+Natural Language Processing consists of numerous different tasks such as automatic summarisation, parsing, relationship extraction, topic segmentation and recognition, part of speech recognition, etc \cite{nlp1}.
 \hfill \break
 \\
-Although all of the aforementioned functionalities are important for text processing, part-of-speech tagging in particular can be used in our case to distinguish the meaning of a certain fragment of text. Being able to tell if a certain word is a noun, verb or adjective can help discover the importance of that specific word within a specific topic.  We are mostly interested in distinguishing the nouns since they determine the topic of a sentence.}
+Although all of the aforementioned functionalities are important for text processing, part-of-speech tagging \cite{nlp2} in particular can be used in our case to distinguish the meaning of a certain fragment of text. Being able to tell if a certain word is a noun, verb or adjective can help discover the importance of that specific word within a specific topic \cite{socialweb}.  We are mostly interested in distinguishing the nouns since they determine the topic of a sentence.}
 \hfill \break
 \\
 Compared to the suggested deflation method, this technique does not require specifying certain keywords beforehand. This is mainly due to the fact that it allows us to build structured data tables or trees in order to extract the meaningful entities. 
@@ -656,10 +693,10 @@ TF_IDF:  54c01232d177b4687bd24088 attack -> 0.123999337904
 ....
 \end{spverbatim}
 \captionsetup{font=small}
-\caption{A sample from the complete TF-IDF algorithm result. For each function the documentID with associated score and query word is provided}
+\caption{A sample from the complete TF-IDF algorithm result}
 \end{footnotesize}
 \end{figure}
-\hfill \break 
+\hfill \break \\
 The main reason that contributes to high computational costs was the function that multiplies the TF with the IDF scores and produces the overall score. For 5141 messages the total execution time came to around 15 minutes. If we just calculate the TF and IDF scores the algorithm will run in the following time values: 
 \begin{spverbatim}
 real	0m0.694s	
@@ -669,7 +706,9 @@ sys	0m0.023s
 \hfill \break
 However costly, this method still provides a good statistical view on the importance of the documents associated to the specified keywords. 
 \hfill \break \\\\
+\parbox{\linewidth}{
 What is actually interesting here is to look at the documents that are included in the \texttt{Overall TF-IDF scores for query "attack hack"} section (Figure~\ref{fig:overall}). The document with the highest score (the ones with a score greater than 1 should not be considered), is the most relevant. In this example it is the document \texttt{54c76e02d177b432b0ca7d0b} with a  score equal to 0.610428075355 (Figure~\ref{fig:android}).
+}
 \hfill \break 
 \begin{figure}[h!]
 \begin{footnotesize}
@@ -681,7 +720,7 @@ What is actually interesting here is to look at the documents that are included 
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result when interrogating the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that presents higher score for the word \texttt{hack}} compared to the document with \texttt{ID: 54c0d9c6d177b470832e5407}
+\caption{Document \texttt{54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that presents a higher score for the word \texttt{hack} compared to document \texttt{54c0d9c6d177b470832e5407}}
 \label{fig:android}
 \end{figure}
 \begin{figure}[h!]
@@ -705,7 +744,7 @@ What is actually interesting here is to look at the documents that are included 
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result when interrogating the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that has a lower score for the work \texttt{attack}} compared to the document with \texttt{ID: 54c76e02d177b432b0ca7d0b}
+\caption{Document \texttt{I54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that has a lower score for the word \texttt{attack} compared to  document \texttt{54c76e02d177b432b0ca7d0b}}
 \label{fig:script}
 \end{figure}
 \hfill \break \\\\\\
@@ -758,8 +797,10 @@ gathered after a certain period of time that the system will be operated, we can
 design an analytic model using regression analysis techniques.
 \item
 \textbf{Summarisation}: This task aims to provide a more compact representation of the data set, including visualisation and report generation. In our case this applies to the creation of the alerts to be presented to the Security Analysts. The alerting will consist of a common format that will apply to automatically generated events that will be propagated to the appropriate parties. One proposed format could be the following:
-%\{alert\_id: 00001, subject: "Something is rotten in the state of Denmark", importance: Red, backing_documents:\[1,3,4,6\]\}
-This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of thisn document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
+\begin{spverbatim}
+{alert_id: "id", subject: "Subject", importance: "importance_level", backing_documents:["documents"]}
+\end{spverbatim}
+This presents the analyst with an event informing them about a security incident with a certain importance level. The way of determining the level of importance falls out of the scope of this document. Notice also the list of supporting documents resulting from different sources. At this point the analyst can go and inspect each one of this documents manually, assess the risk themselves and take the appropriate measures such as further informing the involved parties, or ignoring the alert.
 \end{itemize}
 \newpage
 \subsubsubsection{Implementation}
@@ -769,10 +810,12 @@ This presents the analyst with an event informing them about a security incident
 Association Rule Learning is usually performed on databases that contain sales transactions (e.g. \{milk, butter, bread, jam\}) and for that reason it is sometimes referred to as Market Basket Analysis \cite{assoc1}. However, since we have documents deflated to contain only certain keywords, this method is very suitable to help us distinguish frequent item sets. 
 \hfill \break 
 \\
-The most commonly used algorithm for performing this operation is called Apriori \cite{apriori1}. It  employs a "bottom up" approach, during which frequent subsets are extended one item at a time, a step known as \textit{candidate generation}. All groups of candidates are tested against the data. The algorithm terminates when no further successful extensions can be found. The algorithm produces two part rules that have the format $X \rightarrow Y$. This denotes that when subset $X$ occurs, subset $Y$ is likely to occur as well.  \hfill \break 
+The most commonly used algorithm for performing this operation is called Apriori \cite{assoc2}. It  employs a "bottom up" approach, during which frequent subsets are extended one item at a time, a step known as \textit{candidate generation}. All groups of candidates are tested against the data. The algorithm terminates when no further successful extensions can be found. The algorithm produces two part rules that have the format $X \rightarrow Y$. This denotes that when subset $X$ occurs, subset $Y$ is likely to occur as well.  \hfill \break 
 \\
-We produced an example implementation of the algorithm by using the \texttt{associate}\cite{orange-assoc} package from the \texttt{Orange}\cite{orange} analytics and visualisation framework. The code was tested on actual documents originating from \texttt{Twitter}, deflated against certain keywords.  \hfill \break 
-\\
+\parbox{\linewidth}{
+We produced an example implementation of the algorithm by using the \texttt{associate}\cite{orange-assoc} package from the \texttt{Orange}\cite{orange} analytics and visualisation framework. The code was tested on actual documents originating from \texttt{Twitter}, deflated against certain keywords. 
+}
+ \hfill \break \\
 For each association rule produced (Figure~\ref{fig:assoc}), three quantitative statistical measures that denote the importance of the rule. This measures are called \texttt{Support}, \texttt{Confidence} and \texttt{Lift}. Support refers to to the fraction of the documents that contain both $X$ and $Y$ parts of the rule, while Confidence measures how often each item in Y appears in documents that contain X. Lift is an expectance measure denoting the correlation between each part of the rule. A Lift value greater than 1, for example, shows that the two parts of the rule appear together more often than expected, i.e it is more possible to find these two sets together rather than alone. 
 \hfill \break 
 \newpage
@@ -941,30 +984,34 @@ There is a lot of effort to be invested towards the correct implementation of th
 \parbox{\linewidth}{
 At this moment we have specified a modular and pipelined system and implemented a Proof of Concept by using open source tools. The first future task would be to actually try to implement the full system architecture, and integrate it with the CTI portal that is being currently developed by Deloitte NL. }
 \hfill \break\\
+\parbox{\linewidth}{
 Once the system has been built, we can put it in production and use it to gather a significant amount of data over a certain period of time (approximately one year) which we can use to test the data mining algorithms thoroughly. 
+}
 \hfill \break\\
 We can also use the data to build historical data sets that will help train the supervised data mining methods. This also allow us to implement even more methods such as Regression or Anomaly Detection. 
 \hfill \break\\
 A valuable extension to the analytics phase would be to take into account other metrics provided with each document such as votes on \textit{Reddit} or number of followers on \textit{Twitter} to determine the importance of each produced result.
 \hfill \break\\
+\parbox{\linewidth}{
 We can investigate Machine Learning techniques in order to implement the Feedback module and provide accurate readjustments to the System. Furthermore, methods that have already been mentioned such as Classification can be used for Sentiment Analysis something that would provide valuable insights that can be used for the feedback and sorting out false positives.
+}
 \hfill \break\\
+\parbox{\linewidth}{
 By exploring NLP capabilities we can add support for other languages especially those that do not use Latin scripts (e.g. Chinese, Korean, Russian, Greek etc.).
+}
 \hfill \break\\
 At this moment no special effort has been invested in determining best format for presenting the appropriate parties with security alerts. Special care has to be taken so the information is presented in a way that allows Security Analysts to respond as quickly as possible. 
 \hfill \break\\
+\parbox{\linewidth}{
 After the System has been built and tested, new requirements can be added that for example can contribute to better communication between the modules. For example this can include message brokers or triggering mechanisms that inform the System of the termination of the operation of a module.
+}
 \hfill \break\\
+\parbox{\linewidth}{
 Lastly we could look extensively into other systems that provide similar services and assess the functions they provide to further improve the functionality and efficiency of our proposed architecture.
-
-\newpage
-\begin{appendices}
-\section{Code}
-All the Source Code that we have used for the demonstration of our Proof of Concept can be found in the following repository:\\
-\url{https://github.com/SecurityIntelligenceOS3/OS3Demo}
-\end{appendices}
+}
 \newpage
 \begin{thebibliography}{99}
+\addcontentsline{toc}{section}{References}
 \bibitem{cyber}
 US cybercrime: Rising risks, reduced readiness, PWC, Available at: \url{http://www.pwc.com/en_US/us/increasing-it-effectiveness/publications/assets/2014-us-state-of-cybercrime.pdf}
 \bibitem{sony}
@@ -998,7 +1045,6 @@ Fedora Project Pastebin Fpaste.org, (2015). New paste • Fedora Project Pastebi
 \url{http://fpaste.org }
 \bibitem{pastebin}
 Pastebin, (2015). Pastebin.com - \#1 paste tool since 2002!. [online] Available at:     \url{http://pastebin.com/}
-
 \bibitem{pastebin-magazine}
 Security Intelligence, (2015). Pastebin a Convenient Way for Cybercriminals to Remotely Host Malware. [online] Available at: \url{http://securityintelligence.com/news/pastebin-convenient-way-cybercriminals-remotely-host-malware/#.VMS25DX8vCI }
 \bibitem{pastebin-pastie}
@@ -1007,6 +1053,12 @@ Pastie.org, (2015). New - Pastie. [online] Available at: \url{http://pastie.org}
  Paste.ubuntu.org.cn, (2015). [online] Available at: \url{http://paste.ubuntu.org.cn/}
 \bibitem{scrapy}
 Scrapy.org, (2015). Scrapy | A Fast and Powerful Scraping and Web Crawling Framework. [online] Available at: \url{http://scrapy.org/} 
+\bibitem{twitteroverview}
+Dev.twitter.com, (2015). The Streaming APIs | Twitter Developers. [online] Available at: \url{https://dev.twitter.com/streaming/overview}
+\bibitem{twitterpublic}
+Dev.twitter.com, (2015). Public streams | Twitter Developers. [online] Available at: \url{https://dev.twitter.com/streaming/public}
+\bibitem{twitterfilter}
+Dev.twitter.com, (2015). POST statuses/filter | Twitter Developers. [online] Available at: \url{https://dev.twitter.com/streaming/reference/post/statuses/filter}
 \bibitem{reddit}
 Reddit.com, (2015). reddit: the front page of the internet. [online] Available at: \url{http://www.reddit.com/} 
 \bibitem{r.blackhat}
@@ -1019,6 +1071,10 @@ reddit, (2007). /r/netsec - Information Security News \& Discussion. [online] Av
 Reddit, (2008). pwned • /r/pwned. [online] Available at: http://www.reddit.com/r/pwned 
 \bibitem{r.rvd}
 Reddit, (2012). Vulnerability Research and Development • /r/vrd. [online] Available at: \url{http://www.reddit.com/r/vrd/}
+\bibitem{nlp1}
+Christopher D. Manning and Hinrich Schutze (1999). Foundations of Statistical Natural Language Processing. The MIT Press
+\bibitem{nlp2}
+David M. W. Powers and Christopher C. R. Turk (1989). Machine Learning of Natural Language. Springer-Verlag. 
 \bibitem{oracle-list}
 Oracle.com, (2015). Oracle Data Mining Techniques and Algorithms. [online] Available at: \url{http://www.oracle.com/technetwork/database/enterprise-edition/odm-techniques-algorithms-097163.html}
 \bibitem{tf-idf}
@@ -1035,18 +1091,27 @@ Scikit-learn.org, (2015). scikit-learn: machine learning in Python — scikit-le
  Numpy.org, (2015). NumPy — Numpy. [online] Available at: \url{http://www.numpy.org/}
 \bibitem{tweepy}
 Tweepy.org, (2015). Tweepy. [online] Available at: \url{http://www.tweepy.org/} 
+\bibitem{bullgen}
+Bibliography: Code.activestate.com, (2015). Bullshit Generator, Python-list , ActiveState List Archives. [online] Available at: \url{http://code.activestate.com/lists/python-list/145950/}
 \bibitem{orange}
 Bioinformatics Laboratory, U. (2015). Orange Data Mining. [online] Orange.biolab.si. Available at: \url{http://orange.biolab.si/} 
-\bibitem{k-means} Junjie Wu , Advances in K-means Clustering: A Data Mining Thinking
+\bibitem{assoc1}
+Tan, Pang-Ning; Michael, Steinbach; Kumar, Vipin (2005). "Chapter 6. Association Analysis: Basic Concepts and Algorithms
+\bibitem{assoc2}
+Rakesh Agrawal and Ramakrishnan Srikant Fast algorithms for mining association rules in large databases. Proceedings of the 20th International Conference on Very Large Data Bases, VLDB, pages 487-499, Santiago, Chile, September 1994
+\bibitem{orange-assoc}
+Orange.biolab.si, (2015). Association rules and frequent itemsets (associate) ? Orange Documentation v2.7.8. [online] Available at: http://orange.biolab.si/docs/latest/reference/rst/Orange.associate.html
+\bibitem{k-means} 
+Junjie Wu , Advances in K-means Clustering: A Data Mining Thinking
+\bibitem{datamining} 
+Witten, Ian H.; Frank, Eibe; Hall, Mark A. (30 January 2011). Data Mining: Practical Machine Learning Tools and Techniques (3 ed.). Elsevier
 \bibitem{k-means-example}
 Gonçalves, H. (2015). K-means clustering - algorithm and examples. [online] Onmyphd.com. Available at: \url{http://www.onmyphd.com/?p=k-means.clustering}
 \bibitem{procedures-for-kmeans}    Glenn W. Milligan, Martha C. Cooper , An examination of procedures for determining the number of clusters in a data set
 \bibitem{k-means-20news}
 Scikit-learn.org, (2015). Clustering text documents using k-means — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/auto_examples/document_clustering.html} 
-
 \bibitem{paris-attack}
 Bbc.com, (2015). BBC News - Paris attacks. [online] Available at: \url{http://www.bbc.com/news/world-europe-30717580} 
-
 \bibitem{fappening}
 MIRROR, (2015). Nude celebrity photos leaked. [online] Available at: \url{http://www.mirror.co.uk/all-about/nude-celebrity-photos-leaked}
 \bibitem{tel-aviv}
@@ -1056,4 +1121,10 @@ Scikit-learn.org,. '1.12. Multiclass And Multilabel Algorithms — Scikit-Learn 
 \bibitem{learn-classification}
 Scikit-learn.org, (2015). Classification of text documents using sparse features — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/auto_examples/document_classification_20newsgroups.html} 
 \end{thebibliography}
+\newpage
+\begin{appendices}
+\section{Source Code}
+All the Source Code that we have used for the demonstration of our Proof of Concept can be found in the following repository:\\
+\url{https://github.com/SecurityIntelligenceOS3/OS3Demo}
+\end{appendices}
 \end{document}
