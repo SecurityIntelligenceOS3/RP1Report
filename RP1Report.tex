@@ -138,12 +138,12 @@ This project was proposed by and carried out in co-operation with Deloitte Nethe
 
 We would like to express our gratitude and appreciation towards certain people that helped us during this Research Project as well as our studies so far, for all the support, expert knowledge and guidelines they provided. 
 \hfill \break \\ 
-First of all we would like to thank Delloite Netherlands, for granting us access to their headquarters building, and providing us with all the resources needed for the completion of our research. We owe utmost gratitude to all the employes of Deloitte NL that took time out of their busy schedule to assist us with our project. 
+First of all we would like to thank Deloitte Netherlands, for granting us access to their headquarters building, and providing us with all the resources needed for the completion of our research. We owe utmost gratitude to all the employs of Deloitte NL that took time out of their busy schedule to assist us with our project. 
 \\ 
-To begin with we would like to thank mr.Henri Hambartsumyan who came up with the idea of this project and who was the our first contact with the company. \\
-To our main supervisor mr.Joost Kremers we express our warm thanks for always being there to assist us and provide feedback, even if his schedule would not permit it. Even before we started working on this project he made sure to guide and direct us to the right research path.\\
-Next we feel the need to thank the developers of the CTI portal, mr.Niels Pompe for providing us with a list of Web resources relevant to our project and introducing us to the rest of the CTI team. Mr.Ari Davies, for guiding our development effort and mr. Gijs Hollestelle for explainingt the usage of their platform and explained to us the further needed requirements.\\
-Last but not least we would like Vincent van de Ven from the Data Analytics team, for providing us valuable insights about Data Management techniques. 
+To begin with we would like to thank Henri Hambartsumyan who came up with the idea of this project and who was the our first contact with the company. \\
+To our main supervisor Joost Kremers we express our warm thanks for always being there to assist us and provide feedback, even if his schedule would not permit it. Even before we started working on this project he made sure to guide and direct us to the right research path.\\
+Next we feel the need to thank the developers of the CTI portal, Niels Pompe for providing us with a list of Web resources relevant to our project and introducing us to the rest of the CTI team. Ari Davies, for guiding our development effort and Gijs Hollestelle for explaining the usage of their platform and the further needed requirements.\\
+Last but not least Vincent van de Ven from the Data Analytics team, for providing us valuable insights about Data Management techniques. 
 \hfill \break \\ 
 Secondly, we would like to thank the University of Amsterdam and the people from the OS3 core team for their support during our studies. Dr.Cees de Laat, co-ordinator of the Research Projects, our professors dr.Karst Koymans and dr.Jaap van Ginkel as well as our lab teachers dr. Arno Bakker and dr.Jeroen van der Ham. 
 \hfill \break \\ 
@@ -190,7 +190,6 @@ This question can be analysed into more specific parts that cover the topic to s
 	\item	How can the collected knowledge be applied on a system implementation?
 	\begin{itemize}
 		\item What is a reliable and extensible System Architecture that can be designed?
-		\item What are the computational and storage requirements of such a system?
 		\item What extensions can be proposed for that system?
 	\end{itemize}
 \end{enumerate}
@@ -198,13 +197,13 @@ This question can be analysed into more specific parts that cover the topic to s
 The proposed system extensions can spawn further research questions, namely on the topics of presenting the analysed data, reacting to the real time events and finally assessing the situations that arise and providing feedback to the system.
 
 \subsection{Related work}
-There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book 'Mining The Social Web' by M.Russel \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). 
+There is a lot of literature around the field of Data Mining and more recently Web Mining. The most prominent and recent case is the book "Mining The Social Web", Second Edition by Matthew Russell \cite{socialweb} that deals with exploring and mining information from social websites (e.g., Facebook, Twitter, LinkedIn, Google+, GitHub, etc.). 
 \hfill \break \\
 There are also several academic papers and books that deal with applying Data Mining to System Security. One example is a system proposed by the university of Minnesota, called \texttt{MINDS}  \cite{minds}, that employs various Data Mining in Intrusion Detection. The system is described in their paper 'Data Mining for Cyber Security'. 
 \hfill \break \\
 Another example is a system proposed by the Dutch company Sentient in co-operation with the Amsterdam Police Force \cite{police} aiming to provide Data Analytics operations automation while on the same time minimising the technical expertise needed by the system user.
 \hfill \break \\
-An example related to the previously discussed system, is a study conducted by Oracle Corporation\cite{oracle}, which presents a technique for speeding up the process of solving crimes \cite{pattern-police} by identifying crime patterns using data mining. In order to accomplish the proposed task this paper suggests the use of Clustering along with Geographic Location analysis for identifying and predicting possible criminal activity. 
+An example related to the previously discussed system, is a study conducted by Shyam Varan Nath within Oracle Corporation\cite{oracle}, which presents a technique for speeding up the process of solving crimes \cite{pattern-police} by identifying crime patterns using data mining. In order to accomplish the proposed task this paper suggests the use of Clustering along with Geographic Location analysis for identifying and predicting possible criminal activity. 
 \hfill \break \\
 Another system called \texttt{uberVU} aims to \textit{find insights, detect influencer mentions, detect trending stories and suggest engaging content to post}\cite{ubervu} from social networks such as \texttt{Twitter, Facebook or Youtube} and it is targeted to Marketing departments in order to gather Social Intelligence.  
 \newpage
@@ -225,7 +224,7 @@ The above will be described in detail in the following sections.
 \subsection{Hardware and Software Used}
 Most of the work was carried out on end laptops using the Guest WiFi network of the Deloitte\cite{deloitte} headquarters for internet connectivity. For the execution of the demonstration software and storage of the collected data, one of our assigned OS3 servers was used.
 \hfill \break \\
-For the storage of the raw well as the processed data we used MongoDB\cite{mongo}, a free and open source NoSQL database system. All the applications implemented were tested on an Ubuntu Server 14.04 LTS \cite{ubuntu-server-14.04} operating system.
+For the storage of the raw well as the processed data we used MongoDB\cite{mongodb}, a free and open source NoSQL database system. All the applications implemented were tested on an Ubuntu Server 14.04 LTS \cite{ubuntu} operating system.
 \hfill \break \\ 
 All software developed for the purposes of this project was written in the Python\cite{python} programming language using standard as well as external libraries. The external libraries and tools used were Tweepy \cite{tweepy}, Scrapy \cite{scrapy}, Numpy \cite{numpy}, PyMongo \cite{pymongo}, Orange \cite{orange}, scikit-learn \cite{sklearn}, NLP-Toolkit \cite{nltk}. More details on their usage can be found in the next chapters, where each software module is explained.
 
@@ -682,7 +681,7 @@ What is actually interesting here is to look at the documents that are included 
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result when retrieving the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that has a higher score for the word \texttt{hack}}
+\caption{MongoDB result when interrogating the document which has \texttt{ID: 54c76e02d177b432b0ca7d0b} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that presents higher score for the word \texttt{hack}} compared to the document with \texttt{ID: 54c0d9c6d177b470832e5407}
 \label{fig:android}
 \end{figure}
 \begin{figure}[h!]
@@ -706,12 +705,13 @@ What is actually interesting here is to look at the documents that are included 
 \end{spverbatim}
 \end{footnotesize}
 \captionsetup{font=small}
-\caption{MongoDB result when retrieving the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time},that has a lower score for the work \texttt{attack}}
+\caption{MongoDB result when interrogating the document which has \texttt{ID: 54c0d9c6d177b470832e5407} with the associated fields \texttt{url, paste, uniq\_visitors and time}, that has a lower score for the work \texttt{attack}} compared to the document with \texttt{ID: 54c76e02d177b432b0ca7d0b}
 \label{fig:script}
 \end{figure}
 \hfill \break \\\\\\
 The word \texttt{hack} appears four times in this block of Text (Figure~\ref{fig:android}), and it has a higher TF-IDF value. If we look at another document for example  \texttt{54c0d9c6d177b470832e5407} (Figure~\ref{fig:script}), it presents a lower score equal to  0.120993293348, which means that this word appears fewer times. However, not only the frequency of the word \texttt{attack} within a certain document is taken into consideration but also its frequency across all documents.\\
 \hfill \break 
+ 
 \newpage
 \subsubsection{Analytics and Alerting}
 
@@ -867,10 +867,23 @@ We can clearly see that top frequent terms for Cluster 13, highlight the recent 
 We propose the use of the Classification task to help us map our data into certain threat or attack categories. 
 \hfill \break
 \\
-For implementing an example of the method we selected the "one-vs-the-rest" multi-class strategy\cite{classiciation-multilabel}, since we have to classify the information given into multiple categories. This example will help showcase how the method works and that is a useful technique. We used the example code \cite{learn-classification} provided within the \textit{scikit-learn.org} website, with minor modifications.
+For implementing an example of this method we selected the "one-vs-the-rest" multi-class algorithm\cite{classiciation-multilabel}, since we have to classify the information given into multiple categories. This example will help showcase how the method works and that is a useful technique. We used the example code \cite{learn-classification} provided within the \textit{scikit-learn.org} website, with minor modifications.
 \hfill \break
 \\
-Classification is a supervised method and it requires a training set. Therefore we built a set that contains a list of sentences as it can be seen in \textit{Figure 2.9}. In each sentence an attack name might or might not be explicitly mentioned. This, however, does not constrain the algorithm, since each sentence already belongs to a certain class that has been added to the training list. The targeted categories are the following: \texttt{ddos,xss,spoof} with their corresponding numbers being  \texttt{\{0,1,2\}}. The algorithm attempts to recognize patterns in each incoming sentence by checking it against the list of predefined classes and assigns the sentence to its corresponding class. We should mention at this point that for more accurate results the number of the samples in the training set should be greater than the number of the members in the input dataset.
+Classification is a supervised method and it requires a training set. Therefore we built a set that contains a list of sentences as it can be seen in \textit{Figure 2.11}. In each sentence an attack name might or might not be explicitly mentioned. This, however, does not constrain the algorithm, since each sentence already belongs to a certain class that has been added to the training list. The targeted categories are the following: \texttt{ddos,xss,spoof} with their corresponding numbers being  \texttt{\{0,1,2\}}. The algorithm attempts to recognize patterns in each incoming sentence by checking it against the list of predefined classes and assigns the sentence to its corresponding class. We should mention at this point that for more accurate results the number of the samples in the training set should be greater than the number of the members in the input dataset. This is the reason why we suggest in Future Work section, to build real training sets for the system. It is possible to automate the recognition process by having large sets of data, against new arriving messages.
+\hfill \break
+\begin{figure}[h!]
+\begin{footnotesize}
+\begin{spverbatim}
+Spoofed addresses found on this site => spoof
+ddos lala somewhere in the sky => ddos
+hello frm my spoofed mail and here boom ddos attack => ddos, spoof
+\end{spverbatim}
+\end{footnotesize}
+\captionsetup{font=small}
+\caption{The result of the multi-label classification. It matches the class to which each input sentence belongs to.}
+\label{fig:trainset-result}
+\end{figure}
 \newpage
 \begin{figure}[h!]
 \begin{footnotesize}
@@ -895,18 +908,7 @@ target_names = ['ddos', 'xss','spoof']
 \caption{A simple example of a training set along with its associated trained list and targeted categories.}
 \label{fig:trainset}
 \end{figure}
-\begin{figure}[h!]
-\begin{footnotesize}
-\begin{spverbatim}
-Spoofed addresses found on this site => spoof
-ddos lala somewhere in the sky => ddos
-hello frm my spoofed mail and here boom ddos attack => ddos, spoof
-\end{spverbatim}
-\end{footnotesize}
-\captionsetup{font=small}
-\caption{The result of the multi-label classification. It matches the class to which each input sentence belongs to.}
-\label{fig:trainset-result}
-\end{figure}
+
 \newpage
 \subsubsection{Feedback and Assessment}
 During the last step of the operation the system will have to be able to produce reconfiguration sets in order to adjust its behaviour and produce more accurate results in the future.
@@ -974,12 +976,23 @@ US cybercrime: Rising risks, reduced readiness, PWC, Available at: \url{http://w
 \bibitem{police}
    RCP van der Veer, H.T. Roo,  A. van der Zanden, Data mining for intelligence led policing, Sentient, Amsterdam Police Force, Amsterdam, The Netherlands, 2009
 \bibitem{pattern-police}
-Shyam Varan Nath, Crime Pattern Detection Using Data Mining [online] Available at: http://cs.brown.edu/courses/csci2950-t/crime.pdf [Accessed 7 Feb. 2015].
+Shyam Varan Nath, Crime Pattern Detection Using Data Mining [online] Available at: \url{http://cs.brown.edu/courses/csci2950-t/crime.pdf} 
+\bibitem{oracle}
+Oracle.com, (2015). Oracle | Hardware and Software, Engineered to Work Together. [online] Available at: \url{http://www.oracle.com/index.html}
+\bibitem{mongodb}
+Mongodb.org, (2015). MongoDB. [online] Available at: \url{http://www.mongodb.org/} 
 \bibitem{ubervu}
-Ubervu.com, (2015). uberVU - Instant Brand Insights powered by Social Media. [online] Available at: https://www.ubervu.com [Accessed 7 Feb. 2015].
+Ubervu.com, (2015). uberVU - Instant Brand Insights powered by Social Media. [online] Available at: \url{https://www.ubervu.com}
+\bibitem{deloitte}
+Deloitte Nederland, (2015). Deloitte | Audit, Consulting, Financial Advisory, Risk Management \& Tax services. [online] Available at: \url{http://www2.deloitte.com/nl/nl.html}
+\bibitem{ubuntu}
+Ubuntu.com, (2015). Ubuntu Server - for scale-out computing | Ubuntu. [online] Available at: \url{http://www.ubuntu.com/server}
 \bibitem{nltk}
 Nltk.org, (2015). Natural Language Toolkit - NLTK 3.0 documentation. [online] Available at: \url{http://www.nltk.org/}
-
+\bibitem{pymongo}
+Api.mongodb.org, (2015). PyMongo 2.8 Documentation — PyMongo 2.8 documentation. [online] Available at: \url{http://api.mongodb.org/python/current/}
+\bibitem{python}
+Python.org, (2015). Welcome to Python.org. [online] Available at: \url{https://www.python.org/}
 \bibitem{fpaste}
 Fedora Project Pastebin Fpaste.org, (2015). New paste • Fedora Project Pastebin. [online] Available at:  
 \url{http://fpaste.org }
@@ -1018,6 +1031,10 @@ Owasp.org, (2015). Category:OWASP Top Ten Project - OWASP. [online] Available at
 Passeri, P., Passeri, P. and Passeri, P. (2015). Cyber Attacks Timeline | Hackmageddon.com. [online] Hackmageddon.com. Available at: http://hackmageddon.com/category/security/cyber-attacks-timeline/ 
 \bibitem{sklearn}
 Scikit-learn.org, (2015). scikit-learn: machine learning in Python — scikit-learn 0.15.2 documentation. [online] Available at: \url{http://scikit-learn.org/stable/index.html}
+\bibitem{numpy}
+ Numpy.org, (2015). NumPy — Numpy. [online] Available at: \url{http://www.numpy.org/}
+\bibitem{tweepy}
+Tweepy.org, (2015). Tweepy. [online] Available at: \url{http://www.tweepy.org/} 
 \bibitem{orange}
 Bioinformatics Laboratory, U. (2015). Orange Data Mining. [online] Orange.biolab.si. Available at: \url{http://orange.biolab.si/} 
 \bibitem{k-means} Junjie Wu , Advances in K-means Clustering: A Data Mining Thinking
@@ -1031,9 +1048,9 @@ Scikit-learn.org, (2015). Clustering text documents using k-means — scikit-lea
 Bbc.com, (2015). BBC News - Paris attacks. [online] Available at: \url{http://www.bbc.com/news/world-europe-30717580} 
 
 \bibitem{fappening}
-MIRROR, (2015). Nude celebrity photos leaked. [online] Available at: http://www.mirror.co.uk/all-about/nude-celebrity-photos-leaked [Accessed 7 Feb. 2015].
+MIRROR, (2015). Nude celebrity photos leaked. [online] Available at: \url{http://www.mirror.co.uk/all-about/nude-celebrity-photos-leaked}
 \bibitem{tel-aviv}
- Haaretz.com, (2015). 12 Israelis wounded in stabbing attack on Tel Aviv bus - Diplomacy and Defense. [online] Available at: http://www.haaretz.com/news/diplomacy-defense/1.638210 
+ Haaretz.com, (2015). 12 Israelis wounded in stabbing attack on Tel Aviv bus - Diplomacy and Defense. [online] Available at: \url{http://www.haaretz.com/news/diplomacy-defense/1.638210} 
 \bibitem{classiciation-multilabel}
 Scikit-learn.org,. '1.12. Multiclass And Multilabel Algorithms — Scikit-Learn 0.16.Dev Documentation'. N.p., 2015. Web. 
 \bibitem{learn-classification}
